@@ -2,7 +2,11 @@ const fastify = require('fastify')({
     logger: true
 });
 
-fastify.get('/information-item', async (request, reply) => {
+const storeInformationRepository = require('./storeInformationRepository');
+
+fastify.put('/information-item', async (request, reply) => {
+    storeInformationRepository(request.body);
+
     reply.type('application/json').code(200);
     reply.send({});
 })
