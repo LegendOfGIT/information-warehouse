@@ -5,6 +5,7 @@ module.exports = (informationItem) => {
 
     console.log(informationItem.itemId);
 
+
     if (!informationItem.itemId) {
         console.log('required itemId is missing');
     }
