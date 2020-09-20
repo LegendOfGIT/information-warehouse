@@ -1,34 +1,25 @@
 const mongoClient = require('mongodb').MongoClient;
 
-module.exports = (informationItem) => {
+module.exports = (informationItem) => new Promise((resolve, reject) => {
     informationItem = informationItem || {};
-
-    console.log(informationItem.itemId);
-
 
     if (!informationItem.itemId) {
         console.log('required itemId is missing');
     }
 
-    mongoClient.connect(
-        'mongodb://localhost:27017/information-items',
-        {},
-        (error, database) => {
-            if (error) {
-                throw error;
-            }
-
+    mongoClient.connect('mongodb://localhost:27017/information-items')
+        .then((database) => {
             const collection = database.db().collection('items');
             collection.insertOne(informationItem)
-                .then((response) => {
-                    console.log(response);
+                .then(response => {
+                    resolve(response);
                 })
-                .catch((error) => {
-                    throw error;
+                .catch(error => {
+                    reject(error);
                 })
                 .finally(() => {
                     database.close();
                 });
-        }
-    );
-};
+        })
+        .catch(error => { reject(error); });
+});

@@ -2,13 +2,23 @@ const fastify = require('fastify')({
     logger: true
 });
 
+const queryInformationRepository = require('./queryInformationRepository');
 const storeInformationRepository = require('./storeInformationRepository');
 
-fastify.put('/information-item', async (request, reply) => {
-    storeInformationRepository(request.body);
-
+fastify.get('/information-items', async(request, reply) => {
     reply.type('application/json').code(200);
-    reply.send({});
+
+    queryInformationRepository()
+        .then(response => { reply.send({ errorMessage: '', items: response }); })
+        .catch(error => { reply.code(500).send({ errorMessage: error, items: [] }); });
+});
+
+fastify.put('/information-item', async (request, reply) => {
+    reply.type('application/json').code(200);
+
+    storeInformationRepository(request.body)
+        .then(() => { reply.send({}); })
+        .catch(error => reply.code(500).send({ errorMessage: error }));
 })
 
 fastify.listen(3002, (err, address) => {
