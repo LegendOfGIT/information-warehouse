@@ -59,34 +59,48 @@ describe('queryInformationRepository', () => {
                 db: () => database
             };
 
-            describe('find returns results', () => {
-                let repositoryPromise;
+            const queriesTestProvider = [
+                {
+                    scenarioName: 'no parameters given',
+                    expectedQuery: undefined
+                },
+                {
+                    scenarioName: 'queryPattern given',
+                    queryPattern: 'lord of the rings',
+                    expectedQuery: { title: new RegExp('.*lord of the rings.*', 'i') }
+                }
+            ];
 
-                beforeEach(() => {
-                    connectMock = Promise.resolve(databaseObject);
-                    repositoryPromise = repository();
-                });
+            queriesTestProvider.forEach(({ expectedQuery, queryPattern, scenarioName}) => {
+                describe(`find returns results (${scenarioName})`, () => {
+                    let repositoryPromise;
 
-                test('collection is called from database', () => {
-                    expect(database.collection).toHaveBeenCalledWith('items');
-                });
+                    beforeEach(() => {
+                        connectMock = Promise.resolve(databaseObject);
+                        repositoryPromise = repository(queryPattern);
+                    });
 
-                test('find of collection is called', () => {
-                    expect(collection.find).toHaveBeenCalled();
-                });
+                    test('collection is called from database', () => {
+                        expect(database.collection).toHaveBeenCalledWith('items');
+                    });
 
-                test('database close has been called', () => {
-                    expect(databaseObject.close).toHaveBeenCalled();
-                });
+                    test('find of collection is called', () => {
+                        expect(collection.find).toHaveBeenCalledWith(expectedQuery);
+                    });
 
-                test('repository returns information-items from data source', (done) => {
-                    repositoryPromise.then(response => {
-                        expect(response).toEqual([
-                            { all: 'my' },
-                            { happy: 'items' }
-                        ]);
+                    test('database close has been called', () => {
+                        expect(databaseObject.close).toHaveBeenCalled();
+                    });
 
-                        done();
+                    test('repository returns information-items from data source', (done) => {
+                        repositoryPromise.then(response => {
+                            expect(response).toEqual([
+                                { all: 'my' },
+                                { happy: 'items' }
+                            ]);
+
+                            done();
+                        });
                     });
                 });
             });

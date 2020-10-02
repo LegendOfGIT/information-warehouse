@@ -1,6 +1,6 @@
 const mongoClient = require('mongodb').MongoClient;
 
-module.exports = () => new Promise((resolve, reject) => {
+module.exports = (queryPattern) => new Promise((resolve, reject) => {
     mongoClient.connect('mongodb://localhost:27017/information-items')
         .then(database => {
             if(!database) {
@@ -8,7 +8,8 @@ module.exports = () => new Promise((resolve, reject) => {
             }
 
             const collection = database.db().collection('items');
-            collection.find().toArray()
+            const query = queryPattern ? { title: new RegExp(`.*${queryPattern}.*`, 'i')} : undefined;
+            collection.find(query).toArray()
                 .then((result) => {
                     resolve(result);
                 })
