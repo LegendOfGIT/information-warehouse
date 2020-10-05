@@ -62,22 +62,31 @@ describe('queryInformationRepository', () => {
             const queriesTestProvider = [
                 {
                     scenarioName: 'no parameters given',
-                    expectedQuery: undefined
+                    expectedQuery: {}
                 },
                 {
                     scenarioName: 'queryPattern given',
                     queryPattern: 'lord of the rings',
                     expectedQuery: { title: new RegExp('.*lord of the rings.*', 'i') }
+                },
+                {
+                    scenarioName: 'queryPattern given',
+                    queryPattern: 'lord of the rings',
+                    navigationId: 'NAVI_GATION',
+                    expectedQuery: {
+                        title: new RegExp('.*lord of the rings.*', 'i'),
+                        navigationPath: 'NAVI_GATION'
+                    }
                 }
             ];
 
-            queriesTestProvider.forEach(({ expectedQuery, queryPattern, scenarioName}) => {
+            queriesTestProvider.forEach(({ expectedQuery, navigationId, queryPattern, scenarioName}) => {
                 describe(`find returns results (${scenarioName})`, () => {
                     let repositoryPromise;
 
                     beforeEach(() => {
                         connectMock = Promise.resolve(databaseObject);
-                        repositoryPromise = repository(queryPattern);
+                        repositoryPromise = repository(queryPattern, navigationId);
                     });
 
                     test('collection is called from database', () => {

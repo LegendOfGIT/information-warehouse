@@ -8,7 +8,7 @@ const storeInformationRepository = require('./storeInformationRepository');
 fastify.get('/information-items', async(request, reply) => {
     reply.type('application/json').code(200);
 
-    queryInformationRepository(request.query.searchPattern)
+    queryInformationRepository(request.query.searchPattern, request.query.navigationId)
         .then(response => {
             reply.header('Access-Control-Allow-Origin', '*').send({ errorMessage: '', items: response });
         })
