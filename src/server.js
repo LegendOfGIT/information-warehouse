@@ -3,6 +3,7 @@ const fastify = require('fastify')({
 });
 
 const queryInformationRepository = require('./queryInformationRepository');
+const removeInformationRepository = require('./removeInformationRepository');
 const storeInformationRepository = require('./storeInformationRepository');
 
 fastify.get('/information-items', async(request, reply) => {
@@ -15,11 +16,23 @@ fastify.get('/information-items', async(request, reply) => {
         .catch(error => { reply.code(500).send({ errorMessage: error, items: [] }); });
 });
 
-fastify.put('/information-item', async (request, reply) => {
+fastify.post('/information-item', async (request, reply) => {
     reply.type('application/json').code(200);
 
     storeInformationRepository(request.body)
         .then(() => { reply.send({}); })
+        .catch(error => reply.code(500).send({ errorMessage: error }));
+})
+
+fastify.put('/information-item', async (request, reply) => {
+    reply.type('application/json').code(200);
+
+    removeInformationRepository(request.body)
+        .then(() => {
+            storeInformationRepository(request.body)
+                .then(() => { reply.send({}); })
+                .catch(error => reply.code(500).send({ errorMessage: error }));
+        })
         .catch(error => reply.code(500).send({ errorMessage: error }));
 })
 
