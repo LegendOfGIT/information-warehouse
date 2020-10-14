@@ -18,13 +18,13 @@ jest.doMock('mongodb', () => ({
     MongoClient: mongoClientMock
 }));
 
-const repository = require('../src/removeInformationRepository');
+const repository = require('../../src/wishlist/removeWishlistRepository');
 
 let consoleMock;
 
 const originalConsole = global.console;
 
-describe('removeInformationRepository', () => {
+describe('removeWishlistRepository', () => {
     afterEach(() => {
         global.console = originalConsole;
     });
@@ -36,16 +36,18 @@ describe('removeInformationRepository', () => {
         global.console = consoleMock;
     });
 
-    describe('called without required properties in information object', () => {
+    describe('called without required arguments', () => {
         test('logs a message', (done) => {
-            repository().then(() => {
-                expect(consoleMock.log).toBeCalledWith('required itemId is missing');
+            repository().then().catch((error) => {
+                expect(error).toEqual('required userId is missing');
+                expect(consoleMock.log).toBeCalledWith(error);
+                expect(successfulConnectionCollectionRemoveOneMock).not.toHaveBeenCalled();
                 done();
             });
         });
     });
 
-    describe('called with required properties in information object', () => {
+    describe('called with required arguments', () => {
         describe('connect throws an error', () => {
             const error = new MongoError('no connection');
             let repositoryPromise;
@@ -70,15 +72,13 @@ describe('removeInformationRepository', () => {
 
             beforeEach(() => {
                 connectMock = Promise.resolve(successfulConnectionMock);
-                repositoryPromise = repository({
-                    itemId: 'abc'
-                });
+                repositoryPromise = repository('aaaa-bbb-ccc');
             });
 
             test('repository connects to mongodb', (done) => {
                 repositoryPromise.then(() => {
                     expect(mongoClientMock.connect).toBeCalledWith(
-                        'mongodb://localhost:27017/information-items'
+                        'mongodb://localhost:27017/wishlists'
                     );
 
                     done();
@@ -87,7 +87,7 @@ describe('removeInformationRepository', () => {
 
             test('collection is called from database', (done) => {
                 repositoryPromise.then(() => {
-                    expect(successfulConnectionCollectionMock).toHaveBeenCalledWith('items');
+                    expect(successfulConnectionCollectionMock).toHaveBeenCalledWith('wishlist-items');
                     done();
                 });
             });
@@ -95,7 +95,7 @@ describe('removeInformationRepository', () => {
             describe('removeOne succeeds', () => {
                 test('removeOne of collection is called', (done) => {
                     repositoryPromise.then(() => {
-                        expect(successfulConnectionCollectionRemoveOneMock).toHaveBeenCalledWith({ itemId: 'abc' });
+                        expect(successfulConnectionCollectionRemoveOneMock).toHaveBeenCalledWith({ userId: 'aaaa-bbb-ccc' });
                         done();
                     });
                 });
