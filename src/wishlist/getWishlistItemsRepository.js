@@ -10,12 +10,12 @@ module.exports = (userId) => new Promise((resolve, reject) => {
 
             const collection = database.db().collection('wishlist-items');
 
-            collection.find({ userId })
+            collection.findOne({ userId })
                 .then((result) => {
                     resolve(result.items);
                 })
-                .catch((error) => {
-                    reject(error);
+                .catch(() => {
+                    resolve([]);
                 })
                 .finally(() => {
                     database.close();

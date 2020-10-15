@@ -6,9 +6,9 @@ jest.doMock('mongodb', () => ({
     MongoClient: mongoClientMock
 }));
 
-const repository = require('../../src/wishlist/getWishlistRepository');
+const repository = require('../../src/wishlist/getWishlistItemsRepository');
 
-describe('getWishlistRepository', () => {
+describe('getWishlistItemsRepository', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
@@ -42,16 +42,12 @@ describe('getWishlistRepository', () => {
         });
 
         describe('connect callback called without error', () => {
-            let findToArrayMock = Promise.resolve([
-                { all: 'my' },
-                { happy: 'items' }
-            ]);
             const collection = {
-                find: jest.fn(() => ({
+                findOne: jest.fn(() => (Promise.resolve({
                     items: [
                         'a', 'b', 'c'
                     ]
-                }))
+                })))
             };
             const database = {
                 collection: jest.fn(() => collection)
@@ -82,24 +78,30 @@ describe('getWishlistRepository', () => {
                         repositoryPromise = repository(userId);
                     });
 
-                    test('collection is called from database', () => {
-                        expect(database.collection).toHaveBeenCalledWith('wishlist-items');
+                    test('collection is called from database', (done) => {
+                        repositoryPromise.then(() => {
+                            expect(database.collection).toHaveBeenCalledWith('wishlist-items');
+                            done();
+                        });
                     });
 
-                    test('find of collection is called', () => {
-                        expect(collection.find).toHaveBeenCalledWith(expectedQuery);
+                    test('find of collection is called', (done) => {
+                        repositoryPromise.then(() => {
+                            expect(collection.findOne).toHaveBeenCalledWith(expectedQuery);
+                            done();
+                        });
                     });
 
-                    test('database close has been called', () => {
-                        expect(databaseObject.close).toHaveBeenCalled();
+                    test('database close has been called', (done) => {
+                        repositoryPromise.then(() => {
+                            expect(databaseObject.close).toHaveBeenCalled();
+                            done();
+                        });
                     });
 
                     test('repository returns wishlist-items from data source', (done) => {
                         repositoryPromise.then(response => {
-                            expect(response).toEqual([
-                                { all: 'my' },
-                                { happy: 'items' }
-                            ]);
+                            expect(response).toEqual(['a', 'b', 'c']);
 
                             done();
                         });
@@ -111,14 +113,14 @@ describe('getWishlistRepository', () => {
                 let repositoryPromise;
 
                 beforeEach(() => {
-                    findToArrayMock = Promise.reject('no results');
+                    collection.findOne = jest.fn(() => Promise.reject('no results'));
                     connectMock = Promise.resolve(databaseObject);
                     repositoryPromise = repository();
                 });
 
-                test('repository rejects with an error', (done) => {
-                    repositoryPromise.then().catch(error => {
-                        expect(error).toBe('no results');
+                test('repository resolved with an empty array', (done) => {
+                    repositoryPromise.then((response) => {
+                        expect(response).toEqual([]);
                         done();
                     });
                 });
