@@ -14,24 +14,39 @@ fastify.register(require('fastify-cors'), {});
 
 fastify.get('/guest-user-id', async(request, reply) => {
     reply.type('application/json').code(200);
-    reply.header('Access-Control-Allow-Origin', '*').send({ userId: uuid() });
+    reply.send({ userId: uuid() });
 });
+
+const replyWithInternalError = (reply, errorMessage, additionalInformation) => {
+    reply.code(500);
+    return reply.send(Object.assign({ errorMessage }, additionalInformation));
+};
 
 fastify.get('/information-items', async(request, reply) => {
     reply.type('application/json').code(200);
 
-    queryInformationRepository(request.query.searchPattern, request.query.navigationId)
+    const { navigationId, searchPattern } = request.query;
+
+    const query = {};
+    if (searchPattern) {
+        query.title = new RegExp(`.*${searchPattern}.*`, 'i')
+    }
+    if (navigationId) {
+        query.navigationPath = navigationId
+    }
+
+    queryInformationRepository(query)
         .then(response => {
-            reply.header('Access-Control-Allow-Origin', '*').send({ errorMessage: '', items: response });
+            reply.send({ errorMessage: '', items: response });
         })
-        .catch(error => { reply.code(500).send({ errorMessage: error, items: [] }); });
+        .catch(error => replyWithInternalError(reply, error, { items: [] }));
 });
 fastify.post('/information-item', async (request, reply) => {
     reply.type('application/json').code(200);
 
     storeInformationRepository(request.body)
         .then(() => { reply.send({}); })
-        .catch(error => reply.code(500).send({ errorMessage: error }));
+        .catch(error => replyWithInternalError(reply, error));
 })
 fastify.put('/information-item', async (request, reply) => {
     reply.type('application/json').code(200);
@@ -42,28 +57,48 @@ fastify.put('/information-item', async (request, reply) => {
                 .then(() => { reply.send({}); })
                 .catch(error => reply.code(500).send({ errorMessage: error }));
         })
-        .catch(error => reply.code(500).send({ errorMessage: error }));
+        .catch(error => replyWithInternalError(reply, error));
 });
 
+fastify.get('/wishlist-items', async (request, reply) => {
+    reply.type('application/json');
+
+    const { userId } = request.query;
+
+    getWishlistItemsRepository(userId).then((items) => {
+        queryInformationRepository({ itemId: { $in: items } }).then((informationItems) => {
+            reply.code(200).send(informationItems);
+        }).catch((error) => replyWithInternalError(reply, error));
+
+    }).catch((error) => replyWithInternalError(reply, error));
+});
+fastify.delete('/wishlist-item', async (request, reply) => {
+    reply.type('application/json');
+
+    const { itemId, userId } = request.query;
+
+    getWishlistItemsRepository(userId).then((items) => {
+        items = items.filter((itemIdFromWishlist) => itemIdFromWishlist !== itemId);
+
+        storeWishlistItemsRepository(userId, items)
+            .then(() => { reply.code(200).send({}); })
+            .catch(error => replyWithInternalError(reply, error));
+
+    }).catch((error) => replyWithInternalError(reply, error));
+});
 fastify.put('/wishlist-item', async (request, reply) => {
     reply.type('application/json');
 
     const { itemId, userId } = request.body;
 
     getWishlistItemsRepository(userId).then((items) => {
-        console.log(items);
         items.push(itemId);
 
-        removeWishlistRepository(userId)
-            .then(() => {
-                reply.code(200).send({ errorMessage: '' });
+        storeWishlistItemsRepository(userId, items)
+            .then(() => { reply.code(200).send({}); })
+            .catch(error => replyWithInternalError(reply, error));
 
-                storeWishlistItemsRepository(userId, items)
-                    .then(() => { reply.code(200).send({}); })
-                    .catch(error => reply.code(500).send({ errorMessage: error }));
-            })
-            .catch(error => { reply.code(500).send({ errorMessage: error }); });
-    }).catch((error) => { reply.code(500).send({ errorMessage: error }); });
+    }).catch((error) => replyWithInternalError(reply, error));
 });
 
 fastify.listen(3002, (err, address) => {

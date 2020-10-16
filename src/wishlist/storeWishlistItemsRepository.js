@@ -11,20 +11,14 @@ module.exports = (userId, wishlistItems) => new Promise((resolve, reject) => {
         return;
     }
 
-    if (0 === wishlistItems.length) {
-        message = 'required wishlistItems are missing';
-        console.log(message);
-        reject(message);
-        return;
-    }
-
     mongoClient.connect('mongodb://localhost:27017/wishlists')
         .then((database) => {
             const collection = database.db().collection('wishlist-items');
-            collection.insertOne({
-                userId,
-                items: wishlistItems
-            })
+            collection.updateOne(
+                { userId },
+                { $set: { items: wishlistItems } },
+                { upsert: true }
+            )
                 .then(response => {
                     resolve(response);
                 })

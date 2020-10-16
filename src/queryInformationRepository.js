@@ -1,22 +1,13 @@
 const mongoClient = require('mongodb').MongoClient;
 
-module.exports = (queryPattern, navigationId) => new Promise((resolve, reject) => {
+module.exports = (query) => new Promise((resolve, reject) => {
     mongoClient.connect('mongodb://localhost:27017/information-items')
         .then(database => {
             if(!database) {
                 resolve([]);
             }
 
-            const collection = database.db().collection('items');
-            const query = {};
-            if (queryPattern) {
-                query.title = new RegExp(`.*${queryPattern}.*`, 'i')
-            }
-            if (navigationId) {
-                query.navigationPath = navigationId
-            }
-
-            collection.find(query).toArray()
+            database.db().collection('items').find(query).toArray()
                 .then((result) => {
                     resolve(result);
                 })
