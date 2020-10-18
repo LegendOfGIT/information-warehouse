@@ -1,8 +1,8 @@
 const MongoError = require('mongodb').MongoError;
 
-let successfulConnectionCollectionInsertOneMock = jest.fn(() => Promise.resolve());
+let successfulConnectionCollectionUpdateOneMock = jest.fn(() => Promise.resolve());
 const successfulConnectionCollectionMock = jest.fn(() => ({
-    insertOne: successfulConnectionCollectionInsertOneMock
+    updateOne: successfulConnectionCollectionUpdateOneMock
 }));
 const successfulConnectionMock = {
     close: jest.fn(),
@@ -41,16 +41,7 @@ describe('storeWishlistItemsRepository', () => {
             repository().then().catch((error) => {
                 expect(error).toEqual('required userId is missing');
                 expect(consoleMock.log).toBeCalledWith(error);
-                expect(successfulConnectionCollectionInsertOneMock).not.toHaveBeenCalled();
-                done();
-            });
-        });
-
-        test('without items rejects with a message', (done) => {
-            repository('abcdef').then().catch((error) => {
-                expect(error).toEqual('required wishlistItems are missing');
-                expect(consoleMock.log).toBeCalledWith(error);
-                expect(successfulConnectionCollectionInsertOneMock).not.toHaveBeenCalled();
+                expect(successfulConnectionCollectionUpdateOneMock).not.toHaveBeenCalled();
                 done();
             });
         });
@@ -103,29 +94,27 @@ describe('storeWishlistItemsRepository', () => {
                 });
             });
 
-            describe('insertOne succeeds', () => {
-                test('insertOne of collection is called', (done) => {
+            describe('updateOne succeeds', () => {
+                test('updateOne of collection is called', (done) => {
                     repositoryPromise.then(() => {
-                        expect(successfulConnectionCollectionInsertOneMock).toHaveBeenCalledWith({
-                            userId: 'aaaaa-bbb-ccc',
-                            items: [
-                                'abc',
-                                'def'
-                            ]
-                        });
+                        expect(successfulConnectionCollectionUpdateOneMock).toHaveBeenCalledWith(
+                            { userId: 'aaaaa-bbb-ccc' },
+                            { $set: { items: [ 'abc', 'def' ] } },
+                            { upsert: true }
+                        );
                         done();
                     });
                 });
             });
 
-            describe('insertOne fails', () => {
+            describe('updateOne fails', () => {
                 beforeEach(() => {
-                    successfulConnectionCollectionInsertOneMock = () => Promise.reject('insert failed');
+                    successfulConnectionCollectionUpdateOneMock = () => Promise.reject('update failed');
                 });
 
                 test('repository rejects', (done) => {
                     repository('a', ['a']).then().catch((error) => {
-                        expect(error).toBe('insert failed');
+                        expect(error).toBe('update failed');
                         done();
                     });
                 });

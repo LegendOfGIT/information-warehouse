@@ -1,21 +1,14 @@
 const queryInformationRepository = require('./queryInformationRepository');
 const removeInformationRepository = require('./removeInformationRepository');
 const getWishlistItemsRepository = require('./wishlist/getWishlistItemsRepository');
-const removeWishlistRepository = require('./wishlist/removeWishlistRepository');
 const storeInformationRepository = require('./storeInformationRepository');
 const storeWishlistItemsRepository = require('./wishlist/storeWishlistItemsRepository');
-const uuid = require('uuid').v4;
 
 const fastify = require('fastify')({
     logger: true
 });
 
 fastify.register(require('fastify-cors'), {});
-
-fastify.get('/guest-user-id', async(request, reply) => {
-    reply.type('application/json').code(200);
-    reply.send({ userId: uuid() });
-});
 
 const replyWithInternalError = (reply, errorMessage, additionalInformation) => {
     reply.code(500);
@@ -91,8 +84,13 @@ fastify.put('/wishlist-item', async (request, reply) => {
 
     const { itemId, userId } = request.body;
 
+    console.log(userId);
+
     getWishlistItemsRepository(userId).then((items) => {
+        console.log(items);
         items.push(itemId);
+        console.log(itemId);
+        console.log(items);
 
         storeWishlistItemsRepository(userId, items)
             .then(() => { reply.code(200).send({}); })

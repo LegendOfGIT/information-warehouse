@@ -59,57 +59,40 @@ describe('queryInformationRepository', () => {
                 db: () => database
             };
 
-            const queriesTestProvider = [
-                {
-                    scenarioName: 'no parameters given',
-                    expectedQuery: {}
-                },
-                {
-                    scenarioName: 'queryPattern given',
-                    queryPattern: 'lord of the rings',
-                    expectedQuery: { title: new RegExp('.*lord of the rings.*', 'i') }
-                },
-                {
-                    scenarioName: 'queryPattern given',
-                    queryPattern: 'lord of the rings',
-                    navigationId: 'NAVI_GATION',
-                    expectedQuery: {
+            describe('find returns results', () => {
+                let repositoryPromise;
+
+                beforeEach(() => {
+                    connectMock = Promise.resolve(databaseObject);
+                    repositoryPromise = repository({
                         title: new RegExp('.*lord of the rings.*', 'i'),
                         navigationPath: 'NAVI_GATION'
-                    }
-                }
-            ];
-
-            queriesTestProvider.forEach(({ expectedQuery, navigationId, queryPattern, scenarioName}) => {
-                describe(`find returns results (${scenarioName})`, () => {
-                    let repositoryPromise;
-
-                    beforeEach(() => {
-                        connectMock = Promise.resolve(databaseObject);
-                        repositoryPromise = repository(queryPattern, navigationId);
                     });
+                });
 
-                    test('collection is called from database', () => {
-                        expect(database.collection).toHaveBeenCalledWith('items');
+                test('collection is called from database', () => {
+                    expect(database.collection).toHaveBeenCalledWith('items');
+                });
+
+                test('find of collection is called with expected arguments', () => {
+                    expect(collection.find).toHaveBeenCalledWith({
+                        title: new RegExp('.*lord of the rings.*', 'i'),
+                        navigationPath: 'NAVI_GATION'
                     });
+                });
 
-                    test('find of collection is called', () => {
-                        expect(collection.find).toHaveBeenCalledWith(expectedQuery);
-                    });
+                test('database close has been called', () => {
+                    expect(databaseObject.close).toHaveBeenCalled();
+                });
 
-                    test('database close has been called', () => {
-                        expect(databaseObject.close).toHaveBeenCalled();
-                    });
+                test('repository returns information-items from data source', (done) => {
+                    repositoryPromise.then(response => {
+                        expect(response).toEqual([
+                            { all: 'my' },
+                            { happy: 'items' }
+                        ]);
 
-                    test('repository returns information-items from data source', (done) => {
-                        repositoryPromise.then(response => {
-                            expect(response).toEqual([
-                                { all: 'my' },
-                                { happy: 'items' }
-                            ]);
-
-                            done();
-                        });
+                        done();
                     });
                 });
             });
