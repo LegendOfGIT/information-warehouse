@@ -1,8 +1,8 @@
 const MongoError = require('mongodb').MongoError;
 
-let successfulConnectionCollectionInsertOneMock = jest.fn(() => Promise.resolve());
+let successfulConnectionCollectionReplaceOneMock = jest.fn(() => Promise.resolve());
 const successfulConnectionCollectionMock = jest.fn(() => ({
-    insertOne: successfulConnectionCollectionInsertOneMock
+    replaceOne: successfulConnectionCollectionReplaceOneMock
 }));
 const successfulConnectionMock = {
     close: jest.fn(),
@@ -18,13 +18,13 @@ jest.doMock('mongodb', () => ({
     MongoClient: mongoClientMock
 }));
 
-const repository = require('../src/storeInformationRepository');
+const repository = require('../../../src/information/repositories/storeVirtualInformationItemRepository');
 
 let consoleMock;
 
 const originalConsole = global.console;
 
-describe('storeInformationRepository', () => {
+describe('storeVirtualInformationItemRepository', () => {
     afterEach(() => {
         global.console = originalConsole;
     });
@@ -39,7 +39,7 @@ describe('storeInformationRepository', () => {
     describe('called without required properties in information object', () => {
         test('logs a message', (done) => {
             repository().then(() => {
-                expect(consoleMock.log).toBeCalledWith('required itemId is missing');
+                expect(consoleMock.log).toBeCalledWith('required ean is missing');
                 done();
             });
         });
@@ -53,7 +53,7 @@ describe('storeInformationRepository', () => {
             beforeEach(() => {
                 connectMock = Promise.reject(error);
                 repositoryPromise = repository({
-                    itemId: 'abc'
+                    ean: '21387217213'
                 });
             });
 
@@ -71,7 +71,8 @@ describe('storeInformationRepository', () => {
             beforeEach(() => {
                 connectMock = Promise.resolve(successfulConnectionMock);
                 repositoryPromise = repository({
-                    itemId: 'abc'
+                    ean: '111222333444555',
+                    abc: 'def'
                 });
             });
 
@@ -87,31 +88,35 @@ describe('storeInformationRepository', () => {
 
             test('collection is called from database', (done) => {
                 repositoryPromise.then(() => {
-                    expect(successfulConnectionCollectionMock).toHaveBeenCalledWith('items');
+                    expect(successfulConnectionCollectionMock).toHaveBeenCalledWith('virtual-items');
                     done();
                 });
             });
 
-            describe('insertOne succeeds', () => {
-                test('insertOne of collection is called', (done) => {
+            describe('replaceOne succeeds', () => {
+                test('replaceOne of collection is called', (done) => {
                     repositoryPromise.then(() => {
-                        expect(successfulConnectionCollectionInsertOneMock).toHaveBeenCalledWith({itemId: 'abc'});
+                        expect(successfulConnectionCollectionReplaceOneMock).toHaveBeenCalledWith(
+                            { ean: '111222333444555' },
+                            { ean: '111222333444555', abc: 'def' },
+                            { upsert: true }
+                        );
                         done();
                     });
                 });
             });
 
-            describe('insertOne fails', () => {
+            describe('replaceOne fails', () => {
                 beforeEach(() => {
-                    successfulConnectionCollectionInsertOneMock = () => Promise.reject('insert failed');
+                    successfulConnectionCollectionReplaceOneMock = () => Promise.reject('replace failed');
                     repositoryPromise = repository({
-                        itemId: 'abc'
+                        ean: '111222333444555'
                     });
                 });
 
                 test('repository rejects', (done) => {
                     repositoryPromise.then().catch((error) => {
-                        expect(error).toBe('insert failed');
+                        expect(error).toBe('replace failed');
                         done();
                     });
                 });

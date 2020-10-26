@@ -6,9 +6,9 @@ jest.doMock('mongodb', () => ({
     MongoClient: mongoClientMock
 }));
 
-const repository = require('../src/queryInformationRepository');
+const repository = require('../../../src/information/repositories/queryVirtualInformationItemsRepository');
 
-describe('queryInformationRepository', () => {
+describe('queryVirtualInformationItemsRepository', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
@@ -71,7 +71,7 @@ describe('queryInformationRepository', () => {
                 });
 
                 test('collection is called from database', () => {
-                    expect(database.collection).toHaveBeenCalledWith('items');
+                    expect(database.collection).toHaveBeenCalledWith('virtual-items');
                 });
 
                 test('find of collection is called with expected arguments', () => {
@@ -85,7 +85,7 @@ describe('queryInformationRepository', () => {
                     expect(databaseObject.close).toHaveBeenCalled();
                 });
 
-                test('repository returns information-items from data source', (done) => {
+                test('repository returns virtual-items from data source', (done) => {
                     repositoryPromise.then(response => {
                         expect(response).toEqual([
                             { all: 'my' },

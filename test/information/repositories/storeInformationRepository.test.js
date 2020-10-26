@@ -1,8 +1,8 @@
 const MongoError = require('mongodb').MongoError;
 
-let successfulConnectionCollectionRemoveOneMock = jest.fn(() => Promise.resolve());
+let successfulConnectionCollectionReplaceOneMock = jest.fn(() => Promise.resolve());
 const successfulConnectionCollectionMock = jest.fn(() => ({
-    removeOne: successfulConnectionCollectionRemoveOneMock
+    replaceOne: successfulConnectionCollectionReplaceOneMock
 }));
 const successfulConnectionMock = {
     close: jest.fn(),
@@ -18,13 +18,13 @@ jest.doMock('mongodb', () => ({
     MongoClient: mongoClientMock
 }));
 
-const repository = require('../../src/wishlist/removeWishlistRepository');
+const repository = require('../../../src/information/repositories/storeInformationRepository');
 
 let consoleMock;
 
 const originalConsole = global.console;
 
-describe('removeWishlistRepository', () => {
+describe('storeInformationRepository', () => {
     afterEach(() => {
         global.console = originalConsole;
     });
@@ -36,18 +36,16 @@ describe('removeWishlistRepository', () => {
         global.console = consoleMock;
     });
 
-    describe('called without required arguments', () => {
+    describe('called without required properties in information object', () => {
         test('logs a message', (done) => {
-            repository().then().catch((error) => {
-                expect(error).toEqual('required userId is missing');
-                expect(consoleMock.log).toBeCalledWith(error);
-                expect(successfulConnectionCollectionRemoveOneMock).not.toHaveBeenCalled();
+            repository().then(() => {
+                expect(consoleMock.log).toBeCalledWith('required itemId is missing');
                 done();
             });
         });
     });
 
-    describe('called with required arguments', () => {
+    describe('called with required properties in information object', () => {
         describe('connect throws an error', () => {
             const error = new MongoError('no connection');
             let repositoryPromise;
@@ -72,13 +70,16 @@ describe('removeWishlistRepository', () => {
 
             beforeEach(() => {
                 connectMock = Promise.resolve(successfulConnectionMock);
-                repositoryPromise = repository('aaaa-bbb-ccc');
+                repositoryPromise = repository({
+                    itemId: 'abc',
+                    abc: 'def'
+                });
             });
 
             test('repository connects to mongodb', (done) => {
                 repositoryPromise.then(() => {
                     expect(mongoClientMock.connect).toBeCalledWith(
-                        'mongodb://localhost:27017/wishlists'
+                        'mongodb://localhost:27017/information-items'
                     );
 
                     done();
@@ -87,23 +88,27 @@ describe('removeWishlistRepository', () => {
 
             test('collection is called from database', (done) => {
                 repositoryPromise.then(() => {
-                    expect(successfulConnectionCollectionMock).toHaveBeenCalledWith('wishlist-items');
+                    expect(successfulConnectionCollectionMock).toHaveBeenCalledWith('items');
                     done();
                 });
             });
 
-            describe('removeOne succeeds', () => {
-                test('removeOne of collection is called', (done) => {
+            describe('replaceOne succeeds', () => {
+                test('replaceOne of collection is called', (done) => {
                     repositoryPromise.then(() => {
-                        expect(successfulConnectionCollectionRemoveOneMock).toHaveBeenCalledWith({ userId: 'aaaa-bbb-ccc' });
+                        expect(successfulConnectionCollectionReplaceOneMock).toHaveBeenCalledWith(
+                            { itemId: 'abc' },
+                            { itemId: 'abc', abc: 'def' },
+                            { upsert: true }
+                        );
                         done();
                     });
                 });
             });
 
-            describe('removeOne fails', () => {
+            describe('replaceOne fails', () => {
                 beforeEach(() => {
-                    successfulConnectionCollectionRemoveOneMock = () => Promise.reject('remove failed');
+                    successfulConnectionCollectionReplaceOneMock = () => Promise.reject('replace failed');
                     repositoryPromise = repository({
                         itemId: 'abc'
                     });
@@ -111,7 +116,7 @@ describe('removeWishlistRepository', () => {
 
                 test('repository rejects', (done) => {
                     repositoryPromise.then().catch((error) => {
-                        expect(error).toBe('remove failed');
+                        expect(error).toBe('replace failed');
                         done();
                     });
                 });

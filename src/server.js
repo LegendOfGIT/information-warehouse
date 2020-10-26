@@ -1,8 +1,9 @@
-const queryInformationRepository = require('./queryInformationRepository');
-const removeInformationRepository = require('./removeInformationRepository');
+const queryInformationItems = require('./information/queryInformationItems');
+const queryInformationRepository = require('./information/repositories/queryInformationRepository');
+const queryVirtualInformationItemsRepository = require('./information/repositories/queryVirtualInformationItemsRepository');
 const getWishlistItemsRepository = require('./wishlist/getWishlistItemsRepository');
-const storeInformationRepository = require('./storeInformationRepository');
 const storeWishlistItemsRepository = require('./wishlist/storeWishlistItemsRepository');
+const storeInformationItem = require('./information/storeInformationItem');
 
 const fastify = require('fastify')({
     logger: true
@@ -28,27 +29,18 @@ fastify.get('/information-items', async(request, reply) => {
         query.navigationPath = navigationId
     }
 
-    queryInformationRepository(query)
+    queryInformationItems(query)
         .then(response => {
             reply.send({ errorMessage: '', items: response });
         })
         .catch(error => replyWithInternalError(reply, error, { items: [] }));
 });
-fastify.post('/information-item', async (request, reply) => {
-    reply.type('application/json').code(200);
-
-    storeInformationRepository(request.body)
-        .then(() => { reply.send({}); })
-        .catch(error => replyWithInternalError(reply, error));
-})
 fastify.put('/information-item', async (request, reply) => {
     reply.type('application/json').code(200);
 
-    removeInformationRepository(request.body)
+    storeInformationItem(request.body)
         .then(() => {
-            storeInformationRepository(request.body)
-                .then(() => { reply.send({}); })
-                .catch(error => reply.code(500).send({ errorMessage: error }));
+            reply.send({});
         })
         .catch(error => replyWithInternalError(reply, error));
 });
@@ -59,7 +51,7 @@ fastify.get('/wishlist-items', async (request, reply) => {
     const { userId } = request.query;
 
     getWishlistItemsRepository(userId).then((items) => {
-        queryInformationRepository({ itemId: { $in: items } }).then((informationItems) => {
+        queryVirtualInformationItemsRepository({ itemId: { $in: items } }).then((informationItems) => {
             reply.code(200).send(informationItems);
         }).catch((error) => replyWithInternalError(reply, error));
 
