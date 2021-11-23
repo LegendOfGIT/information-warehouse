@@ -72,7 +72,8 @@ describe('storeVirtualInformationItemRepository', () => {
                 connectMock = Promise.resolve(successfulConnectionMock);
                 repositoryPromise = repository({
                     ean: '111222333444555',
-                    abc: 'def'
+                    abc: 'def',
+                    navigationPath: ['IT', 'IS', 'HERE']
                 });
             });
 
@@ -98,7 +99,12 @@ describe('storeVirtualInformationItemRepository', () => {
                     repositoryPromise.then(() => {
                         expect(successfulConnectionCollectionReplaceOneMock).toHaveBeenCalledWith(
                             { ean: '111222333444555' },
-                            { ean: '111222333444555', abc: 'def' },
+                            {
+                                ean: '111222333444555',
+                                abc: 'def',
+                                itemId: 'IT-IS-HERE-111222333444555',
+                                navigationPath: ['IT', 'IS', 'HERE']
+                            },
                             { upsert: true }
                         );
                         done();
