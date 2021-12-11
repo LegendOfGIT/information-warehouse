@@ -13,6 +13,7 @@ module.exports = (userId, wishlistItems) => new Promise((resolve, reject) => {
 
     mongoClient.connect('mongodb://localhost:27017/wishlists')
         .then((database) => {
+
             const collection = database.db().collection('wishlist-items');
             collection.updateOne(
                 { userId },

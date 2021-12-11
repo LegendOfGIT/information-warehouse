@@ -4,6 +4,7 @@ const queryVirtualInformationItemsRepository = require('./information/repositori
 const getWishlistItemsRepository = require('./wishlist/getWishlistItemsRepository');
 const storeWishlistItemsRepository = require('./wishlist/storeWishlistItemsRepository');
 const storeInformationItem = require('./information/storeInformationItem');
+const addActivityRepository = require('./activities/repositories/addActivityRepository');
 
 const fastify = require('fastify')({
     logger: true
@@ -76,17 +77,18 @@ fastify.put('/wishlist-item', async (request, reply) => {
 
     const { itemId, userId } = request.body;
 
-    console.log(userId);
-
     getWishlistItemsRepository(userId).then((items) => {
-        console.log(items);
         items.push(itemId);
-        console.log(itemId);
-        console.log(items);
 
-        storeWishlistItemsRepository(userId, items)
-            .then(() => { reply.code(200).send({}); })
-            .catch(error => replyWithInternalError(reply, error));
+        addActivityRepository({
+            repository: storeWishlistItemsRepository,
+            activityId: 'add-to-wishlist',
+            userId,
+            items,
+            itemId
+        })
+        .then(() => { reply.code(200).send({}); })
+        .catch(error => replyWithInternalError(reply, error));
 
     }).catch((error) => replyWithInternalError(reply, error));
 });
