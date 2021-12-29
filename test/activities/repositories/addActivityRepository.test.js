@@ -41,19 +41,14 @@ describe('addActivityRepository', () => {
                     collection: () => ({
                         insertOne: () => Promise.resolve()
                     })
-                })
+                }),
+                close: jest.fn()
             });
         });
 
         test('repository connects to mongodb', (done) => {
             repository({
-                trackingArguments: {
-                    arg: 'uments'
-                },
-                repository: () => {},
-                repositoryArguments: {
-                    repo: 'arguments'
-                }
+                repository: jest.fn()
             }).then(() => {
                 expect(mongoClientMock.connect).toBeCalledWith(
                     'mongodb://localhost:27017/activities'
