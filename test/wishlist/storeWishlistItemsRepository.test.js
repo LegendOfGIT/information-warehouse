@@ -38,7 +38,7 @@ describe('storeWishlistItemsRepository', () => {
 
     describe('called without required arguments', () => {
         test('without userId rejects with a message', (done) => {
-            repository().then().catch((error) => {
+            repository({}).then().catch((error) => {
                 expect(error).toEqual('required userId is missing');
                 expect(consoleMock.log).toBeCalledWith(error);
                 expect(successfulConnectionCollectionUpdateOneMock).not.toHaveBeenCalled();
@@ -56,7 +56,10 @@ describe('storeWishlistItemsRepository', () => {
             });
 
             test('repository throws an error', (done) => {
-                repository('a', ['a']).then().catch((e) => {
+                repository({
+                    userId: 'a',
+                    wishlistItems: ['a']
+                }).then().catch((e) => {
                     expect(e).toBe(error);
                     done();
                 });
@@ -68,13 +71,13 @@ describe('storeWishlistItemsRepository', () => {
 
             beforeEach(() => {
                 connectMock = Promise.resolve(successfulConnectionMock);
-                repositoryPromise = repository(
-                    'aaaaa-bbb-ccc',
-                    [
+                repositoryPromise = repository({
+                    userId: 'aaaaa-bbb-ccc',
+                    wishlistItems: [
                         'abc',
                         'def'
                     ]
-                );
+                });
             });
 
             test('repository connects to mongodb', (done) => {
@@ -113,7 +116,10 @@ describe('storeWishlistItemsRepository', () => {
                 });
 
                 test('repository rejects', (done) => {
-                    repository('a', ['a']).then().catch((error) => {
+                    repository({
+                        userId: 'a',
+                        wishlistItems: ['a']
+                    }).then().catch((error) => {
                         expect(error).toBe('update failed');
                         done();
                     });

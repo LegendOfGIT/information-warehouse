@@ -81,11 +81,16 @@ fastify.put('/wishlist-item', async (request, reply) => {
         items.push(itemId);
 
         addActivityRepository({
+            trackingArguments: {
+                activityId: 'add-to-wishlist',
+                userId,
+                itemId
+            },
             repository: storeWishlistItemsRepository,
-            activityId: 'add-to-wishlist',
-            userId,
-            items,
-            itemId
+            repositoryArguments: {
+                userId,
+                wishlistItems: items
+            }
         })
         .then(() => { reply.code(200).send({}); })
         .catch(error => replyWithInternalError(reply, error));

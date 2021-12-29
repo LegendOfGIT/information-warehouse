@@ -1,6 +1,6 @@
 const mongoClient = require('mongodb').MongoClient;
 
-module.exports = (userId, wishlistItems) => new Promise((resolve, reject) => {
+module.exports = ({ userId, wishlistItems }) => new Promise((resolve, reject) => {
     wishlistItems = wishlistItems || [];
 
     let message = '';
