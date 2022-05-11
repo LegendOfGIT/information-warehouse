@@ -18,7 +18,7 @@ jest.doMock('mongodb', () => ({
     MongoClient: mongoClientMock
 }));
 
-const repository = require('../../src/wishlist/storeWishlistItemsRepository');
+const repository = require('../../../src/wishlist/repositories/storeWishlistItemsRepository');
 
 let consoleMock;
 
