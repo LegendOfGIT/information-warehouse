@@ -1,5 +1,5 @@
-const informationItemsController = require('./information/controllers/informationItemsController');
-const wishlistItemsController = require('./wishlist/controllers/wishlistItemsController');
+const informationItemsController = require('./information/controllers/informationItemsController')();
+const wishlistItemsController = require('./wishlist/controllers/wishlistItemsController')();
 
 const fastify = require('fastify')({
     logger: true
@@ -7,12 +7,12 @@ const fastify = require('fastify')({
 
 fastify.register(require('fastify-cors'), {});
 
-informationItemsController().registerGetInformationItems(fastify);
-informationItemsController().registerStoreInformationItem(fastify);
+informationItemsController.registerGetInformationItems(fastify);
+informationItemsController.registerStoreInformationItem(fastify);
 
-wishlistItemsController().registerGetWishlistItems(fastify);
-wishlistItemsController().registerStoreWishlistItem(fastify);
-wishlistItemsController().registerDeleteWishlistItem(fastify);
+wishlistItemsController.registerGetWishlistItems(fastify);
+wishlistItemsController.registerStoreWishlistItem(fastify);
+wishlistItemsController.registerDeleteWishlistItem(fastify);
 
 fastify.listen(3002, (err, address) => {
     if (err) throw err
