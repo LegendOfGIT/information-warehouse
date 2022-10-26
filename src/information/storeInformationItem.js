@@ -4,23 +4,28 @@ const storeVirtualInformationItemRepository = require('./repositories/storeVirtu
 
 module.exports = (informationItem) => new Promise((resolve, reject) => {
     storeInformationRepository(informationItem).then(() => {
-        const { ean } = informationItem;
-        if (!ean) {
+        const { asin, ean } = informationItem;
+        if (!asin && !ean) {
             resolve();
             return;
         }
 
-        queryVirtualInformationItemsRepository({ ean }).then((virtualItems) => {
-            const virtualItem = virtualItems.length > 0 ? virtualItems[0] : {
-                ean,
-                correspondingInformationItems : []
-            };
+        queryVirtualInformationItemsRepository(ean ? { ean } : { asin }).then((virtualItems) => {
+            const virtualItem = virtualItems.length > 0
+                ? virtualItems[0]
+                : {
+                    asin,
+                    ean,
+                    correspondingInformationItems : []
+                };
 
             let key = 'title';
             virtualItem[key] = virtualItem[key] || informationItem[key];
             key = 'title-image';
             virtualItem[key] = virtualItem[key] || informationItem[key];
             key = 'navigationPath';
+            virtualItem[key] = virtualItem[key] || informationItem[key];
+            key = 'updatedOn';
             virtualItem[key] = virtualItem[key] || informationItem[key];
 
             if (!virtualItem.correspondingInformationItems.includes(informationItem.itemId)) {

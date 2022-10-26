@@ -1,9 +1,7 @@
 const mongoClient = require('mongodb').MongoClient;
 
 module.exports = (informationItem) => new Promise((resolve, reject) => {
-    informationItem = informationItem || {};
-
-    if (!informationItem.itemId) {
+    if (!informationItem?.itemId) {
         console.log('required itemId is missing');
     }
 
