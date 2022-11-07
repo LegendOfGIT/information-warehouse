@@ -33,7 +33,7 @@ module.exports = () => ({
                 }, () => {});
             }
 
-            queryInformationItems(query)
+            await queryInformationItems(query)
                 .then(response => {
                     reply.send({ errorMessage: '', items: response });
                 })

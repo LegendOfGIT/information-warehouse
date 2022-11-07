@@ -21,10 +21,11 @@ module.exports = () => ({
 
             const { userId } = request.query;
 
-            getWishlistItemsRepository(userId).then((items) => {
-                queryVirtualInformationItemsRepository({ itemId: { $in: items } }).then((informationItems) => {
-                    reply.code(200).send(informationItems);
-                }).catch((error) => replyWithInternalError(reply, error));
+            await getWishlistItemsRepository(userId).then(async (items) => {
+                await queryVirtualInformationItemsRepository({ itemId: { $in: items } })
+                    .then((informationItems) => {
+                        reply.code(200).send(informationItems);
+                    }).catch((error) => replyWithInternalError(reply, error));
 
             }).catch((error) => replyWithInternalError(reply, error));
         });
