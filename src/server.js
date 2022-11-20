@@ -13,6 +13,7 @@ informationItemsController.registerStoreInformationItem(fastify);
 
 searchProfilesController.registerGetSearchProfiles(fastify);
 searchProfilesController.registerStoreSearchProfile(fastify);
+searchProfilesController.registerRemoveSearchProfile(fastify);
 
 wishlistItemsController.registerGetWishlistItems(fastify);
 wishlistItemsController.registerStoreWishlistItem(fastify);

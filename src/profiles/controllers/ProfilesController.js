@@ -1,5 +1,6 @@
 const getSearchProfilesRepository = require('../repositories/getSearchProfilesRepository');
 const storeSearchProfilesRepository = require('../repositories/storeSearchProfilesRepository');
+const removeSearchProfilesRepository = require('../repositories/removeSearchProfilesRepository');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -27,6 +28,18 @@ module.exports = () => ({
             const { searchProfile, userId } = request.body;
 
             storeSearchProfilesRepository(userId, searchProfile)
+                .then(() => { reply.code(200).send({}); })
+                .catch(error => replyWithInternalError(reply, error));
+
+        });
+    },
+    registerRemoveSearchProfile: (fastify) => {
+        fastify.delete('/api/search-profile', async (request, reply) => {
+            reply.type('application/json');
+
+            const { userId, searchProfileId } = request.query;
+
+            await removeSearchProfilesRepository(userId, searchProfileId)
                 .then(() => { reply.code(200).send({}); })
                 .catch(error => replyWithInternalError(reply, error));
 

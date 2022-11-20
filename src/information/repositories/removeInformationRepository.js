@@ -10,7 +10,7 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
     mongoClient.connect('mongodb://localhost:27017/information-items')
         .then((database) => {
             const collection = database.db().collection('items');
-            collection.removeOne({ itemId: informationItem.itemId})
+            collection.removeOne({ itemId: informationItem.itemId })
                 .then(response => {
                     resolve(response);
                 })
