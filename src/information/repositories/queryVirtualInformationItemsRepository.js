@@ -5,6 +5,7 @@ module.exports = (query) => new Promise((resolve, reject) => {
         .then(database => {
             if(!database) {
                 resolve([]);
+                return;
             }
 
             database.db().collection('virtual-items').find(query).sort({ updatedOn: -1 }).toArray()

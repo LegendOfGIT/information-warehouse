@@ -37,11 +37,11 @@ module.exports = () => ({
 
             const { itemId, userId } = request.body;
 
-            getWishlistItemsRepository(userId).then((items) => {
+            await getWishlistItemsRepository(userId).then(async (items) => {
                 items.push(itemId);
 
-                storeWishlistItemsRepository(userId, items)
-                    .then(() => { reply.code(200).send({}); })
+                await storeWishlistItemsRepository(userId, items)
+                    .then(async () => { reply.code(200).send({}); })
                     .catch(error => replyWithInternalError(reply, error));
 
             }).catch((error) => replyWithInternalError(reply, error));
@@ -54,11 +54,11 @@ module.exports = () => ({
 
             const { itemId, userId } = request.query;
 
-            getWishlistItemsRepository(userId).then((items) => {
+            await getWishlistItemsRepository(userId).then(async (items) => {
                 items = items.filter((itemIdFromWishlist) => itemIdFromWishlist !== itemId);
 
-                storeWishlistItemsRepository(userId, items)
-                    .then(() => { reply.code(200).send({}); })
+                await storeWishlistItemsRepository(userId, items)
+                    .then(async () => { reply.code(200).send({}); })
                     .catch(error => replyWithInternalError(reply, error));
 
             }).catch((error) => replyWithInternalError(reply, error));

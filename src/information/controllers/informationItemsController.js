@@ -1,5 +1,6 @@
 const queryInformationItems = require('../queryInformationItems');
 const storeInformationItem = require('../storeInformationItem');
+const storeInformationItemScoring = require('../repositories/storeInformationScoringRepository');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -16,7 +17,7 @@ module.exports = () => ({
         fastify.get('/api/information-items', async(request, reply) => {
             reply.type('application/json').code(200);
 
-            const { navigationId, searchPattern } = request.query;
+            const { navigationId, searchPattern, searchProfileId } = request.query;
 
             const query = {};
             if (searchPattern) {
@@ -35,6 +36,20 @@ module.exports = () => ({
 
             await queryInformationItems(query)
                 .then(response => {
+                    response = response.sort((a,b) => {
+                        let scoringA = 0;
+                        let scoringB = 0;
+
+                        if (a.scoring) {
+                            scoringA = a.scoring[searchProfileId || ''] || 0;
+                        }
+                        if (b.scoring) {
+                            scoringB = b.scoring[searchProfileId || ''] || 0;
+                        }
+
+                        return scoringB - scoringA;
+                    });
+
                     reply.send({ errorMessage: '', items: response });
                 })
                 .catch(error => replyWithInternalError(reply, error, { items: [] }));
@@ -47,6 +62,18 @@ module.exports = () => ({
 
             storeInformationItem(request.body)
                 .then(() => {
+                    reply.send({});
+                })
+                .catch(error => replyWithInternalError(reply, error));
+        });
+    },
+
+    registerStoreInformationItemScoring: (fastify) => {
+        fastify.put('/api/information-item/scoring', async (request, reply) => {
+            reply.type('application/json').code(200);
+
+            await storeInformationItemScoring(request.body)
+                .then(async () => {
                     reply.send({});
                 })
                 .catch(error => replyWithInternalError(reply, error));

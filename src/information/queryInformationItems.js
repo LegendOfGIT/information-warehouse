@@ -8,7 +8,6 @@ module.exports = (query) => new Promise((resolve, reject) => {
             const items = virtualItems.map((virtualItem) => {
                 const correspondingInformationItems = virtualItem.correspondingInformationItems.map((correspondingInformationItem) => {
                     const informationItem = informationItems.find((item) => item.itemId === correspondingInformationItem);
-                    console.log(correspondingInformationItem);
                     if (informationItem) {
                         const propertyKeys = [ 'itemId', 'link', 'price-current', 'price-initial', 'title-image' ]
 
