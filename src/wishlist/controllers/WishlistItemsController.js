@@ -1,5 +1,5 @@
 const storeInformationItem = require('../../information/storeInformationItem');
-const queryVirtualInformationItemsRepository = require('../../information/repositories/queryVirtualInformationItemsRepository');
+const queryInformationRepository = require('../../information/repositories/queryInformationRepository');
 const getWishlistItemsRepository = require('../repositories/getWishlistItemsRepository');
 const storeWishlistItemsRepository = require('../repositories/storeWishlistItemsRepository');
 
@@ -22,7 +22,7 @@ module.exports = () => ({
             const { userId } = request.query;
 
             await getWishlistItemsRepository(userId).then(async (items) => {
-                await queryVirtualInformationItemsRepository({ itemId: { $in: items } })
+                await queryInformationRepository({ itemId: { $in: items } })
                     .then((informationItems) => {
                         reply.code(200).send(informationItems);
                     }).catch((error) => replyWithInternalError(reply, error));

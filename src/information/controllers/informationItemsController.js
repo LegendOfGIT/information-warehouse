@@ -1,6 +1,9 @@
+const requestModule = require('request');
+
 const queryInformationItems = require('../queryInformationItems');
 const storeInformationItem = require('../storeInformationItem');
 const storeInformationItemScoring = require('../repositories/storeInformationScoringRepository');
+const observeConfiguration = require('../../configuration/observe-configuration');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -34,22 +37,8 @@ module.exports = () => ({
                 }, () => {});
             }
 
-            await queryInformationItems(query)
+            await queryInformationItems(query, searchProfileId)
                 .then(response => {
-                    response = response.sort((a,b) => {
-                        let scoringA = 0;
-                        let scoringB = 0;
-
-                        if (a.scoring) {
-                            scoringA = a.scoring[searchProfileId || ''] || 0;
-                        }
-                        if (b.scoring) {
-                            scoringB = b.scoring[searchProfileId || ''] || 0;
-                        }
-
-                        return scoringB - scoringA;
-                    });
-
                     reply.send({ errorMessage: '', items: response });
                 })
                 .catch(error => replyWithInternalError(reply, error, { items: [] }));
@@ -60,7 +49,7 @@ module.exports = () => ({
         fastify.put('/api/information-item', async (request, reply) => {
             reply.type('application/json').code(200);
 
-            storeInformationItem(request.body)
+            await storeInformationItem(request.body)
                 .then(() => {
                     reply.send({});
                 })

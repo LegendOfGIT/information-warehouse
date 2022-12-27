@@ -1,29 +1,22 @@
+const requestModule = require('request');
+
 const queryInformation = require('./repositories/queryInformationRepository')
-const queryVirtualInformationItemsRepository = require('./repositories/queryVirtualInformationItemsRepository');
 
-module.exports = (query) => new Promise((resolve, reject) => {
-    queryVirtualInformationItemsRepository(query).then((virtualItems) => {
-        const informationItemIds = virtualItems.map((virtualItem) => virtualItem.correspondingInformationItems).flat();
-        queryInformation({ itemId: { $in: informationItemIds } }).then((informationItems) => {
-            const items = virtualItems.map((virtualItem) => {
-                const correspondingInformationItems = virtualItem.correspondingInformationItems.map((correspondingInformationItem) => {
-                    const informationItem = informationItems.find((item) => item.itemId === correspondingInformationItem);
-                    if (informationItem) {
-                        const propertyKeys = [ 'itemId', 'link', 'price-current', 'price-initial', 'title-image' ]
-
-                        const correspondingInformationItem = {};
-                        propertyKeys.forEach((propertyKey) => {
-                            correspondingInformationItem[propertyKey] = informationItem[propertyKey];
-                        });
-                        return correspondingInformationItem;
-                    }
-                });
-
-                virtualItem.correspondingInformationItems = correspondingInformationItems;
-                return virtualItem;
-            });
-
-            resolve(items);
-        }).catch((error) => { reject(error); })
+module.exports = (query, searchProfileId) => new Promise((resolve, reject) => {
+    queryInformation(query).then((items) => {
+        const informationItem = items && items.length ? items[0] : {};
+        const navigationId = informationItem.navigationPath && informationItem.navigationPath.length ? informationItem.navigationPath[1] : '';
+        const modelId = navigationId ? `${searchProfileId}-${navigationId}` : '';
+        console.log('modelId:' + modelId);
+        if (modelId) {
+            requestModule.post(
+                'http://localhost:3003/api/give-predictions?navigationId=' + navigationId + '&modelId=' + modelId,
+                { json: items },
+                (err, res, itemsWithPredictions) => {
+                    resolve(err ? items : itemsWithPredictions);
+                }
+            );
+        }
+        else { resolve(items); }
     }).catch((error) => { reject(error); })
 });

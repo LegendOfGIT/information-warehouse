@@ -8,6 +8,7 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
     mongoClient.connect('mongodb://localhost:27017/information-items')
         .then((database) => {
             const collection = database.db().collection('items');
+            console.log(informationItem);
             collection.replaceOne(
                 { itemId: informationItem.itemId },
                 informationItem,
