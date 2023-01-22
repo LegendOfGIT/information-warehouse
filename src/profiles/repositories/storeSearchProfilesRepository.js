@@ -1,3 +1,4 @@
+const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
 module.exports = (userId, searchProfile) => new Promise((resolve, reject) => {
@@ -10,7 +11,7 @@ module.exports = (userId, searchProfile) => new Promise((resolve, reject) => {
     }
 
     const id = userId + searchProfile.id;
-    mongoClient.connect('mongodb://localhost:27017/profiles')
+    mongoClient.connect(`mongodb://${configuration.host}:${configuration.port}/profiles`)
         .then((database) => {
             const collection = database.db().collection('searchProfiles');
             collection.updateOne(

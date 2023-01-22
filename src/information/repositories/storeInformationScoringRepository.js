@@ -1,3 +1,4 @@
+const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
 module.exports = (informationItemScoring) => new Promise((resolve, reject) => {
@@ -19,7 +20,7 @@ module.exports = (informationItemScoring) => new Promise((resolve, reject) => {
         return;
     }
 
-    mongoClient.connect('mongodb://localhost:27017/information-items')
+    mongoClient.connect(`mongodb://${configuration.host}:${configuration.port}/information-items`)
         .then((database) => {
             const collection = database.db().collection('virtual-items');
 

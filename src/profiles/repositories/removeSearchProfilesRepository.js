@@ -1,3 +1,4 @@
+const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
 module.exports = (userId, searchProfileId) => new Promise((resolve, reject) => {
@@ -13,7 +14,7 @@ module.exports = (userId, searchProfileId) => new Promise((resolve, reject) => {
         return;
     }
 
-    mongoClient.connect('mongodb://localhost:27017/profiles')
+    mongoClient.connect(`mongodb://${configuration.host}:${configuration.port}/profiles`)
         .then((database) => {
             const collection = database.db().collection('searchProfiles');
             collection.removeOne({ id: userId + searchProfileId })

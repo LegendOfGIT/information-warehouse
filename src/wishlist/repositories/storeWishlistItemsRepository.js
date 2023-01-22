@@ -1,3 +1,4 @@
+const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
 module.exports = (userId, wishlistItems) => new Promise((resolve, reject) => {
@@ -11,7 +12,7 @@ module.exports = (userId, wishlistItems) => new Promise((resolve, reject) => {
         return;
     }
 
-    mongoClient.connect('mongodb://localhost:27017/wishlists')
+    mongoClient.connect(`mongodb://${configuration.host}:${configuration.port}/wishlists`)
         .then((database) => {
             const collection = database.db().collection('wishlist-items');
             collection.updateOne(
