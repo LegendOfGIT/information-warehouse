@@ -2,7 +2,7 @@ const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
 module.exports = (userId) => new Promise(async (resolve, reject) => {
-    mongoClient.connect(`mongodb://${configuration.host}:${configuration.port}/profiles`)
+    mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/profiles`)
         .then(database => {
             if(!database) {
                 resolve([]);
