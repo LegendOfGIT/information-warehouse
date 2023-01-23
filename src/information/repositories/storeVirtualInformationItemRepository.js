@@ -11,7 +11,7 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
 
     informationItem.itemId = `${(informationItem.navigationPath  || []).join('-')}-${ean || asin}`;
 
-    mongoClient.connect(`mongodb://${configuration.host}:${configuration.port}/information-items`)
+    mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
         .then((database) => {
             const collection = database.db().collection('virtual-items');
             collection.replaceOne(
