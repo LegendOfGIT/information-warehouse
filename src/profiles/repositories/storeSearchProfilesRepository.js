@@ -11,7 +11,7 @@ module.exports = (userId, searchProfile) => new Promise((resolve, reject) => {
     }
 
     const id = userId + searchProfile.id;
-    mongoClient.connect(`mongodb://${configuration.host}:${configuration.port}/profiles`)
+    mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/profiles`)
         .then((database) => {
             const collection = database.db().collection('searchProfiles');
             collection.updateOne(
