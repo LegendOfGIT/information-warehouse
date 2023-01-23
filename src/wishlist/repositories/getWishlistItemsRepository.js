@@ -2,7 +2,7 @@ const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
 module.exports = (userId) => new Promise((resolve, reject) => {
-    mongoClient.connect(`mongodb://${configuration.host}:${configuration.port}/wishlists`)
+    mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/wishlists`)
         .then(database => {
             if(!database) {
                 resolve([]);
