@@ -14,7 +14,7 @@ module.exports = (userId, searchProfileId) => new Promise((resolve, reject) => {
         return;
     }
 
-    mongoClient.connect(`mongodb://${configuration.host}:${configuration.port}/profiles`)
+    mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/profiles`)
         .then((database) => {
             const collection = database.db().collection('searchProfiles');
             collection.removeOne({ id: userId + searchProfileId })
