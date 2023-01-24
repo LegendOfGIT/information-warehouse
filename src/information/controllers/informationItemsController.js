@@ -1,3 +1,4 @@
+const requestModule = require('request');
 const configuration = require('../../configuration/app-config')();
 const queryInformationItems = require('../queryInformationItems');
 const storeInformationItem = require('../storeInformationItem');
