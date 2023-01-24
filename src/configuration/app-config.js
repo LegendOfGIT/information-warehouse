@@ -9,6 +9,11 @@ module.exports =
                 database: {
                     host: 'localhost',
                     port: 27017
+                },
+                services: {
+                    satelliteController: {
+                        host: 'satellite-controller'
+                    }
                 }
             },
             production: {
@@ -18,6 +23,11 @@ module.exports =
                 database: {
                     host: 'warehouse-database',
                     port: 27017
+                },
+                services: {
+                    satelliteController: {
+                        host: '127.0.0.1'
+                    }
                 }
             }
         }

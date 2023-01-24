@@ -1,3 +1,4 @@
+const configuration = require('../../configuration/app-config')();
 const queryInformationItems = require('../queryInformationItems');
 const storeInformationItem = require('../storeInformationItem');
 const storeInformationItemScoring = require('../repositories/storeInformationScoringRepository');
@@ -29,7 +30,7 @@ module.exports = () => ({
 
                 const categoryId = observeConfiguration.getCategoryIdByNavigationId(navigationId);
                 requestModule.post({
-                    url: 'http://localhost:3001/observe-category',
+                    url: `http://${configuration.services.satelliteController.host}:3001/observe-category`,
                     json: { 'category-id': categoryId }
                 }, () => {});
             }
