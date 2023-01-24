@@ -2,7 +2,7 @@ const configuration = require('../../configuration/app-config')();
 const queryInformationItems = require('../queryInformationItems');
 const storeInformationItem = require('../storeInformationItem');
 const storeInformationItemScoring = require('../repositories/storeInformationScoringRepository');
-const observeConfiguration = require('../../observe-configuration');
+const observeConfiguration = require('../../configuration/observe-configuration');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
