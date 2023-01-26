@@ -22,7 +22,7 @@ module.exports = (informationItemScoring) => new Promise((resolve, reject) => {
 
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
         .then((database) => {
-            const collection = database.db().collection('virtual-items');
+            const collection = database.db().collection('items');
 
             collection.findOne({ itemId: informationItemScoring.itemId })
                 .then(informationItem => {

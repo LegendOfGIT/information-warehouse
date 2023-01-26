@@ -1,46 +1,53 @@
 const storeInformationRepository = require('./repositories/storeInformationRepository');
-const queryVirtualInformationItemsRepository = require('./repositories/queryVirtualInformationItemsRepository');
-const storeVirtualInformationItemRepository = require('./repositories/storeVirtualInformationItemRepository');
+const queryInformationRepository = require('./repositories/queryInformationRepository');
 
-module.exports = (informationItem) => new Promise((resolve, reject) => {
-    storeInformationRepository(informationItem).then(() => {
-        const { asin, ean } = informationItem;
-        if (!asin && !ean) {
-            resolve();
+const getItemIdFromInformationItem = (item) => {
+    return `${(item.navigationPath  || []).join('-')}-${item.ean || item.asin}`;
+};
+
+const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
+    const providerSpecificProperties = ['itemId', 'link', 'price-current', 'price-initial', 'updatedOn'];
+
+    const itemToStore = {}
+    Object.keys(scrapedItem).forEach(propertyKey => {
+        if (providerSpecificProperties.includes(propertyKey)) {
             return;
         }
 
-        queryVirtualInformationItemsRepository(ean ? { ean } : { asin }).then((virtualItems) => {
-            const virtualItem = virtualItems.length > 0
-                ? virtualItems[0]
-                : {
-                    asin,
-                    ean,
-                    correspondingInformationItems : []
-                };
-
-            let key = 'title';
-            virtualItem[key] = virtualItem[key] || informationItem[key];
-            key = 'title-image';
-            virtualItem[key] = virtualItem[key] || informationItem[key];
-            key = 'navigationPath';
-            virtualItem[key] = virtualItem[key] || informationItem[key];
-            key = 'updatedOn';
-            virtualItem[key] = virtualItem[key] || informationItem[key];
-
-            if (!virtualItem.correspondingInformationItems.includes(informationItem.itemId)) {
-                virtualItem.correspondingInformationItems.push(informationItem.itemId)
-            }
-
-            storeVirtualInformationItemRepository(virtualItem).then(() => {
-                resolve();
-            }).catch((error) => { reject(error); })
-
-        }).catch((error) => {
-            reject(error);
-        })
-
-    }).catch((error) => {
-        reject(error);
+        itemToStore[propertyKey] = scrapedItem[propertyKey];
     });
+
+    const providerItemToStore = {};
+    Object.keys(scrapedItem).forEach(propertyKey => {
+        if (!providerSpecificProperties.includes(propertyKey)) {
+            return;
+        }
+
+        providerItemToStore[propertyKey] = scrapedItem[propertyKey];
+    });
+
+    storedItem = storedItem || { itemId: getItemIdFromInformationItem(scrapedItem) };
+    let providers = storedItem.providers || [];
+    providers = providers.filter(provider => provider.itemId != providerItemToStore.itemId);
+    providers.push(providerItemToStore);
+
+    return {
+        ...storedItem,
+        ...itemToStore,
+        providers
+    };
+};
+
+module.exports = (informationItem) => new Promise((resolve, reject) => {
+    queryInformationRepository({ itemId: getItemIdFromInformationItem(informationItem) })
+        .then((storedItems) => {
+            const itemToStore = itemToStoreFromScrapedItem(storedItems.length ? storedItems[0] : undefined, informationItem);
+            storeInformationRepository(itemToStore)
+                .then(() => {})
+                .finally(() => {
+                    resolve();
+                    return;
+                });
+        })
+        .catch((error) => { reject(error); })
 });
