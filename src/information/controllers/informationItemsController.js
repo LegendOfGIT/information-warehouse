@@ -63,7 +63,7 @@ module.exports = () => ({
         fastify.put('/api/information-item', async (request, reply) => {
             reply.type('application/json').code(200);
 
-            storeInformationItem(request.body)
+            await storeInformationItem(request.body)
                 .then(() => {
                     reply.send({});
                 })

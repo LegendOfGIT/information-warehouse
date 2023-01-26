@@ -12,7 +12,7 @@ module.exports =
                 },
                 services: {
                     satelliteController: {
-                        host: 'satellite-controller'
+                        host: 'localhost'
                     }
                 }
             },
