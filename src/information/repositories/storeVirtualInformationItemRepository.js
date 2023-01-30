@@ -4,18 +4,18 @@ const mongoClient = require('mongodb').MongoClient;
 module.exports = (informationItem) => new Promise((resolve, reject) => {
     informationItem = informationItem || {};
 
-    const { asin, ean } = informationItem;
-    if (!asin && !ean) {
-        console.log('required article-id (asin or ean) is missing');
+    const { asin, gtin } = informationItem;
+    if (!asin && !gtin) {
+        console.log('required article-id (asin or gtin) is missing');
     }
 
-    informationItem.itemId = `${(informationItem.navigationPath  || []).join('-')}-${ean || asin}`;
+    informationItem.itemId = `${(informationItem.navigationPath  || []).join('-')}-${gtin || asin}`;
 
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
         .then((database) => {
             const collection = database.db().collection('virtual-items');
             collection.replaceOne(
-                ean ? { ean } : { asin },
+                gtin ? { gtin } : { asin },
                 informationItem,
                 { upsert: true }
             )

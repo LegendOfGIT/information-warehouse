@@ -2,7 +2,7 @@ const storeInformationRepository = require('./repositories/storeInformationRepos
 const queryInformationRepository = require('./repositories/queryInformationRepository');
 
 const getItemIdFromInformationItem = (item) => {
-    return `${(item.navigationPath  || []).join('-')}-${item.ean || item.asin}`;
+    return `${(item.navigationPath  || []).join('-')}-${item.gtin || item.asin}`;
 };
 
 const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
@@ -28,7 +28,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
 
     storedItem = storedItem || { itemId: getItemIdFromInformationItem(scrapedItem) };
     let providers = storedItem.providers || [];
-    providers = providers.filter(provider => provider.itemId != providerItemToStore.itemId);
+    providers = providers.filter(provider => provider.itemId !== providerItemToStore.itemId);
     providers.push(providerItemToStore);
 
     return {
@@ -46,7 +46,6 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
                 .then(() => {})
                 .finally(() => {
                     resolve();
-                    return;
                 });
         })
         .catch((error) => { reject(error); })
