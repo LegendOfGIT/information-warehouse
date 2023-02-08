@@ -11,7 +11,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
 
     const itemToStore = {}
     Object.keys(scrapedItem).forEach(propertyKey => {
-        if (providerSpecificProperties.includes(propertyKey)) {
+        if (!providerAndItemSpecificProperties.includes(propertyKey) && providerSpecificProperties.includes(propertyKey)) {
             return;
         }
 
@@ -20,7 +20,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
 
     const providerItemToStore = {};
     Object.keys(scrapedItem).forEach(propertyKey => {
-        if (!providerSpecificProperties.includes(propertyKey) && !providerAndItemSpecificProperties.includes(propertyKey)) {
+        if (!providerSpecificProperties.includes(propertyKey)) {
             return;
         }
 
