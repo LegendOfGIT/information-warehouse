@@ -11,11 +11,18 @@ const HTTP_STATUS_CODE_OK = 200;
 const ONE_MINUTE_IN_MILLISECONDS = 60000;
 const SIX_HOURS_IN_SECONDS = 21600;
 
+setTimeout(
+    () => {
+        observeCategory(observeConfiguration.getRandomCategoryId());
+        observeCategory(observeConfiguration.getRandomCategoryId());
+    },
+    ONE_MINUTE_IN_MILLISECONDS
+)
 setInterval(
     () => {
         observeCategory(observeConfiguration.getRandomCategoryId());
         observeCategory(observeConfiguration.getRandomCategoryId());
-    }, (ONE_MINUTE_IN_MILLISECONDS + (ONE_MINUTE_IN_MILLISECONDS * SIX_HOURS_IN_SECONDS))
+    }, (ONE_MINUTE_IN_MILLISECONDS * SIX_HOURS_IN_SECONDS)
 );
 
 const replyWithInternalError = (reply, errorMessage, additionalInformation) => {
