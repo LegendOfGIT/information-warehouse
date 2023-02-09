@@ -8,11 +8,26 @@ const observeConfiguration = require('../../configuration/observe-configuration'
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
 
-const replyWithInternalError = (reply, errorMessage, additionalInformation) => {
+const ONE_MINUTE_IN_MILLISECONDS = 60000;
+const SIX_HOURS_IN_SECONDS = 21600;
 
+setInterval(
+    () => {
+        observeCategory(observeConfiguration.getRandomCategoryId());
+        observeCategory(observeConfiguration.getRandomCategoryId());
+    }, (ONE_MINUTE_IN_MILLISECONDS + (ONE_MINUTE_IN_MILLISECONDS * SIX_HOURS_IN_SECONDS))
+);
+
+const replyWithInternalError = (reply, errorMessage, additionalInformation) => {
     reply.code(HTTP_STATUS_CODE_INTERNAL_ERROR);
     return reply.send(Object.assign({ errorMessage }, additionalInformation));
+};
 
+const observeCategory = (categoryId) => {
+    requestModule.post({
+        url: `http://${configuration.services.satelliteController.host}:3001/observe-category`,
+        json: { 'category-id': categoryId }
+    }, () => {});
 };
 
 module.exports = () => ({
@@ -29,12 +44,7 @@ module.exports = () => ({
 
             if (navigationId) {
                 query.navigationPath = navigationId;
-
-                const categoryId = observeConfiguration.getCategoryIdByNavigationId(navigationId);
-                requestModule.post({
-                    url: `http://${configuration.services.satelliteController.host}:3001/observe-category`,
-                    json: { 'category-id': categoryId }
-                }, () => {});
+                observeCategory(observeConfiguration.getCategoryIdByNavigationId(navigationId));
             }
 
             await queryInformationItems(query)
