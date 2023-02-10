@@ -9,11 +9,10 @@ const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
 
 const ONE_MINUTE_IN_MILLISECONDS = 60000;
-const SIX_HOURS_IN_SECONDS = 21600;
+const ONE_HOUR_IN_SECONDS = 3600;
 
 setTimeout(
     () => {
-        observeCategory(observeConfiguration.getRandomCategoryId());
         observeCategory(observeConfiguration.getRandomCategoryId());
     },
     ONE_MINUTE_IN_MILLISECONDS
@@ -21,8 +20,7 @@ setTimeout(
 setInterval(
     () => {
         observeCategory(observeConfiguration.getRandomCategoryId());
-        observeCategory(observeConfiguration.getRandomCategoryId());
-    }, (ONE_MINUTE_IN_MILLISECONDS * SIX_HOURS_IN_SECONDS)
+    }, (ONE_MINUTE_IN_MILLISECONDS * ONE_HOUR_IN_SECONDS)
 );
 
 const replyWithInternalError = (reply, errorMessage, additionalInformation) => {
