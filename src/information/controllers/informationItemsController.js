@@ -13,14 +13,16 @@ const ONE_HOUR_IN_SECONDS = 3600;
 
 setTimeout(
     () => {
-        observeCategory(observeConfiguration.getRandomCategoryId());
+        //observeCategory(observeConfiguration.getRandomCategoryId());
+        console.log('observe: ' + observeConfiguration.getRandomCategoryId());
     },
     ONE_MINUTE_IN_MILLISECONDS
-)
+);
 setInterval(
     () => {
-        observeCategory(observeConfiguration.getRandomCategoryId());
-    }, (ONE_MINUTE_IN_MILLISECONDS * ONE_HOUR_IN_SECONDS)
+        //observeCategory(observeConfiguration.getRandomCategoryId());
+        console.log('observe: ' + observeConfiguration.getRandomCategoryId());
+    }, (ONE_MINUTE_IN_MILLISECONDS)
 );
 
 const replyWithInternalError = (reply, errorMessage, additionalInformation) => {
