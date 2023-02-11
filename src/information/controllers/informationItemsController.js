@@ -13,16 +13,14 @@ const ONE_HOUR_IN_SECONDS = 3600;
 
 setTimeout(
     () => {
-        //observeCategory(observeConfiguration.getRandomCategoryId());
-        console.log('observe: ' + observeConfiguration.getRandomCategoryId());
+        observeConfiguration.getRandomCategoryIds().forEach(categoryId => observeCategory(categoryId));
     },
     ONE_MINUTE_IN_MILLISECONDS
 );
 setInterval(
     () => {
-        //observeCategory(observeConfiguration.getRandomCategoryId());
-        console.log('observe: ' + observeConfiguration.getRandomCategoryId());
-    }, (ONE_MINUTE_IN_MILLISECONDS)
+        observeConfiguration.getRandomCategoryIds().forEach(categoryId => observeCategory(categoryId));
+    }, (3 * ONE_HOUR_IN_SECONDS * ONE_MINUTE_IN_MILLISECONDS)
 );
 
 const replyWithInternalError = (reply, errorMessage, additionalInformation) => {
@@ -51,7 +49,7 @@ module.exports = () => ({
 
             if (navigationId) {
                 query.navigationPath = navigationId;
-                observeCategory(observeConfiguration.getCategoryIdByNavigationId(navigationId));
+                observeConfiguration.getCategoryIdsByNavigationId(navigationId).forEach(categoryId => observeCategory(categoryId));
             }
 
             await queryInformationItems(query)
