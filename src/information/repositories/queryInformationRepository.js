@@ -2,8 +2,6 @@ const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
 module.exports = (query) => new Promise((resolve, reject) => {
-    console.log(configuration);
-
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
         .then(database => {
             if(!database) {
