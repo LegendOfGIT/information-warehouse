@@ -1,4 +1,5 @@
 const requestModule = require('request');
+const cron = require('node-cron');
 const configuration = require('../../configuration/app-config')();
 const queryInformationItems = require('../queryInformationItems');
 const storeInformationItem = require('../storeInformationItem');
@@ -17,10 +18,10 @@ setTimeout(
     },
     ONE_MINUTE_IN_MILLISECONDS
 );
-setInterval(
+cron.schedule('0 */3 * * *',
     () => {
         observeConfiguration.getRandomCategoryIds().forEach(categoryId => observeCategory(categoryId));
-    }, (3 * ONE_HOUR_IN_SECONDS * ONE_MINUTE_IN_MILLISECONDS)
+    }
 );
 
 const replyWithInternalError = (reply, errorMessage, additionalInformation) => {
