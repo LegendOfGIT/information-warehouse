@@ -2,7 +2,7 @@ const storeInformationRepository = require('./repositories/storeInformationRepos
 const queryInformationRepository = require('./repositories/queryInformationRepository');
 
 const getItemIdFromInformationItem = (item) => {
-    return `${(item.navigationPath  || []).join('-')}-${item.gtin || item.asin}`;
+    return `${(item.navigationPath  || []).join('-')}-${item.gtin || item.asin || item.ean}`;
 };
 
 const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
