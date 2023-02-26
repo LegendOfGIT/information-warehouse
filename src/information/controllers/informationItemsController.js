@@ -9,15 +9,6 @@ const observeConfiguration = require('../../configuration/observe-configuration'
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
 
-const ONE_MINUTE_IN_MILLISECONDS = 60000;
-const ONE_HOUR_IN_SECONDS = 3600;
-
-setTimeout(
-    () => {
-        observeConfiguration.getRandomCategoryIds().forEach(categoryId => observeCategory(categoryId));
-    },
-    ONE_MINUTE_IN_MILLISECONDS
-);
 cron.schedule('0 */3 * * *',
     () => {
         observeConfiguration.getRandomCategoryIds().forEach(categoryId => observeCategory(categoryId));
