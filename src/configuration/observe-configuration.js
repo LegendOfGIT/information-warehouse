@@ -6,7 +6,7 @@ const CATEGORY_MAPPING = {
     MULTIMEDIA_GAMES_PC: 'pc-games',
     MULTIMEDIA_GAMES_PLAYSTATION_4: 'playstation-4-games',
     MULTIMEDIA_GAMES_PLAYSTATION_5: 'playstation-5-games',
-    MUSIC_CD_GERMANFOLK: 'german-folk-music'
+    MUSIC: 'german-folk-music'
 };
 
 module.exports = {
