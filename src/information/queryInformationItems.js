@@ -3,7 +3,7 @@ const queryInformation = require('./repositories/queryInformationRepository');
 
 module.exports = (query) => new Promise((resolve, reject) => {
     queryInformation(query).then((items) => {
-        items = (items || []).map(item => {
+        items = (items || []).filter(item => item['title-image']).map(item => {
             (item.providers || []).forEach(provider => {
                 provider.link = `${provider.link}${getCampaignParameterByUrl(provider.link)}`;
             });
