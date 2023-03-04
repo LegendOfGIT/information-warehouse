@@ -9,7 +9,7 @@ module.exports = (query, numberOfResults) => new Promise((resolve, reject) => {
                 resolve([]);
             }
 
-            database.db().collection('items').find(query).sort({ updatedOn: -1 }).toArray()
+            database.db().collection('items').find(query).limit(numberOfResults).sort({ updatedOn: -1 }).toArray()
                 .then((result) => {
                     resolve(result);
                 })

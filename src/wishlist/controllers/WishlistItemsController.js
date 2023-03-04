@@ -22,7 +22,7 @@ module.exports = () => ({
             const { userId } = request.query;
 
             await getWishlistItemsRepository(userId).then(async (items) => {
-                await queryInformationRepository({ itemId: { $in: items } })
+                await queryInformationRepository({ itemId: { $in: items } }, 0)
                     .then((informationItems) => {
                         reply.code(200).send(informationItems);
                     }).catch((error) => replyWithInternalError(reply, error));
