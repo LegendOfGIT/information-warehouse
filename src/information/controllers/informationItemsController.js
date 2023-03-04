@@ -12,6 +12,7 @@ const HTTP_STATUS_CODE_OK = 200;
 cron.schedule('0 */3 * * *',
     () => {
         observeConfiguration.getRandomCategoryIds().forEach(categoryId => observeCategory(categoryId));
+        observeConfiguration.getRandomCategoryIds().forEach(categoryId => observeCategory(categoryId));
     }
 );
 
