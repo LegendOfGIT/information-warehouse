@@ -2,7 +2,9 @@ const getCampaignParameterByUrl = require('../configuration/campaign-configurati
 const queryInformation = require('./repositories/queryInformationRepository');
 
 module.exports = (query, numberOfResults) => new Promise((resolve, reject) => {
-    queryInformation(query, numberOfResults ? Number.parseInt(numberOfResults) : 0).then((items) => {
+    const MAXIMUM_AMOUNT_OF_RESULTS = 80;
+
+    queryInformation(query, numberOfResults ? Number.parseInt(numberOfResults) : MAXIMUM_AMOUNT_OF_RESULTS).then((items) => {
         items = (items || []).filter(item => item['title-image']).map(item => {
             (item.providers || []).forEach(provider => {
                 provider.link = `${provider.link}${getCampaignParameterByUrl(provider.link)}`;
