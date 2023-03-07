@@ -33,9 +33,14 @@ module.exports = () => ({
         fastify.get('/api/information-items', async(request, reply) => {
             reply.type('application/json').code(200);
 
-            const { navigationId, numberOfResults, searchPattern, searchProfileId } = request.query;
+            const { id, navigationId, numberOfResults, searchPattern, searchProfileId } = request.query;
 
             const query = {};
+
+            if (id) {
+                query._id = id;
+            }
+
             if (searchPattern) {
                 query.title = new RegExp(`.*${searchPattern}.*`, 'i')
             }
