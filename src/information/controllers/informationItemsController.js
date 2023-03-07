@@ -5,6 +5,7 @@ const queryInformationItems = require('../queryInformationItems');
 const storeInformationItem = require('../storeInformationItem');
 const storeInformationItemScoring = require('../repositories/storeInformationScoringRepository');
 const observeConfiguration = require('../../configuration/observe-configuration');
+const ObjectID = require('mongodb').ObjectID;
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -38,7 +39,7 @@ module.exports = () => ({
             const query = {};
 
             if (id) {
-                query._id = id;
+                query._id = ObjectID(id);
             }
 
             if (searchPattern) {
