@@ -1,7 +1,9 @@
 const CATEGORY_MAPPING = {
     ELECTRONICS_AND_COMPUTERS_LARGE_APPLIANCES_FRIDGES_AND_FREEZERS: 'fridges|freezers',
     FASHION_WOMEN_JEWELRY: 'women-jewelry',
+    FASHION_WOMEN_PANTS: 'women-pants',
     FASHION_MEN_JEWELRY: 'men-jewelry',
+    FASHION_MEN_PANTS: 'men-pants',
     KIDS_PARTY_TABLEWARE: 'kids-party-tableware',
     KIDS_SCHOOL_SATCHEL: 'kids-school-satchel',
     MULTIMEDIA_GAMES_NINTENDO_SWITCH: 'nintendo-switch-games',
