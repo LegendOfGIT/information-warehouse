@@ -1,5 +1,6 @@
 const CATEGORY_MAPPING = {
     BEAUTY_CARE_SKIN_CARE_FACE_CARE: 'face-care',
+    BEAUTY_CARE_SKIN_CARE_KIDS: 'skin-care-kids',
     ELECTRONICS_AND_COMPUTERS_LARGE_APPLIANCES_FRIDGES_AND_FREEZERS: 'fridges|freezers',
     FASHION_WOMEN_BAGS: 'women-bags',
     FASHION_WOMEN_JEANS: 'women-jeans',
@@ -18,7 +19,9 @@ const CATEGORY_MAPPING = {
     MULTIMEDIA_GAMES_PC: 'pc-games',
     MULTIMEDIA_GAMES_PLAYSTATION_4: 'playstation-4-games',
     MULTIMEDIA_GAMES_PLAYSTATION_5: 'playstation-5-games',
-    MUSIC: 'german-folk-music'
+    MUSIC_CD_GERMANFOLK: 'german-folk-music',
+    MUSIC_CD_POP: 'music-pop',
+    MUSIC_CD_ROCK: 'music-rock'
 };
 
 module.exports = {
