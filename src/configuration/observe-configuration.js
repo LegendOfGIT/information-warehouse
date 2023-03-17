@@ -15,6 +15,7 @@ const CATEGORY_MAPPING = {
     FASHION_MEN_SWEATERS_AND_KNITWEAR: 'men-sweaters-knitwear',
     KIDS_PARTY_TABLEWARE: 'kids-party-tableware',
     KIDS_SCHOOL_SATCHEL: 'kids-school-satchel',
+    LIGHTING_INNERLIGHTING_CEILING: 'lighting-ceiling',
     MULTIMEDIA_GAMES_NINTENDO_SWITCH: 'nintendo-switch-games',
     MULTIMEDIA_GAMES_PC: 'pc-games',
     MULTIMEDIA_GAMES_PLAYSTATION_4: 'playstation-4-games',
