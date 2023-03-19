@@ -2,6 +2,7 @@ const CATEGORY_MAPPING = {
     BEAUTY_CARE_SKIN_CARE_FACE_CARE: 'face-care',
     BEAUTY_CARE_SKIN_CARE_KIDS: 'skin-care-kids',
     ELECTRONICS_AND_COMPUTERS_LARGE_APPLIANCES_FRIDGES_AND_FREEZERS: 'fridges|freezers',
+    COSMETICS_WOMEN_FRAGRANCES: 'women-fragrances',
     FASHION_WOMEN_BAGS: 'women-bags',
     FASHION_WOMEN_JEANS: 'women-jeans',
     FASHION_WOMEN_JEWELRY: 'women-jewelry',
