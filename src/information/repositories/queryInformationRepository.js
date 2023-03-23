@@ -9,7 +9,7 @@ module.exports = (query, randomItems, numberOfResults) => new Promise((resolve, 
                 resolve([]);
             }
 
-            const queryParts = [{ $match: query, $sort: { updatedOn: -1 } }];
+            const queryParts = [{ $match: query }, { $sort: { updatedOn: -1 }}];
             if ((/true/i).test(randomItems)) {
                 queryParts.push({ $sample: { size: numberOfResults }});
             }
