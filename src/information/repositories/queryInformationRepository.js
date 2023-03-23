@@ -14,7 +14,7 @@ module.exports = (query, randomItems, numberOfResults) => new Promise((resolve, 
                 queryParts.push({ $sample: { size: numberOfResults }});
             }
 
-            database.db().collection('items').aggregate(queryParts).limit(numberOfResults).sort({ updatedOn: -1 }).toArray()
+            database.db().collection('items').find(query).limit(numberOfResults).sort({ updatedOn: -1 }).toArray()
                 .then((result) => {
                     resolve(result);
                 })
