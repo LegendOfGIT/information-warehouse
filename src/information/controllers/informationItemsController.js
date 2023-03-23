@@ -34,7 +34,7 @@ module.exports = () => ({
         fastify.get('/api/information-items', async(request, reply) => {
             reply.type('application/json').code(200);
 
-            const { id, navigationId, numberOfResults, searchPattern, searchProfileId } = request.query;
+            const { id, navigationId, numberOfResults, randomItems, searchPattern, searchProfileId } = request.query;
 
             const query = {};
 
@@ -51,7 +51,7 @@ module.exports = () => ({
                 observeConfiguration.getCategoryIdsByNavigationId(navigationId).forEach(categoryId => observeCategory(categoryId));
             }
 
-            await queryInformationItems(query, numberOfResults)
+            await queryInformationItems(query, randomItems, numberOfResults)
                 .then(response => {
                     response = response.sort((a,b) => {
                         let scoringA = 0;
