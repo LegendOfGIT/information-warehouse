@@ -16,6 +16,7 @@ const CATEGORY_MAPPING = {
     FASHION_MEN_PANTS: 'men-pants',
     FASHION_MEN_SHOES: 'men-shoes',
     FASHION_MEN_SWEATERS_AND_KNITWEAR: 'men-sweaters-knitwear',
+    HOUSEHOLD_ACCESSOIRES_CARPETS: 'carpets',
     KIDS_PARTY_TABLEWARE: 'kids-party-tableware',
     KIDS_SCHOOL_SATCHEL: 'kids-school-satchel',
     LIGHTING_INNERLIGHTING_CEILING: 'lighting-ceiling',
