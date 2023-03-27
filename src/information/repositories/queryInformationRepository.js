@@ -9,12 +9,12 @@ module.exports = (query, randomItems, numberOfResults) => new Promise((resolve, 
                 resolve([]);
             }
 
-            const queryParts = [{ $match: query }, { $sort: { updatedOn: -1 }}];
+            const queryParts = [{ $match: query }, { $sort: { updatedOn: -1 }}, { $limit: numberOfResults }];
             if ((/true/i).test(randomItems)) {
                 queryParts.push({ $sample: { size: numberOfResults }});
             }
 
-            database.db().collection('items').aggregate(queryParts).limit(numberOfResults).sort({ updatedOn: -1 }).toArray()
+            database.db().collection('items').aggregate(queryParts).toArray()
                 .then((result) => {
                     resolve(result);
                 })
