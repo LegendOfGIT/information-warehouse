@@ -4,6 +4,7 @@ const CATEGORY_MAPPING = {
     ELECTRONICS_AND_COMPUTERS_LARGE_APPLIANCES_FRIDGES_AND_FREEZERS: 'fridges|freezers',
     COSMETICS_HAIR_STYLING: 'hairstyling',
     COSMETICS_MAKEUP_EYES: 'makeup-eyes',
+    COSMETICS_MAKEUP_LIPS: 'makeup-lips',
     COSMETICS_WOMEN_FRAGRANCES: 'women-fragrances',
     FASHION_WOMEN_BAGS: 'women-bags',
     FASHION_WOMEN_JEANS: 'women-jeans',
