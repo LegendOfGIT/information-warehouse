@@ -22,6 +22,8 @@ const CATEGORY_MAPPING = {
     FASHION_MEN_SHOES: 'men-shoes',
     FASHION_MEN_SWEATERS_AND_KNITWEAR: 'men-sweaters-knitwear',
     HOME_ACCESSOIRES_CARPETS: 'carpets',
+    HOME_GARDEN_GARDENHOUSES: 'garden-houses',
+    HOME_TOOLS_DRILLINGMACHINES: 'drilling-machines',
     KIDS_PARTY_TABLEWARE: 'kids-party-tableware',
     KIDS_SCHOOL_SATCHEL: 'kids-school-satchel',
     KIDS_TOYS_BABIES: 'kids-baby-toys',
