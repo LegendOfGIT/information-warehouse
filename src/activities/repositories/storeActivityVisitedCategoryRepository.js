@@ -3,8 +3,8 @@ const mongoClient = require('mongodb').MongoClient;
 
 const getRootCategoryIdFrom = (navigationId) => {
     let malformedCategoryBeginnings = ['BEAUTY_CARE', 'ELECTRONICS_AND_COMPUTERS'];
-    for (let malformedCategoryBeginning in malformedCategoryBeginnings) {
-        if ((navigationId || '').startsWith(malformedCategoryBeginning)) {
+    for (let malformedCategoryBeginning of malformedCategoryBeginnings) {
+        if ((navigationId || '') === malformedCategoryBeginning) {
             return malformedCategoryBeginning;
         }
     }
@@ -13,7 +13,7 @@ const getRootCategoryIdFrom = (navigationId) => {
     return navigationIdTokens[0];
 }
 
-module.exports = (searchProfileId, navigationId, maximumNumberOfResults) => new Promise((resolve, reject) => {
+module.exports = (searchProfileId, navigationId, maximumNumberOfResults) => new Promise((resolve) => {
     if (undefined === searchProfileId) {
         resolve();
         return;
@@ -36,16 +36,17 @@ module.exports = (searchProfileId, navigationId, maximumNumberOfResults) => new 
             collection.insertOne({
                 categoryId,
                 searchProfileId,
+                activityOn: new Date()
             })
                 .then(response => {
                     resolve(response);
                 })
-                .catch(error => {
-                    reject(error);
+                .catch(() => {
+                    resolve();
                 })
                 .finally(() => {
                     database.close();
                 });
         })
-        .catch(error => { reject(error); });
+        .catch(() => { resolve(); });
 });

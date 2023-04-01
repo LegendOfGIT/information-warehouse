@@ -13,6 +13,7 @@ informationItemsController.registerGetInformationItems(fastify);
 informationItemsController.registerStoreInformationItem(fastify);
 informationItemsController.registerStoreInformationItemScoring(fastify);
 
+searchProfilesController.registerGetSearchProfile(fastify);
 searchProfilesController.registerGetSearchProfiles(fastify);
 searchProfilesController.registerStoreSearchProfile(fastify);
 searchProfilesController.registerRemoveSearchProfile(fastify);
