@@ -6,6 +6,7 @@ const storeInformationItem = require('../storeInformationItem');
 const storeInformationItemScoring = require('../repositories/storeInformationScoringRepository');
 const observeConfiguration = require('../../configuration/observe-configuration');
 const ObjectID = require('mongodb').ObjectID;
+const storeActivityVisitedCategoryRepository = require('../../activities/repositories/storeActivityVisitedCategoryRepository');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -66,6 +67,13 @@ module.exports = () => ({
 
                         return scoringB - scoringA;
                     });
+
+                    const navigationIdOfFirstItem = response.length ? response[0].navigationPath[0] : '';
+                    storeActivityVisitedCategoryRepository(
+                        searchProfileId,
+                        navigationIdOfFirstItem,
+                        numberOfResults
+                    ).then(() => {});
 
                     reply.send({ errorMessage: '', items: response });
                 })
