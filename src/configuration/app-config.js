@@ -12,7 +12,8 @@ module.exports =
                 },
                 services: {
                     satelliteController: {
-                        host: 'localhost'
+                        host: 'localhost',
+                        port: 3001
                     }
                 }
             },
@@ -26,7 +27,8 @@ module.exports =
                 },
                 services: {
                     satelliteController: {
-                        host: 'satellite-controller'
+                        host: 'satellite-controller',
+                        port: 3001
                     }
                 }
             }
