@@ -8,6 +8,7 @@ const observeConfiguration = require('../../configuration/observe-configuration'
 const ObjectID = require('mongodb').ObjectID;
 const storeActivityVisitedCategoryRepository = require('../../activities/repositories/storeActivityVisitedCategoryRepository');
 const updateItemsRepository = require('../../activities/repositories/updateItemsRepository');
+const isOverviewRequest = require('../../request/isOverviewRequest');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -48,7 +49,7 @@ module.exports = () => ({
                 query.title = new RegExp(`.*${searchPattern}.*`, 'i')
             }
 
-            if (navigationId && !id) {
+            if (navigationId && isOverviewRequest(id, searchProfileId, numberOfResults)) {
                 query.navigationPath = navigationId;
                 observeConfiguration.getCategoryIdsByNavigationId(navigationId).forEach(categoryId => observeCategory(categoryId));
             }
