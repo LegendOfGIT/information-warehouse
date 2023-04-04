@@ -36,15 +36,16 @@ module.exports = (items, searchProfileId, maximumNumberOfResults) => new Promise
         return;
     }
 
-    if (items.length <= 5) {
+    if (items.length <= 3) {
         items.forEach(item => updateItem(item));
         resolve();
         return;
     }
 
-    for (let i=1; i<=5; i++) {
+    for (let i=1; i<=3; i++) {
         updateItem(items[Math.floor(Math.random() * items.length)]);
     }
+
 
     resolve();
 });
