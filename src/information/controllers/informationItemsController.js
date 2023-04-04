@@ -49,9 +49,12 @@ module.exports = () => ({
                 query.title = new RegExp(`.*${searchPattern}.*`, 'i')
             }
 
-            if (navigationId && isOverviewRequest(id, searchProfileId, numberOfResults)) {
+            if (navigationId) {
                 query.navigationPath = navigationId;
-                observeConfiguration.getCategoryIdsByNavigationId(navigationId).forEach(categoryId => observeCategory(categoryId));
+
+                if (isOverviewRequest(id, searchProfileId, numberOfResults)) {
+                    observeConfiguration.getCategoryIdsByNavigationId(navigationId).forEach(categoryId => observeCategory(categoryId));
+                }
             }
 
             await queryInformationItems(query, randomItems, numberOfResults)
