@@ -48,7 +48,7 @@ module.exports = () => ({
                 query.title = new RegExp(`.*${searchPattern}.*`, 'i')
             }
 
-            if (navigationId) {
+            if (navigationId && !id) {
                 query.navigationPath = navigationId;
                 observeConfiguration.getCategoryIdsByNavigationId(navigationId).forEach(categoryId => observeCategory(categoryId));
             }
