@@ -40,7 +40,10 @@ const CATEGORY_MAPPING = {
     MUSIC_CD_ALTERNATIVE: 'music-alternative',
     MUSIC_CD_GERMANFOLK: 'german-folk-music',
     MUSIC_CD_POP: 'music-pop',
-    MUSIC_CD_ROCK: 'music-rock'
+    MUSIC_CD_ROCK: 'music-rock',
+    VEHICLES_CARS_ALLWEATHERTYRES: 'car-all-weather-tyres',
+    VEHICLES_CARS_SUMMERTYRES: 'car-summer-tyres',
+    VEHICLES_CARS_WINTERTYRES: 'car-winter-tyres'
 };
 
 module.exports = {
