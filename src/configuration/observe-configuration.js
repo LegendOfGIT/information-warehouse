@@ -33,6 +33,8 @@ const CATEGORY_MAPPING = {
     KIDS_TOYS_SCOOTERS: 'kids-scooters',
     KIDS_TOYS_TOYVEHICLES: 'kids-toy-vehicles',
     LIGHTING_INNERLIGHTING_CEILING: 'lighting-ceiling',
+    MULTIMEDIA_BOOKS_HISTORY: 'books-history',
+    MULTIMEDIA_BOOKS_PHILOSOPHY: 'books-philosophy',
     MULTIMEDIA_GAMES_NINTENDO_SWITCH: 'nintendo-switch-games',
     MULTIMEDIA_GAMES_PC: 'pc-games',
     MULTIMEDIA_GAMES_PLAYSTATION_4: 'playstation-4-games',
