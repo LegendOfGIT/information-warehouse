@@ -9,6 +9,7 @@ const ObjectID = require('mongodb').ObjectID;
 const storeActivityVisitedCategoryRepository = require('../../activities/repositories/storeActivityVisitedCategoryRepository');
 const updateItemsRepository = require('../../activities/repositories/updateItemsRepository');
 const isOverviewRequest = require('../../request/isOverviewRequest');
+const getAvailablePages = require('../getAvailablePages');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -35,9 +36,17 @@ const observeCategory = (categoryId) => {
 module.exports = () => ({
     registerGetInformationItems: (fastify) => {
         fastify.get('/api/information-items', async(request, reply) => {
-            reply.type('application/json').code(200);
+            reply.type('application/json').code(HTTP_STATUS_CODE_OK);
 
-            const { id, navigationId, numberOfResults, randomItems, searchPattern, searchProfileId } = request.query;
+            const {
+                id,
+                navigationId,
+                numberOfResults,
+                page,
+                randomItems,
+                searchPattern,
+                searchProfileId
+            } = request.query;
 
             const query = {};
 
@@ -57,9 +66,9 @@ module.exports = () => ({
                 }
             }
 
-            await queryInformationItems(query, randomItems, numberOfResults)
-                .then(response => {
-                    response = response.sort((a,b) => {
+            await queryInformationItems(query, randomItems, numberOfResults, page)
+                .then(async response => {
+                    response = response.sort((a, b) => {
                         let scoringA = 0;
                         let scoringB = 0;
 
@@ -78,15 +87,23 @@ module.exports = () => ({
                         searchProfileId,
                         navigationIdOfFirstItem,
                         numberOfResults
-                    ).then(() => {});
+                    ).then(() => {
+                    });
 
                     updateItemsRepository(
                         response,
                         searchProfileId,
                         numberOfResults
-                    ).then(() => {});
+                    ).then(() => {
+                    });
 
-                    reply.send({ errorMessage: '', items: response });
+                    const availablePages = await getAvailablePages(query, numberOfResults, page);
+
+                    reply.send({
+                        errorMessage: '',
+                        items: response,
+                        availablePages
+                    });
                 })
                 .catch(error => replyWithInternalError(reply, error, { items: [] }));
         });
@@ -94,7 +111,7 @@ module.exports = () => ({
 
     registerStoreInformationItem: (fastify) => {
         fastify.put('/api/information-item', async (request, reply) => {
-            reply.type('application/json').code(200);
+            reply.type('application/json').code(HTTP_STATUS_CODE_OK);
 
             await storeInformationItem(request.body)
                 .then(() => {
@@ -106,7 +123,7 @@ module.exports = () => ({
 
     registerStoreInformationItemScoring: (fastify) => {
         fastify.put('/api/information-item/scoring', async (request, reply) => {
-            reply.type('application/json').code(200);
+            reply.type('application/json').code(HTTP_STATUS_CODE_OK);
 
             await storeInformationItemScoring(request.body)
                 .then(async () => {

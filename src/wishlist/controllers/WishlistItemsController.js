@@ -1,4 +1,3 @@
-const storeInformationItem = require('../../information/storeInformationItem');
 const queryInformationRepository = require('../../information/repositories/queryInformationRepository');
 const getWishlistItemsRepository = require('../repositories/getWishlistItemsRepository');
 const storeWishlistItemsRepository = require('../repositories/storeWishlistItemsRepository');
@@ -22,9 +21,9 @@ module.exports = () => ({
             const { userId } = request.query;
 
             await getWishlistItemsRepository(userId).then(async (items) => {
-                await queryInformationRepository({ itemId: { $in: items } }, 'false',0)
+                await queryInformationRepository({ itemId: { $in: items } }, 'false',0, 0)
                     .then((informationItems) => {
-                        reply.code(200).send(informationItems);
+                        reply.code(HTTP_STATUS_CODE_OK).send(informationItems);
                     }).catch((error) => replyWithInternalError(reply, error));
 
             }).catch((error) => replyWithInternalError(reply, error));
@@ -41,7 +40,7 @@ module.exports = () => ({
                 items.push(itemId);
 
                 await storeWishlistItemsRepository(userId, items)
-                    .then(async () => { reply.code(200).send({}); })
+                    .then(async () => { reply.code(HTTP_STATUS_CODE_OK).send({}); })
                     .catch(error => replyWithInternalError(reply, error));
 
             }).catch((error) => replyWithInternalError(reply, error));
@@ -58,7 +57,7 @@ module.exports = () => ({
                 items = items.filter((itemIdFromWishlist) => itemIdFromWishlist !== itemId);
 
                 await storeWishlistItemsRepository(userId, items)
-                    .then(async () => { reply.code(200).send({}); })
+                    .then(async () => { reply.code(HTTP_STATUS_CODE_OK).send({}); })
                     .catch(error => replyWithInternalError(reply, error));
 
             }).catch((error) => replyWithInternalError(reply, error));

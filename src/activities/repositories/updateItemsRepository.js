@@ -5,7 +5,12 @@ const updateItem = (item) => {
     const url = `http://${configuration.services.satelliteController.host}:${configuration.services.satelliteController.port}/update-item`;
 
     if (!(item.providers || []).filter(provider => provider.mean).length) {
-        const itemId = item.mean || (item.asin ? `azo.${item.asin}` : '');
+        let itemId = item.mean || (item.asin ? `azo.${item.asin}` : '');
+        itemId = itemId
+            ? itemId
+            : -1 !== (provider.itemId || '').indexOf('otto.de')
+                ? provider.itemId.replace('otto.de-', 'otto.')
+                : '';
 
         requestModule.post({
             url,

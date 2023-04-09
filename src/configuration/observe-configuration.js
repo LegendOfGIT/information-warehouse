@@ -24,6 +24,7 @@ const CATEGORY_MAPPING = {
     HOME_ACCESSOIRES_CARPETS: 'carpets',
     HOME_GARDEN_GARDENHOUSES: 'garden-houses',
     HOME_TOOLS_DRILLINGMACHINES: 'drilling-machines',
+    KIDS_BOOKS_AUDIOBOOKS: 'kids-audio-books',
     KIDS_PARTY_TABLEWARE: 'kids-party-tableware',
     KIDS_SCHOOL_SATCHEL: 'kids-school-satchel',
     KIDS_TOYS_BABIES: 'kids-baby-toys',
