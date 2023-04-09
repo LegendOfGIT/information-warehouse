@@ -8,8 +8,8 @@ const updateItem = (item) => {
         let itemId = item.mean || (item.asin ? `azo.${item.asin}` : '');
         itemId = itemId
             ? itemId
-            : -1 !== (provider.itemId || '').indexOf('otto.de')
-                ? provider.itemId.replace('otto.de-', 'otto.')
+            : -1 !== (item.itemId || '').indexOf('otto.de')
+                ? item.itemId.replace('otto.de-', 'otto.')
                 : '';
 
         requestModule.post({
