@@ -16,5 +16,5 @@ module.exports = (resultCount, itemsPerPage, current) => {
     if (includeLeftDots) filteredCenter.unshift(0);
     if (includeRightDots) filteredCenter.push(0);
 
-    return [1, ...filteredCenter, total];
+    return [1, ...filteredCenter, total].filter((value, index, array) => !value || array.indexOf(value) === index);
 };
