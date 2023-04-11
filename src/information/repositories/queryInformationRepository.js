@@ -5,13 +5,13 @@ module.exports = (query, randomItems, numberOfResults, page) => new Promise((res
 
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
         .then(database => {
-            if(!database) {
+            if (!database) {
                 resolve([]);
             }
 
             const queryParts = [
                 { $match: query },
-                { $sort: { updatedOn: -1 }}
+                { $sort: { ratingInPercent: -1, numberOfRatings: -1, updatedOn: -1 }}
             ];
 
             if ((/true/i).test(randomItems)) {
