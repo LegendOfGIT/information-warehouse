@@ -32,6 +32,8 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
     providers = providers.filter(provider => provider.itemId !== providerItemToStore.itemId);
     providers.push(providerItemToStore);
 
+    itemToStore.hasPriceInformation = providers.filter(provider => provider['price-initial'] || provider['price-current']).length > 0;
+
     return {
         ...storedItem,
         ...itemToStore,
