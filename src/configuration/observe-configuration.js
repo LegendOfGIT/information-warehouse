@@ -24,6 +24,7 @@ const CATEGORY_MAPPING = {
     FASHION_MEN_SWEATERS_AND_KNITWEAR: 'men-sweaters-knitwear',
     HOME_ACCESSOIRES_CARPETS: 'carpets',
     HOME_FURNITURE_GAMINGCHAIRS: 'gaming-chairs',
+    HOME_GARDEN_GRILLS: 'garden-grills',
     HOME_GARDEN_GARDENHOUSES: 'garden-houses',
     HOME_TOOLS_DRILLINGMACHINES: 'drilling-machines',
     KIDS_BOOKS_AUDIOBOOKS: 'kids-audio-books',
@@ -47,6 +48,7 @@ const CATEGORY_MAPPING = {
     MUSIC_CD_POP: 'music-pop',
     MUSIC_CD_ROCK: 'music-rock',
     VEHICLES_CARS_ALLWEATHERTYRES: 'car-all-weather-tyres',
+    VEHICLES_CARS_CHILDSEATS: 'car-child-seats',
     VEHICLES_CARS_SUMMERTYRES: 'car-summer-tyres',
     VEHICLES_CARS_WINTERTYRES: 'car-winter-tyres'
 };
