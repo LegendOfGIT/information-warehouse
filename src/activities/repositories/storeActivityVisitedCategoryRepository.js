@@ -13,7 +13,12 @@ const getRootCategoryIdFrom = (navigationId) => {
     return navigationIdTokens[0];
 }
 
-module.exports = (searchProfileId, navigationId, maximumNumberOfResults) => new Promise((resolve) => {
+module.exports = (searchProfileId, navigationId, maximumNumberOfResults, isBotRequest) => new Promise((resolve) => {
+    if (isBotRequest) {
+        resolve();
+        return;
+    }
+
     if (undefined === searchProfileId) {
         resolve();
         return;

@@ -33,6 +33,15 @@ const observeCategory = (categoryId) => {
     }, () => {});
 };
 
+const isBotRequest = (request) => {
+    const agent = (request.headers['user-agent'] || '').toLowerCase();
+    if (-1 !== agent.indexOf('googlebot')) {
+        return true;
+    }
+
+    return -1 !== agent.indexOf('bingbot');
+};
+
 module.exports = () => ({
     registerGetInformationItems: (fastify) => {
         fastify.get('/api/information-items', async(request, reply) => {
@@ -61,8 +70,9 @@ module.exports = () => ({
             if (navigationId) {
                 query.navigationPath = navigationId;
 
-                if (isOverviewRequest(id, searchProfileId, numberOfResults)) {
-                    observeConfiguration.getCategoryIdsByNavigationId(navigationId).forEach(categoryId => observeCategory(categoryId));
+                if (isOverviewRequest(id, searchProfileId, numberOfResults) && !isBotRequest(request)) {
+                    observeConfiguration.getCategoryIdsByNavigationId(navigationId)
+                        .forEach(categoryId => observeCategory(categoryId));
                 }
             }
 
@@ -86,7 +96,8 @@ module.exports = () => ({
                     storeActivityVisitedCategoryRepository(
                         searchProfileId,
                         navigationIdOfFirstItem,
-                        numberOfResults
+                        numberOfResults,
+                        isBotRequest(request)
                     ).then(() => {
                     });
 
