@@ -34,7 +34,7 @@ const observeCategory = (categoryId) => {
 };
 
 const isBotRequest = (request) => {
-    return 'true' === request.query['isBot'] || 'false';
+    return 'true' === (request.query['isBot'] || 'false');
 };
 
 module.exports = () => ({
