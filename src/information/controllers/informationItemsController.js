@@ -34,13 +34,7 @@ const observeCategory = (categoryId) => {
 };
 
 const isBotRequest = (request) => {
-    const agent = (request.headers['user-agent'] || '').toLowerCase();
-    console.log(agent);
-    if (-1 !== agent.indexOf('googlebot')) {
-        return true;
-    }
-
-    return -1 !== agent.indexOf('bingbot');
+    return 'true' === request.query['isBot'] || 'false';
 };
 
 module.exports = () => ({
