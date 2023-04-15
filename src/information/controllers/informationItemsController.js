@@ -105,6 +105,10 @@ module.exports = () => ({
 
                     const availablePages = await getAvailablePages(query, numberOfResults, page);
 
+                    if (!randomItems) {
+                        reply.headers.set('Cache-Control', 'max-age=300');
+                    }
+
                     reply.send({
                         errorMessage: '',
                         items: response,
