@@ -47,6 +47,7 @@ const CATEGORY_MAPPING = {
     MUSIC_CD_GERMANFOLK: 'german-folk-music',
     MUSIC_CD_POP: 'music-pop',
     MUSIC_CD_ROCK: 'music-rock',
+    SPORTS_EXERCISE_EQUIPMENT: 'sports-exercise-equipment',
     VEHICLES_CARS_ALLWEATHERTYRES: 'car-all-weather-tyres',
     VEHICLES_CARS_CHILDSEATS: 'car-child-seats',
     VEHICLES_CARS_SUMMERTYRES: 'car-summer-tyres',
