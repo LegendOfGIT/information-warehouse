@@ -138,7 +138,7 @@ module.exports = () => ({
             reply.type('application/json').code(HTTP_STATUS_CODE_OK);
 
             const items = await queryInformationItems(
-                { _id: Object(request.body.id || '') },
+                { _id: ObjectID(request.body.id || '') },
                 false,
                 undefined);
 
