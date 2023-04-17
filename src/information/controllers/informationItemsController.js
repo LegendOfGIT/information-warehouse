@@ -158,6 +158,31 @@ module.exports = () => ({
                 .catch(error => replyWithInternalError(reply, error));
         });
     },
+    registerUnhighlightInformationItem: (fastify) => {
+        fastify.delete('/api/highlight-item', async (request, reply) => {
+            reply.type('application/json').code(HTTP_STATUS_CODE_OK);
+
+            const items = await queryInformationItems(
+                { _id: ObjectID(request.body.id || '') },
+                false,
+                undefined);
+
+            const item = items && items.length ? items[0] : undefined;
+
+            if (!item) {
+                reply.send({ errorMessage: 'item not found' });
+                return;
+            }
+
+            item.isHighlighted = false;
+
+            await storeInformationItemRepository(item)
+                .then(() => {
+                    reply.send({});
+                })
+                .catch(error => replyWithInternalError(reply, error));
+        });
+    },
 
     registerStoreInformationItemScoring: (fastify) => {
         fastify.put('/api/information-item/scoring', async (request, reply) => {
