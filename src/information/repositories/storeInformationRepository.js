@@ -7,7 +7,7 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
     }
 
     (informationItem.providers || []).forEach(provider => {
-        provider.link = provider.link ? provider.link.replace('\?.*', '') : '';
+        provider.link = provider.link ? provider.link.replace(/\?.*/, '') : '';
     });
     console.log(informationItem.providers);
 
