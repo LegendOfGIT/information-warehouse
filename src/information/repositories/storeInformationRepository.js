@@ -8,7 +8,7 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
 
     console.log(informationItem.providers);
     (informationItem.providers || []).forEach(provider => {
-        provider.link = provider.link ? provider.link.replaceAll('\?.*', '') : '';
+        provider.link = provider.link ? provider.link.replace('\?.*', '') : '';
     });
 
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
