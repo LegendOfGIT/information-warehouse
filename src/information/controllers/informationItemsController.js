@@ -3,6 +3,7 @@ const cron = require('node-cron');
 const configuration = require('../../configuration/app-config')();
 const queryInformationItems = require('../queryInformationItems');
 const storeInformationItem = require('../storeInformationItem');
+const storeInformationItemRepository = require('../repositories/storeInformationRepository');
 const storeInformationItemScoring = require('../repositories/storeInformationScoringRepository');
 const observeConfiguration = require('../../configuration/observe-configuration');
 const ObjectID = require('mongodb').ObjectID;
@@ -125,6 +126,32 @@ module.exports = () => ({
             reply.type('application/json').code(HTTP_STATUS_CODE_OK);
 
             await storeInformationItem(request.body)
+                .then(() => {
+                    reply.send({});
+                })
+                .catch(error => replyWithInternalError(reply, error));
+        });
+    },
+
+    registerHighlightInformationItem: (fastify) => {
+        fastify.put('/api/highlight-item', async (request, reply) => {
+            reply.type('application/json').code(HTTP_STATUS_CODE_OK);
+
+            const items = await queryInformationItems(
+                { _id: Object(request.body.id || '') },
+                false,
+                undefined);
+
+            const item = items && items.length ? items[0] : undefined;
+
+            if (!item) {
+                reply.send({ errorMessage: 'item not found' });
+                return;
+            }
+
+            item.isHighlighted = true;
+
+            await storeInformationItemRepository(item)
                 .then(() => {
                     reply.send({});
                 })
