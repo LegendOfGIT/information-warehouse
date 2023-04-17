@@ -1,4 +1,3 @@
-const {getCampaignParameterByUrl} = require("../../configuration/campaign-configuration");
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
