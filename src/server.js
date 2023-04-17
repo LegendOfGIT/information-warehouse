@@ -10,6 +10,7 @@ const fastify = require('fastify')({
 fastify.register(require('@fastify/cors'), {});
 
 informationItemsController.registerGetInformationItems(fastify);
+informationItemsController.registerHighlightInformationItem(fastify);
 informationItemsController.registerStoreInformationItem(fastify);
 informationItemsController.registerStoreInformationItemScoring(fastify);
 
