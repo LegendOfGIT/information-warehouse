@@ -11,9 +11,9 @@ module.exports = (query, randomItems, numberOfResults, page) => new Promise((res
     ).then((items) => {
         items = (items || []).filter(item => item['title-image']).map(item => {
             (item.providers || []).forEach(provider => {
-                provider.link = provider.link
-                    ? provider.link.replaceAll('\?.*', getCampaignParameterByUrl(provider.link))
-                    : '';
+                provider.link = -1 !== provider.link.indexOf('?')
+                        ? provider.link.replaceAll('\?.*', getCampaignParameterByUrl(provider.link))
+                        : provider.link + getCampaignParameterByUrl(provider.link);
             });
 
             return item;
