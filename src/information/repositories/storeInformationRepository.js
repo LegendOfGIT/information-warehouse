@@ -7,7 +7,7 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
         console.log('required itemId is missing');
     }
 
-    (item.providers || []).forEach(provider => {
+    (informationItem.providers || []).forEach(provider => {
         provider.link = provider.link ? provider.link.replaceAll('\?.*', '') : '';
     });
 
