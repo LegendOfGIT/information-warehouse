@@ -45,6 +45,7 @@ module.exports = () => ({
 
             const {
                 id,
+                highlightedItems,
                 navigationId,
                 numberOfResults,
                 page,
@@ -57,6 +58,10 @@ module.exports = () => ({
 
             if (id) {
                 query._id = ObjectID(id);
+            }
+
+            if (highlightedItems) {
+                query.isHighlighted = true;
             }
 
             if (searchPattern) {
