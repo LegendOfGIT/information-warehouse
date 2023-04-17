@@ -1,3 +1,4 @@
+const {getCampaignParameterByUrl} = require("../../configuration/campaign-configuration");
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
@@ -5,6 +6,10 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
     if (!informationItem?.itemId) {
         console.log('required itemId is missing');
     }
+
+    (item.providers || []).forEach(provider => {
+        provider.link = provider.link ? provider.link.replaceAll('\?.*', '') : '';
+    });
 
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
         .then((database) => {
