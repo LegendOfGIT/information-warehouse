@@ -30,6 +30,7 @@ const CATEGORY_MAPPING = {
     HOME_FURNITURE_KIDSBEDS: 'kids-beds',
     HOME_GARDEN_GRILLS: 'garden-grills',
     HOME_GARDEN_GARDENHOUSES: 'garden-houses',
+    HOME_GARDEN_LOUNGEFURNITURE: 'garden-loungefurniture',
     HOME_TOOLS_DRILLINGMACHINES: 'drilling-machines',
     HOME_TOOLS_ELECTRICSAWS: 'electric-saws',
     KIDS_BOOKS_AUDIOBOOKS: 'kids-audio-books',
