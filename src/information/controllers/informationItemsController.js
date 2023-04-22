@@ -155,6 +155,7 @@ module.exports = () => ({
                 return items && items.length ? items[0] : undefined;
             });
 
+            console.log(result);
             reply.send(result.filter(item => item));
         });
     },
