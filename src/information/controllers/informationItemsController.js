@@ -145,9 +145,9 @@ module.exports = () => ({
                 return;
             }
 
-            const result = await navigationIds.split(',').map(navigationId => {
-                const items = queryInformationItems(
-                    { navigationPath: navigationId },
+            const result = await navigationIds.split(',').map(async navigationId => {
+                const items = await queryInformationItems(
+                    {navigationPath: navigationId},
                     randomItems,
                     numberOfResults);
 
