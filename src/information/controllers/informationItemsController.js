@@ -152,9 +152,10 @@ module.exports = () => ({
                     numberOfResults);
 
                 return items && items.length ? items[0] : undefined;
-            });
-
-            await reply.send(result.filter(item => item));
+            }).then(() => {
+                reply.send({ items: result.filter(item => item) });
+            })
+            .catch(error => replyWithInternalError(reply, error, { items: [] }));
         });
     },
 
