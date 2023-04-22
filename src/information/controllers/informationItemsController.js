@@ -11,6 +11,7 @@ const storeActivityVisitedCategoryRepository = require('../../activities/reposit
 const updateItemsRepository = require('../../activities/repositories/updateItemsRepository');
 const isOverviewRequest = require('../../request/isOverviewRequest');
 const getAvailablePages = require('../getAvailablePages');
+const repl = require("repl");
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -127,6 +128,33 @@ module.exports = () => ({
                     });
                 })
                 .catch(error => replyWithInternalError(reply, error, { items: [] }));
+        });
+    },
+    registerGetSampleInformationItemsOfCategories: (fastify) => {
+        fastify.get('/api/information-items/by-categories', async(request, reply) => {
+            reply.type('application/json').code(HTTP_STATUS_CODE_OK);
+
+            const {
+                navigationIds,
+                numberOfResults,
+                randomItems
+            } = request.query;
+
+            if (!navigationIds || !navigationIds.split(',').length) {
+                reply.send({});
+                return;
+            }
+
+            const result = await navigationIds.split(',').map(navigationId => {
+                const items = queryInformationItems(
+                    { navigationPath: navigationId },
+                    randomItems,
+                    numberOfResults);
+
+                return items && items.length ? items[0] : undefined;
+            });
+
+            reply.send(result.filter(item => item));
         });
     },
 
