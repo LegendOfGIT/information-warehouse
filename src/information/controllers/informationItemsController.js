@@ -145,16 +145,17 @@ module.exports = () => ({
                 return;
             }
 
-            const result = await navigationIds.split(',').map(async navigationId => {
+            const resultItems = []
+            await Promise.all(navigationIds.split(',').map(async navigationId => {
                 const items = await queryInformationItems(
                     {navigationPath: navigationId},
                     randomItems,
                     numberOfResults);
 
-                return items && items.length ? items[0] : undefined;
-            });
+                resultItems.push(items && items.length ? items[0] : undefined);
+            }))
 
-            reply.send({ items: result.filter(item => item) });
+            reply.send({ items: resultItems.filter(item => item) });
         });
     },
 
