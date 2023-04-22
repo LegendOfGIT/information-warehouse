@@ -151,6 +151,7 @@ module.exports = () => ({
                     randomItems,
                     numberOfResults);
 
+                console.log(items);
                 return items && items.length ? items[0] : undefined;
             });
 
