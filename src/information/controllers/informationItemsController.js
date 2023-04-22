@@ -151,12 +151,10 @@ module.exports = () => ({
                     randomItems,
                     numberOfResults);
 
-                console.log(items);
                 return items && items.length ? items[0] : undefined;
             });
 
-            console.log(result);
-            reply.send(result.filter(item => item));
+            await reply.send(result.filter(item => item));
         });
     },
 
