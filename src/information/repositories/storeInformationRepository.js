@@ -6,10 +6,6 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
         console.log('required itemId is missing');
     }
 
-    (informationItem.providers || []).forEach(provider => {
-        provider.link = provider.link ? provider.link.replace(/\?.*/, '') : '';
-    });
-
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
         .then((database) => {
             const collection = database.db().collection('items');

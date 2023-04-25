@@ -82,7 +82,7 @@ module.exports = () => ({
                 }
             }
 
-            await queryInformationItems(query, randomItems, numberOfResults, page)
+            await queryInformationItems(query, randomItems, numberOfResults, page, true)
                 .then(async response => {
                     response = response.sort((a, b) => {
                         let scoringA = 0;
@@ -150,7 +150,8 @@ module.exports = () => ({
                 const items = await queryInformationItems(
                     {navigationPath: navigationId},
                     randomItems,
-                    numberOfResults);
+                    numberOfResults,
+                    true);
 
                 resultItems.push(items && items.length ? items[0] : undefined);
             }))
@@ -178,7 +179,8 @@ module.exports = () => ({
             const items = await queryInformationItems(
                 { _id: ObjectID(request.body.id || '') },
                 false,
-                undefined);
+                undefined,
+                false);
 
             const item = items && items.length ? items[0] : undefined;
 
@@ -203,7 +205,8 @@ module.exports = () => ({
             const items = await queryInformationItems(
                 { _id: ObjectID(request.body.id || '') },
                 false,
-                undefined);
+                undefined,
+                false);
 
             const item = items && items.length ? items[0] : undefined;
 

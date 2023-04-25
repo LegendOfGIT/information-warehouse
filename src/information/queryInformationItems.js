@@ -2,7 +2,7 @@ const getCampaignParameterByUrl = require('../configuration/campaign-configurati
 const queryInformation = require('./repositories/queryInformationRepository');
 const constants = require('../constants');
 
-module.exports = (query, randomItems, numberOfResults, page) => new Promise((resolve, reject) => {
+module.exports = (query, randomItems, numberOfResults, page, addCampaignParameter) => new Promise((resolve, reject) => {
     queryInformation(
         query,
         randomItems,
@@ -11,7 +11,9 @@ module.exports = (query, randomItems, numberOfResults, page) => new Promise((res
     ).then((items) => {
         items = (items || []).filter(item => item['title-image']).map(item => {
             (item.providers || []).forEach(provider => {
-                provider.link = provider.link ? `${provider.link}${getCampaignParameterByUrl(provider.link)}` : '';
+                provider.link = addCampaignParameter ?
+                    provider.link ? `${provider.link}${getCampaignParameterByUrl(provider.link)}` : '' :
+                    provider.link;
             });
 
             return item;
