@@ -13,6 +13,8 @@ const CATEGORY_MAPPING = {
     COSMETICS_MAKEUP_EYES: 'makeup-eyes',
     COSMETICS_MAKEUP_LIPS: 'makeup-lips',
     COSMETICS_WOMEN_FRAGRANCES: 'women-fragrances',
+    FASHION_BOYS_SHOES: 'boys-shoes',
+    FASHION_GIRLS_SHOES: 'girls-shoes',
     FASHION_WOMEN_BAGS: 'women-bags',
     FASHION_WOMEN_JACKETS: 'women-jackets',
     FASHION_WOMEN_JEANS: 'women-jeans',
