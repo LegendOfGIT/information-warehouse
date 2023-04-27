@@ -18,7 +18,7 @@ const CATEGORY_MAPPING = {
     FASHION_WOMEN_BAGS: 'women-bags',
     FASHION_WOMEN_JACKETS: 'women-jackets',
     FASHION_WOMEN_JEANS: 'women-jeans',
-    FASHION_WOMEN_JEWELRY: 'women-jewelry',
+    FASHION_WOMEN_JEWELRY: 'women-jewelry|women-necklaces|women-earrings|women-rings',
     FASHION_WOMEN_PANTS: 'women-pants',
     FASHION_WOMEN_SHOES: 'women-shoes',
     FASHION_WOMEN_SWEATERS_AND_KNITWEAR: 'women-sweaters-knitwear',
