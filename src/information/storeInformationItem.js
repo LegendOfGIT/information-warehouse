@@ -6,8 +6,6 @@ const getItemIdFromInformationItem = (item) => {
 };
 
 const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
-    console.log(storedItem);
-    
     const providerSpecificProperties = ['itemId', 'link', 'mean', 'price-current', 'price-initial', 'updatedOn'];
     const providerAndItemSpecificProperties = ['updatedOn'];
 
