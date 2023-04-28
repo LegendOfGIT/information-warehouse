@@ -15,7 +15,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
             return;
         }
 
-        itemToStore[propertyKey] = scrapedItem[propertyKey];
+        itemToStore[propertyKey] = scrapedItem[propertyKey] ? scrapedItem[propertyKey] : itemToStore[propertyKey];
     });
 
     const providerItemToStore = {};
@@ -24,7 +24,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
             return;
         }
 
-        providerItemToStore[propertyKey] = scrapedItem[propertyKey];
+        providerItemToStore[propertyKey] = scrapedItem[propertyKey] ? scrapedItem[propertyKey] : providerItemToStore[propertyKey];
     });
 
     storedItem = storedItem || { itemId: getItemIdFromInformationItem(scrapedItem) };
