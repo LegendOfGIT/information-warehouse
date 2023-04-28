@@ -15,7 +15,10 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
             return;
         }
 
-        itemToStore[propertyKey] = null == itemToStore[propertyKey] || scrapedItem[propertyKey] ? scrapedItem[propertyKey] : itemToStore[propertyKey];
+        itemToStore[propertyKey] =
+            null == itemToStore[propertyKey] || (scrapedItem[propertyKey] || '').length > 0
+                ? scrapedItem[propertyKey]
+                : itemToStore[propertyKey];
     });
 
     const providerItemToStore = {};
@@ -24,7 +27,10 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
             return;
         }
 
-        providerItemToStore[propertyKey] = null == providerItemToStore[propertyKey] || scrapedItem[propertyKey] ? scrapedItem[propertyKey] : providerItemToStore[propertyKey];
+        providerItemToStore[propertyKey] =
+            null == providerItemToStore[propertyKey] || (scrapedItem[propertyKey] || '').length > 0
+                ? scrapedItem[propertyKey]
+                : providerItemToStore[propertyKey];
     });
 
     storedItem = storedItem || { itemId: getItemIdFromInformationItem(scrapedItem) };
