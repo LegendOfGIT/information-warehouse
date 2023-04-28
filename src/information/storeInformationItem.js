@@ -48,7 +48,7 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
             { providers: { $elemMatch: { itemId: informationItem.itemId || '' }} }
         ]
     };
-    queryInformationRepository(storedItemsQuery, 'false',1, 0)
+    queryInformationRepository(storedItemsQuery, 'false', undefined, 0)
         .then((storedItems) => {
             console.log(storedItems.map(item => ({ _id: item._id, itemId: item.itemId })));
 
