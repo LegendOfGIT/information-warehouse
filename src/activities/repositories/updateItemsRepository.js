@@ -7,8 +7,8 @@ const updateItem = (item) => {
     (item.providers || []).filter(provider => !provider.mean).forEach(provider => {
         let itemId = provider.itemId || (item.mean || (item.asin ? `azo.${item.asin}` : ''));
         itemId =
-            -1 !== (item.itemId || '').indexOf('otto.de') ? item.itemId.replace('otto.de-', 'otto.') :
-            -1 !== (item.itemId || '').indexOf('amazon.de') ? item.itemId.replace('amazon.de-', 'azo.') :
+            -1 !== (itemId || '').indexOf('otto.de') ? itemId.replace('otto.de-', 'otto.') :
+            -1 !== (itemId || '').indexOf('amazon.de') ? itemId.replace('amazon.de-', 'azo.') :
             itemId;
 
         requestModule.post({
