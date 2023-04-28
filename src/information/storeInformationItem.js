@@ -42,7 +42,13 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
 };
 
 module.exports = (informationItem) => new Promise((resolve, reject) => {
-    queryInformationRepository({ itemId: getItemIdFromInformationItem(informationItem) }, 'false',1, 0)
+    const storedItemsQuery = {
+        $or: [
+            { itemId: getItemIdFromInformationItem(informationItem) },
+            { providers: { $elemMatch: { itemId: informationItem.itemId || '' }} }
+        ]
+    };
+    queryInformationRepository(storedItemsQuery, 'false',1, 0)
         .then((storedItems) => {
             const itemToStore = itemToStoreFromScrapedItem(storedItems.length ? storedItems[0] : undefined, informationItem);
 
