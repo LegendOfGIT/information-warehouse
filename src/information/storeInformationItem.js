@@ -50,15 +50,16 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
     };
     queryInformationRepository(storedItemsQuery, 'false', undefined, 0)
         .then((storedItems) => {
-            console.log(storedItems.map(item => ({ _id: item._id, itemId: item.itemId })));
+            storedItems = storedItems.length ? storedItems : [undefined];
+            storedItems.forEach(storedItem => {
+                const itemToStore = itemToStoreFromScrapedItem(storedItem, informationItem);
 
-            const itemToStore = itemToStoreFromScrapedItem(storedItems.length ? storedItems[0] : undefined, informationItem);
+                storeInformationRepository(itemToStore)
+                    .then(() => {})
+                    .finally(() => {});
+            });
 
-            storeInformationRepository(itemToStore)
-                .then(() => {})
-                .finally(() => {
-                    resolve();
-                });
+            resolve();
         })
         .catch((error) => { reject(error); })
 });
