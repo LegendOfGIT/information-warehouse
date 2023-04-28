@@ -50,7 +50,7 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
     };
     queryInformationRepository(storedItemsQuery, 'false',1, 0)
         .then((storedItems) => {
-            console.log(storedItems.map(item => item.itemId));
+            console.log(storedItems.map(item => ({ _id: item._id, itemId: item.itemId })));
 
             const itemToStore = itemToStoreFromScrapedItem(storedItems.length ? storedItems[0] : undefined, informationItem);
 
