@@ -9,6 +9,7 @@ const updateItem = (item) => {
         itemId =
             -1 !== (itemId || '').indexOf('otto.de') ? itemId.replace('otto.de-', 'otto.') :
             -1 !== (itemId || '').indexOf('amazon.de') ? itemId.replace('amazon.de-', 'azo.') :
+            -1 !== (itemId || '').indexOf('dress-for-less.de') ? itemId.replace('dress-for-less.de-', 'dfl.') :
             itemId;
 
         requestModule.post({
