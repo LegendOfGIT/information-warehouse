@@ -31,8 +31,5 @@ module.exports = (item) => {
         }
     });
 
-    console.log(item);
-    console.log(tags);
-
     return tags;
 };

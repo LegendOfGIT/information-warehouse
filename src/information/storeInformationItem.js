@@ -35,7 +35,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
 
     itemToStore.hasPriceInformation = providers.filter(provider => provider['price-initial'] || provider['price-current']).length > 0;
 
-    tagsResolver(itemToStore);
+    itemToStore.tags = tagsResolver(itemToStore);
 
     return {
         ...storedItem,
