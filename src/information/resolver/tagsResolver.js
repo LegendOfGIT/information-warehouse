@@ -10,13 +10,13 @@ module.exports = (item) => {
         return lowestPriceProvider && (lowestPriceProvider['price-current'] < lowestPriceProvider['price-initial']);
     }
 
-    const tags = [];
+    let tags = [];
     if (lowestPriceIsOnSale()) {
         tags.push('sale');
     }
 
     if (item.colors) {
-        tags.push(item.colors.split(','));
+        tags = tags.concat(item.colors.split(','));
     }
 
     console.log(item);
