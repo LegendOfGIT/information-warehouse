@@ -19,6 +19,18 @@ module.exports = (item) => {
         tags = tags.concat(item.colors.split(','));
     }
 
+    const tagMapping = [
+        { property: 'fabricPattern', prefix: 'fabric pattern' },
+        { property: 'fit', prefix: 'fit' },
+        { property: 'make' }
+    ];
+
+    tagMapping.forEach(mapping => {
+        if (item[mapping.property]) {
+            tags.push(`${mapping.prefix ? mapping.prefix : ''} ${item[mapping.property]}`.trim());
+        }
+    });
+
     console.log(item);
     console.log(tags);
 
