@@ -1,5 +1,6 @@
 const storeInformationRepository = require('./repositories/storeInformationRepository');
 const queryInformationRepository = require('./repositories/queryInformationRepository');
+const tagsResolver = require('./resolver/tagsResolver');
 
 const getItemIdFromInformationItem = (item) => {
     return `${(item.navigationPath  || []).join('-')}-${item.gtin || item.asin || item.ean || item.mean}`;
@@ -33,6 +34,8 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
     providers.push(providerItemToStore);
 
     itemToStore.hasPriceInformation = providers.filter(provider => provider['price-initial'] || provider['price-current']).length > 0;
+
+    tagsResolver(itemToStore);
 
     return {
         ...storedItem,
