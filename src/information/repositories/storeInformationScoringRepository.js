@@ -8,19 +8,15 @@ module.exports = (informationItemScoring) => new Promise((resolve, reject) => {
         return;
     }
 
-    if (!informationItemScoring?.searchProfileId) {
-        console.log('required searchProfileId is missing');
-        reject();
-        return;
-    }
-
     if (!informationItemScoring?.scoring) {
         console.log('required scoring is missing');
         reject();
         return;
     }
 
-    mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
+    resolve();
+
+    /*mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
         .then((database) => {
             const collection = database.db().collection('items');
 
@@ -53,5 +49,5 @@ module.exports = (informationItemScoring) => new Promise((resolve, reject) => {
                     reject(error);
                 });
         })
-        .catch(error => { reject(error); });
+        .catch(error => { reject(error); });*/
 });

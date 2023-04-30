@@ -229,7 +229,6 @@ module.exports = () => ({
         fastify.put('/api/information-item/scoring', async (request, reply) => {
             reply.type('application/json').code(HTTP_STATUS_CODE_OK);
 
-            console.log(request.body);
             await storeInformationItemScoring(request.body)
                 .then(async () => {
                     reply.send({});
