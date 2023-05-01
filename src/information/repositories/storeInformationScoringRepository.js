@@ -22,6 +22,7 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         return;
     }
 
+    console.log(itemToScore.tags);
     if (!(itemToScore.tags || []).length) {
         console.log('item to score has no tags for scoring');
         reject();
