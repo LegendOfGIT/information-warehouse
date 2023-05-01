@@ -1,7 +1,8 @@
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
+const queryInformationRepository = require('./queryInformationRepository');
 
-module.exports = (informationItemScoring) => new Promise((resolve, reject) => {
+module.exports = (informationItemScoring) => new Promise(async (resolve, reject) => {
     if (!informationItemScoring?.itemId) {
         console.log('required itemId is missing');
         reject();
@@ -13,6 +14,9 @@ module.exports = (informationItemScoring) => new Promise((resolve, reject) => {
         reject();
         return;
     }
+
+    const itemToScore = await queryInformationRepository({itemId: informationItemScoring.itemId}, false, 1, 1);
+    console.log(itemToScore);
 
     resolve();
 
