@@ -55,6 +55,7 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         1);
 
     furtherItemsToScore.forEach(item => {
+        increaseScoringValue(informationItemScoring, itemToScore, item);
         console.log(item.scoring);
     })
 
