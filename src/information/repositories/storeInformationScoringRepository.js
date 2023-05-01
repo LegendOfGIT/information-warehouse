@@ -6,7 +6,7 @@ const increaseScoringValue = (itemToScoreArguments, itemToScore, itemToCompare) 
     const matchingTags = (itemToCompare.tags || []).filter(tag => -1 !== tags.indexOf(tag));
 
     let profileId = itemToScoreArguments.searchProfileId || '';
-    profileId = '' === profileId ? 'no-profile': profileId;
+    profileId = '' === profileId ? 'noprofile': profileId;
     const matchingTagsInPercent = Math.ceil((matchingTags.length * 100) / tags.length);
     const scoring = itemToCompare.scoring || {};
     scoring[profileId] = scoring[itemToScoreArguments.searchProfileId] || 0;
