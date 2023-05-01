@@ -83,20 +83,6 @@ module.exports = () => ({
 
             await queryInformationItems(query, randomItems, numberOfResults, page, true)
                 .then(async response => {
-                    response = response.sort((a, b) => {
-                        let scoringA = 0;
-                        let scoringB = 0;
-
-                        if (a.scoring) {
-                            scoringA = a.scoring[searchProfileId || ''] || 0;
-                        }
-                        if (b.scoring) {
-                            scoringB = b.scoring[searchProfileId || ''] || 0;
-                        }
-
-                        return scoringB - scoringA;
-                    });
-
                     const navigationIdOfFirstItem = response.length ? response[0].navigationPath[0] : '';
                     storeActivityVisitedCategoryRepository(
                         searchProfileId,

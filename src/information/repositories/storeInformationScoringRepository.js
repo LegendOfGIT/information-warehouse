@@ -1,5 +1,3 @@
-const configuration = require('../../configuration/app-config')();
-const mongoClient = require('mongodb').MongoClient;
 const queryInformationRepository = require('./queryInformationRepository');
 const storeInformationRepository = require('./storeInformationRepository');
 
@@ -7,10 +5,12 @@ const increaseScoringValue = (itemToScoreArguments, itemToScore, itemToCompare) 
     const tags = itemToScore.tags || [];
     const matchingTags = (itemToCompare.tags || []).filter(tag => -1 !== tags.indexOf(tag));
 
+    let profileId = itemToScoreArguments.searchProfileId || '';
+    profileId = '' === profileId ? 'no-profile': profileId;
     const matchingTagsInPercent = Math.ceil((matchingTags.length * 100) / tags.length);
     const scoring = itemToCompare.scoring || {};
-    scoring[itemToScoreArguments.searchProfileId] = scoring[itemToScoreArguments.searchProfileId] || 0;
-    scoring[itemToScoreArguments.searchProfileId] += (matchingTagsInPercent * itemToScoreArguments.scoring);
+    scoring[profileId] = scoring[itemToScoreArguments.searchProfileId] || 0;
+    scoring[profileId] += (matchingTagsInPercent * itemToScoreArguments.scoring);
     itemToCompare.scoring = scoring;
 }
 
