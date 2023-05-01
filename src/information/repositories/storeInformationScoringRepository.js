@@ -16,7 +16,17 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
     }
 
     const itemToScore = await queryInformationRepository({itemId: informationItemScoring.itemId}, false, 1, 1);
-    console.log(itemToScore);
+    if (!itemToScore) {
+        console.log('item to score can not be found');
+        reject();
+        return;
+    }
+
+    if (!(itemToScore.tags || []).length) {
+        console.log('item to score has no tags for scoring');
+        reject();
+        return;
+    }
 
     resolve();
 
