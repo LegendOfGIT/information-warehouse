@@ -70,7 +70,6 @@ module.exports = () => ({
                   { title: new RegExp(`.*${searchPattern}.*`, 'i') },
                   { description: new RegExp(`.*${searchPattern}.*`, 'i') }
                 ];
-                // query.title = new RegExp(`.*${searchPattern}.*`, 'i')
             }
 
             if (navigationId) {
