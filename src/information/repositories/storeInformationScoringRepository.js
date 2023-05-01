@@ -2,14 +2,14 @@ const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 const queryInformationRepository = require('./queryInformationRepository');
 
-const increaseScoringValue = (itemToScore, itemToCompare) => {
+const increaseScoringValue = (itemToScoreArguments, itemToScore, itemToCompare) => {
     const tags = itemToScore.tags || [];
     const matchingTags = (itemToScore.tags || []).filter(tag => -1 !== tags.indexOf(tag));
 
     const matchingTagsInPercent = Math.ceil((matchingTags.length * 100) / tags.length);
     const scoring = itemToCompare.scoring || {};
-    scoring[itemToScore.searchProfileId] = scoring[itemToScore.searchProfileId] || 0;
-    scoring[itemToScore.searchProfileId] += (matchingTagsInPercent * itemToScore.scoring);
+    scoring[itemToScoreArguments.searchProfileId] = scoring[itemToScoreArguments.searchProfileId] || 0;
+    scoring[itemToScoreArguments.searchProfileId] += (matchingTagsInPercent * itemToScoreArguments.scoring);
     itemToCompare.scoring = scoring;
 }
 
@@ -40,7 +40,7 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         return;
     }
 
-    increaseScoringValue(itemToScore, itemToScore);
+    increaseScoringValue(informationItemScoring, itemToScore, itemToScore);
     console.log(itemToScore);
 
     resolve();
