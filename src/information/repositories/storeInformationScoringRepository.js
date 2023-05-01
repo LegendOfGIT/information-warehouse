@@ -44,7 +44,7 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
     increaseScoringValue(informationItemScoring, itemToScore, itemToScore);
 
     const deepestNavigationId = itemToScore.navigationPath[itemToScore.navigationPath.length - 1];
-    const furtherItemsToScore = queryInformationRepository(
+    const furtherItemsToScore = await queryInformationRepository(
         {
             itemId: { $ne: informationItemScoring.itemId },
             navigationPath: deepestNavigationId,
