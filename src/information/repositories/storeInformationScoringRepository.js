@@ -5,7 +5,7 @@ const storeInformationRepository = require('./storeInformationRepository');
 
 const increaseScoringValue = (itemToScoreArguments, itemToScore, itemToCompare) => {
     const tags = itemToScore.tags || [];
-    const matchingTags = (itemToScore.tags || []).filter(tag => -1 !== tags.indexOf(tag));
+    const matchingTags = (itemToCompare.tags || []).filter(tag => -1 !== tags.indexOf(tag));
 
     const matchingTagsInPercent = Math.ceil((matchingTags.length * 100) / tags.length);
     const scoring = itemToCompare.scoring || {};
