@@ -54,7 +54,9 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         20,
         1);
 
-    console.log(furtherItemsToScore);
+    furtherItemsToScore.forEach(item => {
+        console.log(item.scoring);
+    })
 
 
     resolve();
