@@ -1,6 +1,7 @@
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 const queryInformationRepository = require('./queryInformationRepository');
+const storeInformationRepository = require('./storeInformationRepository');
 
 const increaseScoringValue = (itemToScoreArguments, itemToScore, itemToCompare) => {
     const tags = itemToScore.tags || [];
@@ -41,7 +42,10 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
     }
 
     increaseScoringValue(informationItemScoring, itemToScore, itemToScore);
-    console.log(itemToScore);
+
+    const deepestNavigationId = itemToScore.navigationPath[itemToScore.navigationPath.length - 1];
+    console.log(deepestNavigationId);
+
 
     resolve();
 
