@@ -2,6 +2,17 @@ const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 const queryInformationRepository = require('./queryInformationRepository');
 
+const increaseScoringValue = (itemToScore, itemToCompare) => {
+    const tags = itemToScore.tags || [];
+    const matchingTags = (itemToScore.tags || []).filter(tag => -1 !== tags.indexOf(tag));
+
+    const matchingTagsInPercent = Math.ceil((matchingTags.length * 100) / tags.length);
+    const scoring = itemToCompare.scoring || {};
+    scoring[itemToScore.searchProfileId] = scoring[itemToScore.searchProfileId] || 0;
+    scoring[itemToScore.searchProfileId] += (matchingTagsInPercent * itemToScore.scoring);
+    itemToCompare.scoring = scoring;
+}
+
 module.exports = (informationItemScoring) => new Promise(async (resolve, reject) => {
     if (!informationItemScoring?.itemId) {
         console.log('required itemId is missing');
@@ -29,7 +40,12 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         return;
     }
 
+    increaseScoringValue(itemToScore, itemToScore);
+    console.log(itemToScore);
+
     resolve();
+
+
 
     /*mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
         .then((database) => {
