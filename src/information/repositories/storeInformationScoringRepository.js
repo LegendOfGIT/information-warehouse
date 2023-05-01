@@ -15,14 +15,14 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         return;
     }
 
-    const itemToScore = await queryInformationRepository({itemId: informationItemScoring.itemId}, false, 1, 1);
+    const itemsToScore = await queryInformationRepository({itemId: informationItemScoring.itemId}, false, 1, 1);
+    const itemToScore = itemsToScore && itemsToScore.length ? itemsToScore[0] : undefined;
     if (!itemToScore) {
         console.log('item to score can not be found');
         reject();
         return;
     }
 
-    console.log(itemToScore);
     if (!(itemToScore.tags || []).length) {
         console.log('item to score has no tags for scoring');
         reject();
