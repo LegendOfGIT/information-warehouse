@@ -12,7 +12,7 @@ module.exports = (query, randomItems, numberOfResults, page) => new Promise((res
             const priceCheck = numberOfResults > 1 ? { hasPriceInformation: { $in: [true, null] } } : null;
             const queryParts = [
                 { $match: { ...query, ...priceCheck } },
-                { $sort: { ratingInPercent: -1, numberOfRatings: -1, updatedOn: -1 }}
+                { $sort: { 'scoring.noprofile': -1, ratingInPercent: -1, numberOfRatings: -1, updatedOn: -1 }}
             ];
 
             if ((/true/i).test(randomItems)) {
