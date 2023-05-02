@@ -70,6 +70,7 @@ const CATEGORY_MAPPING = {
     SPORTS_EXERCISE_EQUIPMENT: 'sports-exercise-equipment',
     VEHICLES_BICYCLES_CITYBIKES: 'city-bikes',
     VEHICLES_BICYCLES_ELECTRICBIKES: 'electric-bikes',
+    VEHICLES_BICYCLES_KIDSBIKES: 'kids-bikes',
     VEHICLES_CARS_ALLWEATHERTYRES: 'car-all-weather-tyres',
     VEHICLES_CARS_CHILDSEATS: 'car-child-seats',
     VEHICLES_CARS_SUMMERTYRES: 'car-summer-tyres',
