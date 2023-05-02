@@ -21,6 +21,7 @@ const updateItem = (item) => {
     });
 
     (item.providers || []).filter(provider => provider.mean).forEach(provider => {
+        console.log(provider.mean);
         requestModule.post({
             url,
             json: { itemId: provider.mean, navigationPath: item.navigationPath }
