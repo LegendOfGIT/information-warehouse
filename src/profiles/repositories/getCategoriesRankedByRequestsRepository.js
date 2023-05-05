@@ -1,8 +1,8 @@
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
-module.exports = (hashTag) => new Promise(async (resolve, reject) => {
-    if (undefined === hashTag) {
+module.exports = (hashtag) => new Promise(async (resolve, reject) => {
+    if (undefined === hashtag) {
         resolve([]);
         return;
     }
@@ -16,7 +16,7 @@ module.exports = (hashTag) => new Promise(async (resolve, reject) => {
 
             const collection =  database.db().collection('visitedCategories');
 
-            collection.find({ hashTag }).sort({ activityOn: -1 }).limit(300).toArray((err, result) => {
+            collection.find({ hashTag: hashtag }).sort({ activityOn: -1 }).limit(300).toArray((err, result) => {
                 if (err) throw err;
 
                 const categories = [...new Set(result.map(item => item.categoryId))].map(category => ({
