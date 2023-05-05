@@ -13,13 +13,13 @@ const getRootCategoryIdFrom = (navigationId) => {
     return navigationIdTokens[0];
 }
 
-module.exports = (searchProfileId, navigationId, maximumNumberOfResults, isBotRequest) => new Promise((resolve) => {
+module.exports = (hashtag, navigationId, maximumNumberOfResults, isBotRequest) => new Promise((resolve) => {
     if (isBotRequest) {
         resolve();
         return;
     }
 
-    if (undefined === searchProfileId) {
+    if (undefined === hashtag) {
         resolve();
         return;
     }
@@ -40,7 +40,8 @@ module.exports = (searchProfileId, navigationId, maximumNumberOfResults, isBotRe
             const collection = database.db().collection('visitedCategories');
             collection.insertOne({
                 categoryId,
-                searchProfileId,
+                hashtag,
+                searchProfileId: hashtag,
                 activityOn: new Date()
             })
                 .then(response => {

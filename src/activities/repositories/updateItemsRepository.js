@@ -28,8 +28,8 @@ const updateItem = (item) => {
     });
 };
 
-module.exports = (items, searchProfileId, maximumNumberOfResults) => new Promise((resolve) => {
-    if (undefined === searchProfileId) {
+module.exports = (items, hashtag, maximumNumberOfResults) => new Promise((resolve) => {
+    if (undefined === hashtag) {
         resolve();
         return;
     }

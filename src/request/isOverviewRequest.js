@@ -1,4 +1,4 @@
-module.exports = (id, searchProfileId, maximumNumberOfResults) =>
-    undefined !== searchProfileId &&
+module.exports = (id, hashtag, maximumNumberOfResults) =>
+    undefined !== hashtag &&
     !id &&
     !maximumNumberOfResults;

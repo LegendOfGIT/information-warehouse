@@ -1,7 +1,12 @@
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
-module.exports = (searchProfileId) => new Promise(async (resolve, reject) => {
+module.exports = (hashTag) => new Promise(async (resolve, reject) => {
+    if (!hashTag) {
+        resolve([]);
+        return;
+    }
+
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/activities`)
         .then(database => {
             if(!database) {
@@ -11,7 +16,7 @@ module.exports = (searchProfileId) => new Promise(async (resolve, reject) => {
 
             const collection =  database.db().collection('visitedCategories');
 
-            collection.find({ searchProfileId }).sort({ activityOn: -1 }).limit(300).toArray((err, result) => {
+            collection.find({ hashTag }).sort({ activityOn: -1 }).limit(300).toArray((err, result) => {
                 if (err) throw err;
 
                 const categories = [...new Set(result.map(item => item.categoryId))].map(category => ({

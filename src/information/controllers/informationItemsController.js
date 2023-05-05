@@ -11,7 +11,6 @@ const storeActivityVisitedCategoryRepository = require('../../activities/reposit
 const updateItemsRepository = require('../../activities/repositories/updateItemsRepository');
 const isOverviewRequest = require('../../request/isOverviewRequest');
 const getAvailablePages = require('../getAvailablePages');
-const repl = require("repl");
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -39,6 +38,14 @@ const isBotRequest = (request) => {
     return 'true' === (request.query['isBot'] || 'false');
 };
 
+const getFirstHashTag = (hashTags) => {
+    if (!hashTags) {
+        return;
+    }
+
+    return hashTags.split(',')[0] || '';
+}
+
 module.exports = () => ({
     registerGetInformationItems: (fastify) => {
         fastify.get('/api/information-items', async(request, reply) => {
@@ -47,6 +54,7 @@ module.exports = () => ({
             const {
                 id,
                 highlightedItems,
+                hashTags,
                 navigationId,
                 numberOfResults,
                 page,
@@ -72,10 +80,11 @@ module.exports = () => ({
                 ];
             }
 
+            const firstHashtag = getFirstHashTag(hashTags) || searchProfileId;
             if (navigationId) {
                 query.navigationPath = navigationId;
 
-                if (isOverviewRequest(id, searchProfileId, numberOfResults) && !isBotRequest(request)) {
+                if (isOverviewRequest(id, firstHashtag, numberOfResults) && !isBotRequest(request)) {
                     observeConfiguration.getCategoryIdsByNavigationId(navigationId)
                         .forEach(categoryId => observeCategory(categoryId));
                 }
@@ -85,19 +94,15 @@ module.exports = () => ({
                 .then(async response => {
                     const navigationIdOfFirstItem = response.length ? response[0].navigationPath[0] : '';
                     storeActivityVisitedCategoryRepository(
-                        searchProfileId,
+                        firstHashtag,
                         navigationIdOfFirstItem,
                         numberOfResults,
                         isBotRequest(request)
                     ).then(() => {
                     });
 
-                    updateItemsRepository(
-                        response,
-                        searchProfileId,
-                        numberOfResults
-                    ).then(() => {
-                    });
+                    updateItemsRepository(response, firstHashtag, numberOfResults)
+                        .then(() => {});
 
                     const availablePages = await getAvailablePages(query, numberOfResults, page);
 

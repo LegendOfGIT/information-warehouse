@@ -1,16 +1,25 @@
 const queryInformationRepository = require('./queryInformationRepository');
 const storeInformationRepository = require('./storeInformationRepository');
 
+const getFirstHashTag = (hashTags) => {
+    if (!hashTags) {
+        return;
+    }
+
+    return hashTags.split(',')[0] || '';
+}
+
 const increaseScoringValue = (itemToScoreArguments, itemToScore, itemToCompare) => {
     const tags = itemToScore.tags || [];
     const matchingTags = (itemToCompare.tags || []).filter(tag => -1 !== tags.indexOf(tag));
 
-    let profileId = itemToScoreArguments.searchProfileId || '';
-    profileId = '' === profileId ? 'noprofile': profileId;
+    let hashtag = getFirstHashTag(itemToScoreArguments.hashTags) || itemToScoreArguments.searchProfileId || '';
+
+    hashtag = '' === hashtag ? 'WeWannaShop': hashtag;
     const matchingTagsInPercent = Math.ceil((matchingTags.length * 100) / tags.length);
     const scoring = itemToCompare.scoring || {};
-    scoring[profileId] = scoring[itemToScoreArguments.searchProfileId] || 0;
-    scoring[profileId] += (matchingTagsInPercent * itemToScoreArguments.scoring);
+    scoring[hashtag] = scoring[itemToScoreArguments.searchProfileId] || 0;
+    scoring[hashtag] += (matchingTagsInPercent * itemToScoreArguments.scoring);
     itemToCompare.scoring = scoring;
 }
 
