@@ -2,7 +2,7 @@ const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
 module.exports = (hashTag) => new Promise(async (resolve, reject) => {
-    if (!hashTag) {
+    if (undefined === hashTag) {
         resolve([]);
         return;
     }
