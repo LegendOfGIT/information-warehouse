@@ -5,6 +5,7 @@ const constants = require('../constants');
 module.exports = (query, hashtag, randomItems, numberOfResults, page, addCampaignParameter) => new Promise((resolve, reject) => {
     queryInformation(
         query,
+        hashtag,
         randomItems,
         numberOfResults ? Number.parseInt(numberOfResults) : constants.DEFAULT_MAXIMUM_AMOUNT_OF_RESULTS,
         page
