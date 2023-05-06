@@ -10,8 +10,11 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Pro
             }
 
             const priceCheck = numberOfResults > 1 ? { hasPriceInformation: { $in: [true, null] } } : null;
-            const sort = { ratingInPercent: -1, numberOfRatings: -1, updatedOn: -1 };
+            const sort = {};
             sort['scoring.' + (hashtag || 'noprofile')] = -1;
+            sort.ratingInPercent = -1;
+            sort.numberOfRatings = -1;
+            sort.updatedOn = -1;
 
             const queryParts = [
                 { $match: { ...query, ...priceCheck } },
