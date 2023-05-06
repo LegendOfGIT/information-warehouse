@@ -1,5 +1,5 @@
 const configuration = require('./configuration/app-config')();
-const hashTagsController = require('./hashtags/controllers/HashTagsController')();
+const hashtagsController = require('./hashtags/controllers/hashtagsController')();
 const informationItemsController = require('./information/controllers/informationItemsController')();
 const searchProfilesController = require('./profiles/controllers/ProfilesController')();
 const wishlistItemsController = require('./wishlist/controllers/WishlistItemsController')();
@@ -17,7 +17,7 @@ informationItemsController.registerStoreInformationItem(fastify);
 informationItemsController.registerStoreInformationItemScoring(fastify);
 informationItemsController.registerUnhighlightInformationItem(fastify);
 
-hashTagsController.registerGetRankedCategoriesByHashTags(fastify);
+hashtagsController.registerGetRankedCategoriesByHashTags(fastify);
 
 searchProfilesController.registerGetSearchProfile(fastify);
 searchProfilesController.registerGetSearchProfiles(fastify);

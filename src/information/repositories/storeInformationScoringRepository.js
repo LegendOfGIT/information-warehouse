@@ -1,19 +1,19 @@
 const queryInformationRepository = require('./queryInformationRepository');
 const storeInformationRepository = require('./storeInformationRepository');
 
-const getFirstHashTag = (hashTags) => {
-    if (!hashTags) {
+const getFirstHashtag = (hashtags) => {
+    if (!hashtags) {
         return;
     }
 
-    return hashTags.split(',')[0] || '';
+    return hashtags.split(',')[0] || '';
 }
 
 const increaseScoringValue = (itemToScoreArguments, itemToScore, itemToCompare) => {
     const tags = itemToScore.tags || [];
     const matchingTags = (itemToCompare.tags || []).filter(tag => -1 !== tags.indexOf(tag));
 
-    let hashtag = getFirstHashTag(itemToScoreArguments.hashTags) || itemToScoreArguments.searchProfileId || '';
+    let hashtag = getFirstHashtag(itemToScoreArguments.hashtags) || itemToScoreArguments.searchProfileId || '';
 
     hashtag = '' === hashtag ? 'WeWannaShop': hashtag;
     const matchingTagsInPercent = Math.ceil((matchingTags.length * 100) / tags.length);

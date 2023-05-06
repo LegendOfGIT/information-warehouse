@@ -2,21 +2,21 @@ const getCategoriesRankedByRequestsRepository = require("../../profiles/reposito
 
 const HTTP_STATUS_CODE_OK = 200;
 
-const getFirstHashTag = (hashTags) => {
-    if (!hashTags) {
+const getFirstHashtag = (hashtags) => {
+    if (!hashtags) {
         return;
     }
 
-    return hashTags.split(',')[0] || '';
+    return hashtags.split(',')[0] || '';
 }
 
 module.exports = () => ({
 
     registerGetRankedCategoriesByHashTags: (fastify) => {
         fastify.get('/api/ranked-categories', async (request, reply) => {
-            const { hashTags } = request.query;
+            const { hashtags } = request.query;
 
-            await getCategoriesRankedByRequestsRepository(getFirstHashTag(hashTags))
+            await getCategoriesRankedByRequestsRepository(getFirstHashtag(hashtags))
                 .then(rankedCategories => reply.code(HTTP_STATUS_CODE_OK).send(rankedCategories))
                 .catch(() => reply.code(HTTP_STATUS_CODE_OK).send([]));
         });

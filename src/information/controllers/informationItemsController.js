@@ -38,12 +38,12 @@ const isBotRequest = (request) => {
     return 'true' === (request.query['isBot'] || 'false');
 };
 
-const getFirstHashTag = (hashTags) => {
-    if (!hashTags) {
+const getFirstHashtag = (hashtags) => {
+    if (!hashtags) {
         return;
     }
 
-    return hashTags.split(',')[0] || '';
+    return hashtags.split(',')[0] || '';
 }
 
 module.exports = () => ({
@@ -54,7 +54,7 @@ module.exports = () => ({
             const {
                 id,
                 highlightedItems,
-                hashTags,
+                hashtags,
                 navigationId,
                 numberOfResults,
                 page,
@@ -80,7 +80,7 @@ module.exports = () => ({
                 ];
             }
 
-            const firstHashtag = getFirstHashTag(hashTags) || searchProfileId;
+            const firstHashtag = getFirstHashtag(hashtags) || searchProfileId;
             if (navigationId) {
                 query.navigationPath = navigationId;
 
