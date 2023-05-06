@@ -1,7 +1,7 @@
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
-module.exports = (query, randomItems, numberOfResults, page) => new Promise((resolve, reject) => {
+module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Promise((resolve, reject) => {
 
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
         .then(database => {
@@ -10,9 +10,12 @@ module.exports = (query, randomItems, numberOfResults, page) => new Promise((res
             }
 
             const priceCheck = numberOfResults > 1 ? { hasPriceInformation: { $in: [true, null] } } : null;
+            const sort = { ratingInPercent: -1, numberOfRatings: -1, updatedOn: -1 };
+            sort['scoring.' + (hashtag || 'noprofile')] = -1;
+
             const queryParts = [
                 { $match: { ...query, ...priceCheck } },
-                { $sort: { 'scoring.noprofile': -1, ratingInPercent: -1, numberOfRatings: -1, updatedOn: -1 }}
+                { $sort: sort}
             ];
 
             if ((/true/i).test(randomItems)) {

@@ -90,7 +90,7 @@ module.exports = () => ({
                 }
             }
 
-            await queryInformationItems(query, randomItems, numberOfResults, page, true)
+            await queryInformationItems(query, firstHashtag, randomItems, numberOfResults, page, true)
                 .then(async response => {
                     const navigationIdOfFirstItem = response.length ? response[0].navigationPath[0] : '';
                     storeActivityVisitedCategoryRepository(
@@ -139,6 +139,7 @@ module.exports = () => ({
             await Promise.all(navigationIds.split(',').map(async navigationId => {
                 const items = await queryInformationItems(
                     {navigationPath: navigationId},
+                    undefined,
                     randomItems,
                     numberOfResults,
                     true);
@@ -168,6 +169,7 @@ module.exports = () => ({
 
             const items = await queryInformationItems(
                 { _id: ObjectID(request.body.id || '') },
+                undefined,
                 false,
                 undefined,
                 false);
@@ -194,6 +196,7 @@ module.exports = () => ({
 
             const items = await queryInformationItems(
                 { _id: ObjectID(request.body.id || '') },
+                undefined,
                 false,
                 undefined,
                 false);

@@ -2,7 +2,7 @@ const getCampaignParameterByUrl = require('../configuration/campaign-configurati
 const queryInformation = require('./repositories/queryInformationRepository');
 const constants = require('../constants');
 
-module.exports = (query, randomItems, numberOfResults, page, addCampaignParameter) => new Promise((resolve, reject) => {
+module.exports = (query, hashtag, randomItems, numberOfResults, page, addCampaignParameter) => new Promise((resolve, reject) => {
     queryInformation(
         query,
         randomItems,

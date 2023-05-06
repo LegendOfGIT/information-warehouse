@@ -21,7 +21,7 @@ module.exports = () => ({
             const { userId } = request.query;
 
             await getWishlistItemsRepository(userId).then(async (items) => {
-                await queryInformationRepository({ itemId: { $in: items } }, 'false',0, 0)
+                await queryInformationRepository({ itemId: { $in: items } }, undefined, 'false',0, 0)
                     .then((informationItems) => {
                         reply.code(HTTP_STATUS_CODE_OK).send(informationItems);
                     }).catch((error) => replyWithInternalError(reply, error));

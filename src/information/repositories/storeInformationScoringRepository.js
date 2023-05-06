@@ -36,7 +36,13 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         return;
     }
 
-    const itemsToScore = await queryInformationRepository({itemId: informationItemScoring.itemId}, false, 1, 1);
+    const itemsToScore = await queryInformationRepository(
+        {itemId: informationItemScoring.itemId},
+        undefined,
+        false,
+        1,
+        1);
+
     const itemToScore = itemsToScore && itemsToScore.length ? itemsToScore[0] : undefined;
     if (!itemToScore) {
         console.log('item to score can not be found');
@@ -60,6 +66,7 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
             navigationPath: deepestNavigationId,
             tags: { $exists: true }
         },
+        undefined,
         true,
         20,
         1);
