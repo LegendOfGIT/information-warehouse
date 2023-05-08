@@ -101,7 +101,7 @@ module.exports = () => ({
                     ).then(() => {
                     });
 
-                    updateItemsRepository(response, firstHashtag, numberOfResults)
+                    updateItemsRepository(response, numberOfResults)
                         .then(() => {});
 
                     const availablePages = await getAvailablePages(query, numberOfResults, page);

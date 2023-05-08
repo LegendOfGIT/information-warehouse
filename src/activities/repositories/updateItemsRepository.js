@@ -28,12 +28,7 @@ const updateItem = (item) => {
     });
 };
 
-module.exports = (items, hashtag, maximumNumberOfResults) => new Promise((resolve) => {
-    if (undefined === hashtag) {
-        resolve();
-        return;
-    }
-
+module.exports = (items, maximumNumberOfResults) => new Promise((resolve) => {
     if (maximumNumberOfResults && maximumNumberOfResults > 1) {
         resolve();
         return;
