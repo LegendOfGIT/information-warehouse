@@ -15,9 +15,12 @@ module.exports = (item) => {
         tags.push('sale');
     }
 
-    if (item.colors) {
-        tags = tags.concat(item.colors.split(','));
-    }
+    const splitProperties = ['colors', 'sizes', 'suitableFor']
+    splitProperties.forEach(splitProperty => {
+        if (item[splitProperty]) {
+            tags = tags.concat(item[splitProperty].split(',').map(v => v.trim()));
+        }
+    });
 
     const tagMapping = [
         { property: 'fabricPattern', prefix: 'fabric pattern' },
