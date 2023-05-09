@@ -48,8 +48,8 @@ module.exports = (item) => {
         dunkelblau: 'darkblue',
         gelb: 'yellow', grau: 'gray', grün: 'green',
         navy: 'darkblue',
-        rot: 'red',
-        schwarz: 'black',
+        rosa: 'pink', rot: 'red',
+        schwarz: 'black', silber: 'silver', 'sterling-silber': 'silver',
         weiß: 'white'
     };
     tags = tags.map(tag => { const t = tag.trim().toLowerCase(); return tagReplacements[t] ? tagReplacements[t] : t; })

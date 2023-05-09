@@ -10,17 +10,23 @@ const getFirstHashtag = (hashtags) => {
     return hashtags.split(',')[0] || '';
 }
 
-const increaseScoringValue = (itemToScoreArguments, itemToScore, itemToCompare) => {
+const modifyScoringValue = (itemToScoreArguments, itemToScore, itemToCompare) => {
     const tags = itemToScore.tags || [];
     const matchingTags = (itemToCompare.tags || []).filter(tag => -1 !== tags.indexOf(tag));
 
     let hashtag = getFirstHashtag(itemToScoreArguments.hashtags) || itemToScoreArguments.searchProfileId || '';
 
-    hashtag = '' === hashtag ? 'WeWannaShop': hashtag;
+    hashtag = '' === hashtag ? 'Highlights': hashtag;
     const matchingTagsInPercent = Math.ceil((matchingTags.length * 100) / tags.length);
     const scoring = itemToCompare.scoring || {};
     scoring[hashtag] = scoring[itemToScoreArguments.searchProfileId] || 0;
-    scoring[hashtag] += (matchingTagsInPercent * itemToScoreArguments.scoring);
+
+    scoring[hashtag] = matchingTagsInPercent > 50
+        ? scoring[hashtag] + (matchingTagsInPercent * itemToScoreArguments.scoring)
+        : scoring[hashtag] - ((100 - matchingTagsInPercent) * itemToScoreArguments.scoring);
+
+    scoring[hashtag] = scoring[hashtag] > 10000 ? 10000 : scoring[hashtag] < 0 ? 0 : scoring[hashtag];
+
     itemToCompare.scoring = scoring;
 }
 
@@ -58,7 +64,7 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         return;
     }
 
-    increaseScoringValue(informationItemScoring, itemToScore, itemToScore);
+    modifyScoringValue(informationItemScoring, itemToScore, itemToScore);
     await storeInformationRepository(itemToScore);
 
     const deepestNavigationId = itemToScore.navigationPath[itemToScore.navigationPath.length - 1];
@@ -75,7 +81,7 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
 
     for (let item of furtherItemsToScore) {
         item.tags = tagsResolver(item);
-        increaseScoringValue(informationItemScoring, itemToScore, item);
+        modifyScoringValue(informationItemScoring, itemToScore, item);
         await storeInformationRepository(item);
     }
 
