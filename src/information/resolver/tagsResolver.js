@@ -15,10 +15,16 @@ module.exports = (item) => {
         tags.push('sale');
     }
 
-    const splitProperties = ['colors', 'sizes', 'suitableFor']
+    const splitProperties = [
+        { key: 'colors' },
+        { key: 'sizes' },
+        { key: 'suitableFor' }
+    ];
     splitProperties.forEach(splitProperty => {
-        if (item[splitProperty]) {
-            tags = tags.concat(item[splitProperty].split(',').map(v => v.trim()));
+        if (item[splitProperty.key]) {
+            const innerSeparators = 'sizes' === splitProperty.key ? /&/ : /&|\//;
+            tags = tags.concat(item[splitProperty.key].split(',').map(a => a.split(innerSeparators)).flat());
+
         }
     });
 
@@ -33,6 +39,20 @@ module.exports = (item) => {
             tags.push(`${mapping.prefix ? mapping.prefix : ''} ${item[mapping.property]}`.trim());
         }
     });
+
+
+    const tagReplacements = {
+        berry: 'purple',
+        blau: 'blue', braun: 'brown',
+        dunkelblau: 'darkblue',
+        gelb: 'yellow', grau: 'gray', grün: 'green',
+        navy: 'darkblue',
+        rot: 'red',
+        schwarz: 'black',
+        weiß: 'white'
+    };
+    tags = tags.map(tag => { const t = tag.trim().toLowerCase(); return tagReplacements[t] ? tagReplacements[t] : t; })
+        .filter((value, index, array) => array.indexOf(value) === index);
 
     return tags;
 };

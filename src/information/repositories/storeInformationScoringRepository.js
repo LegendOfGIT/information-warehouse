@@ -1,5 +1,6 @@
 const queryInformationRepository = require('./queryInformationRepository');
 const storeInformationRepository = require('./storeInformationRepository');
+const tagsResolver = require('../resolver/tagsResolver');
 
 const getFirstHashtag = (hashtags) => {
     if (!hashtags) {
@@ -50,6 +51,7 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         return;
     }
 
+    itemToScore.tags = tagsResolver(itemToScore);
     if (!(itemToScore.tags || []).length) {
         console.log('item to score has no tags for scoring');
         reject();
