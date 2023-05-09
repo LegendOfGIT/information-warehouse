@@ -24,9 +24,10 @@ module.exports = (item) => {
         if (item[splitProperty.key]) {
             const innerSeparators = 'sizes' === splitProperty.key ? /&/ : /&|\//;
             tags = tags.concat(item[splitProperty.key].split(',').map(a => a.split(innerSeparators)).flat());
-
         }
     });
+
+    tags = tags.concat((item.seoKeywords || '').split('|'));
 
     const tagMapping = [
         { property: 'fabricPattern', prefix: 'fabric pattern' },
