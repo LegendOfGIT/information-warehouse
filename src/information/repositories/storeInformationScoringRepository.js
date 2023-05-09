@@ -74,6 +74,7 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         1);
 
     for (let item of furtherItemsToScore) {
+        item.tags = tagsResolver(item);
         increaseScoringValue(informationItemScoring, itemToScore, item);
         await storeInformationRepository(item);
     }
