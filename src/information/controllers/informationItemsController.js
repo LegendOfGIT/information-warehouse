@@ -62,7 +62,7 @@ const addSearchQuery = (query, searchPattern, searchHashtags) => {
     const or = [];
     searchHashtags.split(',').forEach(searchHashTag => {
         const hashTagQuery = {};
-        hashTagQuery[`scoring.${searchHashTag.trim()}`] = { $exists: true };
+        hashTagQuery[`scoring.${searchHashTag.trim()}`] = { $gt: 0.4 };
         or.push(hashTagQuery);
     });
 
