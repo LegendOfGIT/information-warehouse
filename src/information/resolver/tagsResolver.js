@@ -46,13 +46,18 @@ module.exports = (item) => {
         berry: 'purple',
         blau: 'blue', braun: 'brown',
         dunkelblau: 'darkblue',
-        gelb: 'yellow', grau: 'gray', grün: 'green',
+        gelb: 'yellow', gold: 'gold', grau: 'gray', grün: 'green',
         navy: 'darkblue',
         rosa: 'pink', rot: 'red',
-        schwarz: 'black', silber: 'silver', 'sterling-silber': 'silver',
+        schwarz: 'black', silber: 'silver',
         weiß: 'white'
     };
-    tags = tags.map(tag => { const t = tag.trim().toLowerCase(); return tagReplacements[t] ? tagReplacements[t] : t; })
+    tags = tags
+        .map(tag => {
+            const t = tag.trim().toLowerCase();
+            const replacementKey = Object.keys(tagReplacements).find(key => -1 !== t.indexOf(key));
+            return replacementKey ? tagReplacements[replacementKey] : t;
+        })
         .filter((value, index, array) => array.indexOf(value) === index);
 
     return tags;
