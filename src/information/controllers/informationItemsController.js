@@ -46,6 +46,29 @@ const getFirstHashtag = (hashtags) => {
     return hashtags.split(',')[0] || '';
 }
 
+const addSearchQuery = (query, searchPattern, searchHashTags) => {
+    if (searchPattern) {
+        query['$or'] = [
+            { title: new RegExp(`.*${searchPattern}.*`, 'i') },
+            { description: new RegExp(`.*${searchPattern}.*`, 'i') }
+        ];
+        return;
+    }
+
+    if (!searchHashTags) {
+        return;
+    }
+
+    const or = [];
+    searchHashTags.split(',').forEach(searchHashTag => {
+        const hashTagQuery = {};
+        hashTagQuery[`scoring.${searchHashTag.trim()}`] = { $exists: true };
+        or.push(hashTagQuery);
+    });
+
+    query['$or'] = or;
+};
+
 module.exports = () => ({
     registerGetInformationItems: (fastify) => {
         fastify.get('/api/information-items', async(request, reply) => {
@@ -59,6 +82,7 @@ module.exports = () => ({
                 numberOfResults,
                 page,
                 randomItems,
+                searchHashTags,
                 searchPattern,
                 searchProfileId
             } = request.query;
@@ -73,12 +97,7 @@ module.exports = () => ({
                 query.isHighlighted = true;
             }
 
-            if (searchPattern) {
-                query['$or'] = [
-                  { title: new RegExp(`.*${searchPattern}.*`, 'i') },
-                  { description: new RegExp(`.*${searchPattern}.*`, 'i') }
-                ];
-            }
+            addSearchQuery(query, searchPattern, searchHashTags);
 
             const firstHashtag = getFirstHashtag(hashtags) || searchProfileId;
             if (navigationId) {
