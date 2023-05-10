@@ -46,7 +46,7 @@ const getFirstHashtag = (hashtags) => {
     return hashtags.split(',')[0] || '';
 }
 
-const addSearchQuery = (query, searchPattern, searchHashTags) => {
+const addSearchQuery = (query, searchPattern, searchHashtags) => {
     if (searchPattern) {
         query['$or'] = [
             { title: new RegExp(`.*${searchPattern}.*`, 'i') },
@@ -55,12 +55,12 @@ const addSearchQuery = (query, searchPattern, searchHashTags) => {
         return;
     }
 
-    if (!searchHashTags) {
+    if (!searchHashtags) {
         return;
     }
 
     const or = [];
-    searchHashTags.split(',').forEach(searchHashTag => {
+    searchHashtags.split(',').forEach(searchHashTag => {
         const hashTagQuery = {};
         hashTagQuery[`scoring.${searchHashTag.trim()}`] = { $exists: true };
         or.push(hashTagQuery);
@@ -82,7 +82,7 @@ module.exports = () => ({
                 numberOfResults,
                 page,
                 randomItems,
-                searchHashTags,
+                searchHashtags,
                 searchPattern,
                 searchProfileId
             } = request.query;
@@ -97,7 +97,7 @@ module.exports = () => ({
                 query.isHighlighted = true;
             }
 
-            addSearchQuery(query, searchPattern, searchHashTags);
+            addSearchQuery(query, searchPattern, searchHashtags);
 
             const firstHashtag = getFirstHashtag(hashtags) || searchProfileId;
             if (navigationId) {
