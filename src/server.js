@@ -12,10 +12,8 @@ fastify.register(require('@fastify/cors'), {});
 
 informationItemsController.registerGetInformationItems(fastify);
 informationItemsController.registerGetSampleInformationItemsOfCategories(fastify)
-informationItemsController.registerHighlightInformationItem(fastify);
 informationItemsController.registerStoreInformationItem(fastify);
 informationItemsController.registerStoreInformationItemScoring(fastify);
-informationItemsController.registerUnhighlightInformationItem(fastify);
 
 hashtagsController.registerGetRankedCategoriesByHashTags(fastify);
 

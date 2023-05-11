@@ -3,7 +3,6 @@ const cron = require('node-cron');
 const configuration = require('../../configuration/app-config')();
 const queryInformationItems = require('../queryInformationItems');
 const storeInformationItem = require('../storeInformationItem');
-const storeInformationItemRepository = require('../repositories/storeInformationRepository');
 const storeInformationItemScoring = require('../repositories/storeInformationScoringRepository');
 const observeConfiguration = require('../../configuration/observe-configuration');
 const ObjectID = require('mongodb').ObjectID;
@@ -11,6 +10,7 @@ const storeActivityVisitedCategoryRepository = require('../../activities/reposit
 const updateItemsRepository = require('../../activities/repositories/updateItemsRepository');
 const isOverviewRequest = require('../../request/isOverviewRequest');
 const getAvailablePages = require('../getAvailablePages');
+const containsBadTerm = require('../validator/containsBadTerm');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -65,7 +65,6 @@ module.exports = () => ({
             const {
                 id,
                 highlightedItems,
-                hashtags,
                 navigationId,
                 numberOfResults,
                 page,
@@ -73,6 +72,8 @@ module.exports = () => ({
                 searchPattern,
                 searchProfileId
             } = request.query;
+
+            let { hashtags } = request.query;
 
             const query = {};
 
@@ -85,6 +86,9 @@ module.exports = () => ({
             }
 
             addSearchQuery(query, searchPattern);
+
+            const hashtagsContainBadTerm = containsBadTerm(hashtags);
+            hashtags = hashtagsContainBadTerm ? 'Highlights' : hashtags;
 
             const firstHashtag = getFirstHashtag(hashtags) || searchProfileId;
             if (navigationId) {
@@ -118,7 +122,7 @@ module.exports = () => ({
                     }
 
                     reply.send({
-                        errorMessage: '',
+                        errorCode: hashtagsContainBadTerm ? 'HASHTAGS_CONTAIN_BAD_TERM' : '',
                         items: response,
                         availablePages
                     });
@@ -169,64 +173,14 @@ module.exports = () => ({
         });
     },
 
-    registerHighlightInformationItem: (fastify) => {
-        fastify.put('/api/highlight-item', async (request, reply) => {
-            reply.type('application/json').code(HTTP_STATUS_CODE_OK);
-
-            const items = await queryInformationItems(
-                { _id: ObjectID(request.body.id || '') },
-                undefined,
-                false,
-                undefined,
-                false);
-
-            const item = items && items.length ? items[0] : undefined;
-
-            if (!item) {
-                reply.send({ errorMessage: 'item not found' });
-                return;
-            }
-
-            item.isHighlighted = true;
-
-            await storeInformationItemRepository(item)
-                .then(() => {
-                    reply.send({});
-                })
-                .catch(error => replyWithInternalError(reply, error));
-        });
-    },
-    registerUnhighlightInformationItem: (fastify) => {
-        fastify.delete('/api/highlight-item', async (request, reply) => {
-            reply.type('application/json').code(HTTP_STATUS_CODE_OK);
-
-            const items = await queryInformationItems(
-                { _id: ObjectID(request.body.id || '') },
-                undefined,
-                false,
-                undefined,
-                false);
-
-            const item = items && items.length ? items[0] : undefined;
-
-            if (!item) {
-                reply.send({ errorMessage: 'item not found' });
-                return;
-            }
-
-            item.isHighlighted = false;
-
-            await storeInformationItemRepository(item)
-                .then(() => {
-                    reply.send({});
-                })
-                .catch(error => replyWithInternalError(reply, error));
-        });
-    },
-
     registerStoreInformationItemScoring: (fastify) => {
         fastify.put('/api/information-item/scoring', async (request, reply) => {
             reply.type('application/json').code(HTTP_STATUS_CODE_OK);
+
+            if (containsBadTerm(request.body.hashtags)) {
+                reply.send({ errorCode: 'HASHTAGS_CONTAIN_BAD_TERM' });
+                return;
+            }
 
             await storeInformationItemScoring(request.body)
                 .then(async () => {
