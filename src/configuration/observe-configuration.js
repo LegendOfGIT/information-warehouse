@@ -77,6 +77,8 @@ const CATEGORY_MAPPING = {
     MULTIMEDIA_GAMES_PC: 'pc-games',
     MULTIMEDIA_GAMES_PLAYSTATION_4: 'playstation-4-games',
     MULTIMEDIA_GAMES_PLAYSTATION_5: 'playstation-5-games',
+    MULTIMEDIA_MOVIES_ACTION: 'movies-action|movies-bluray-action|movies-dvd-action',
+    MULTIMEDIA_MOVIES_FANTASY: 'movies-fantasy|movies-bluray-fantasy|movies-dvd-fantasy',
     MUSIC_CD_ALTERNATIVE: 'music-alternative',
     MUSIC_CD_GERMANFOLK: 'german-folk-music',
     MUSIC_CD_POP: 'music-pop',
