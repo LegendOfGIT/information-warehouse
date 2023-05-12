@@ -43,6 +43,7 @@ module.exports = (item) => {
 
 
     const tagReplacements = {
+        anthrazit: 'gray',
         berry: 'purple',
         blau: 'blue', braun: 'brown',
         dunkelblau: 'darkblue',
