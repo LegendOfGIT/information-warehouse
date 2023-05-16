@@ -52,6 +52,7 @@ const CATEGORY_MAPPING = {
     HOME_GARDEN_GARDENHOUSES: 'garden-houses',
     HOME_GARDEN_LAWNMOWERS: 'garden-lawnmowers',
     HOME_GARDEN_LOUNGEFURNITURE: 'garden-loungefurniture',
+    HOME_GARDEN_SPORTS: 'garden-trampolines|garden-soccergoals',
     HOME_PETS_CATS: 'pets-cats',
     HOME_PETS_DOGS: 'pets-dogs',
     HOME_TOOLS_DRILLINGMACHINES: 'drilling-machines',
