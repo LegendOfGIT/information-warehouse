@@ -27,7 +27,7 @@ module.exports = () => ({
         fastify.get('/api/hashtags', async (request, reply) => {
             const { hashtagPattern } = request.query;
 
-            await getHashtagsRepository(hashtagPattern)
+            await getHashtagsRepository(hashtagPattern || '')
                 .then(hashtags => reply.code(HTTP_STATUS_CODE_OK).send(hashtags))
                 .catch(() => reply.code(HTTP_STATUS_CODE_OK).send([]));
         });
