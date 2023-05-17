@@ -63,6 +63,7 @@ const CATEGORY_MAPPING = {
     KIDS_TOYS_BABIES: 'kids-baby-toys',
     KIDS_TOYS_CONSTRUCTIONTOYS: 'kids-construction-toys',
     KIDS_TOYS_ELECTRICVEHICLES: 'kids-electric-vehicles',
+    KIDS_TOYS_EXPERIMENTANDRESEARCH: 'kids-toys-experiment-research',
     KIDS_TOYS_GAMES: 'kids-games',
     KIDS_TOYS_SCOOTERS: 'kids-scooters',
     KIDS_TOYS_TOYVEHICLES: 'kids-toy-vehicles',
