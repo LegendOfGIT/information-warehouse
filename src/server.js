@@ -15,7 +15,8 @@ informationItemsController.registerGetSampleInformationItemsOfCategories(fastify
 informationItemsController.registerStoreInformationItem(fastify);
 informationItemsController.registerStoreInformationItemScoring(fastify);
 
-hashtagsController.registerGetRankedCategoriesByHashTags(fastify);
+hashtagsController.registerGetHashtags(fastify);
+hashtagsController.registerGetRankedCategoriesByHashtags(fastify);
 
 searchProfilesController.registerGetSearchProfile(fastify);
 searchProfilesController.registerGetSearchProfiles(fastify);
