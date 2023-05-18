@@ -30,9 +30,11 @@ module.exports = (item) => {
     tags = tags.concat((item.seoKeywords || '').split('|'));
 
     const tagMapping = [
+        { property: 'brand' },
         { property: 'fabricPattern', prefix: 'fabric pattern' },
         { property: 'fit', prefix: 'fit' },
-        { property: 'make' }
+        { property: 'make' },
+        { property: 'productType' }
     ];
 
     tagMapping.forEach(mapping => {
