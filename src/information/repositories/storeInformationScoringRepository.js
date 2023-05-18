@@ -23,7 +23,7 @@ const modifyScoringValue = (itemToScoreArguments, itemToScore, itemToCompare) =>
 
     scoring[hashtag] = matchingTagsInPercent > 60
         ? scoring[hashtag] + (matchingTagsInPercent * itemToScoreArguments.scoring)
-        : scoring[hashtag] - (((100 - matchingTagsInPercent) * itemToScoreArguments.scoring) * 2);
+        : scoring[hashtag] - (((100 - matchingTagsInPercent) * (itemToScoreArguments.scoring < 0 ? itemToScoreArguments.scoring * -1 : itemToScoreArguments.scoring) * 2);
 
     scoring[hashtag] = scoring[hashtag] > 10000 ? 10000 : scoring[hashtag] < 0 ? 0 : scoring[hashtag];
 
