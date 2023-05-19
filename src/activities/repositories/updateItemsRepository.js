@@ -26,6 +26,11 @@ const updateItem = (item) => {
             json: { itemId: provider.mean, navigationPath: item.navigationPath }
         }, () => {});
     });
+
+    requestModule.post({
+        url,
+        json: { itemId: item.itemId, navigationPath: item.navigationPath }
+    }, () => {});
 };
 
 module.exports = (items, maximumNumberOfResults) => new Promise((resolve) => {
