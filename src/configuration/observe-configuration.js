@@ -44,6 +44,7 @@ const CATEGORY_MAPPING = {
     HOME_ACCESSOIRES_BEDCOVERS: 'bedcovers',
     HOME_ACCESSOIRES_CARPETS: 'carpets',
     HOME_ACCESSOIRES_PILLOWS: 'pillows',
+    HOME_COOKINGANDBAKING_BAKINGSUPPLIES: 'baking-supplies|baking-supplies-most-popular',
     HOME_FURNITURE_BEDS: 'beds',
     HOME_FURNITURE_DININGTABLES: 'dining-tables',
     HOME_FURNITURE_GAMINGCHAIRS: 'gaming-chairs',
