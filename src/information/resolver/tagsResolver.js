@@ -34,7 +34,8 @@ module.exports = (item) => {
         { property: 'fabricPattern', prefix: 'fabric pattern' },
         { property: 'fit', prefix: 'fit' },
         { property: 'make' },
-        { property: 'productType' }
+        { property: 'productType' },
+        { property: 'shopCategory' },
     ];
 
     tagMapping.forEach(mapping => {
