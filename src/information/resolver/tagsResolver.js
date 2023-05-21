@@ -51,6 +51,7 @@ module.exports = (item) => {
         blau: 'blue', braun: 'brown',
         dunkelblau: 'darkblue',
         gelb: 'yellow', gold: 'gold', grau: 'gray', grün: 'green',
+        mint: 'green',
         navy: 'darkblue',
         rosa: 'pink', rot: 'red',
         schwarz: 'black', silber: 'silver',
