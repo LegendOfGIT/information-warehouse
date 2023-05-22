@@ -32,7 +32,7 @@ const updateItem = (item) => {
 
     requestModule.post({
         url,
-        json: { itemId: getReworkedItemId(item.itemId.replace(/.*-/, '')), navigationPath: item.navigationPath }
+        json: { itemId: getReworkedItemId(item.itemId.replace(/[A-Z|\-|_]+/, '')), navigationPath: item.navigationPath }
     }, () => {});
 };
 
