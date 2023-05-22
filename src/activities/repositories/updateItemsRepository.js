@@ -1,16 +1,19 @@
 const requestModule = require('request');
 const configuration = require('../../configuration/app-config')();
 
+const getReworkedItemId = (itemId) => {
+    return -1 !== (itemId || '').indexOf('otto.de') ? itemId.replace('otto.de-', 'otto.') :
+        -1 !== (itemId || '').indexOf('amazon.de') ? itemId.replace('amazon.de-', 'azo.') :
+        -1 !== (itemId || '').indexOf('dress-for-less.de') ? itemId.replace('dress-for-less.de-', 'dfl.') :
+        itemId;
+};
+
 const updateItem = (item) => {
     const url = `http://${configuration.services.satelliteController.host}:${configuration.services.satelliteController.port}/update-item`;
 
     (item.providers || []).filter(provider => !provider.mean).forEach(provider => {
         let itemId = provider.itemId || (item.mean || (item.asin ? `azo.${item.asin}` : ''));
-        itemId =
-            -1 !== (itemId || '').indexOf('otto.de') ? itemId.replace('otto.de-', 'otto.') :
-            -1 !== (itemId || '').indexOf('amazon.de') ? itemId.replace('amazon.de-', 'azo.') :
-            -1 !== (itemId || '').indexOf('dress-for-less.de') ? itemId.replace('dress-for-less.de-', 'dfl.') :
-            itemId;
+        itemId = getReworkedItemId(itemId);
 
         requestModule.post({
             url,
@@ -29,7 +32,7 @@ const updateItem = (item) => {
 
     requestModule.post({
         url,
-        json: { itemId: item.itemId.replace(/.*-/, ''), navigationPath: item.navigationPath }
+        json: { itemId: getReworkedItemId(item.itemId.replace(/.*-/, '')), navigationPath: item.navigationPath }
     }, () => {});
 };
 
