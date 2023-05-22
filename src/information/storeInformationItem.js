@@ -35,6 +35,14 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
 
     itemToStore.hasPriceInformation = providers.filter(provider => provider['price-initial'] || provider['price-current']).length > 0;
 
+    const providersWithBothPrices = providers.filter(provider => provider['price-initial'] && provider['price-current']);
+    const reductions = providersWithBothPrices.map(p => (100 - (p['price-current'] * 100 / p['price-initial'])));
+    const highestReductionInPercent = Math.ceil(Math.max(...reductions));
+    itemToStore.highestReductionInPercent = highestReductionInPercent > 0 ? highestReductionInPercent : undefined;
+
+    itemToStore.scoring = itemToStore.scoring || {};
+    itemToStore.scoring['Schnäppchen'] = (itemToScore.highestReductionInPercent || 0) > 10 ? itemToScore.highestReductionInPercent : 0;
+
     itemToStore.tags = tagsResolver(itemToStore);
 
     return {
