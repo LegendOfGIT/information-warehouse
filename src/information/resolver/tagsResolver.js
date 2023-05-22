@@ -33,7 +33,9 @@ module.exports = (item) => {
         { property: 'brand' },
         { property: 'fabricPattern', prefix: 'fabric pattern' },
         { property: 'fit', prefix: 'fit' },
+        { property: 'intakeType' },
         { property: 'make' },
+        { property: 'manufacturer' },
         { property: 'productType' },
         { property: 'shopCategory' },
     ];
