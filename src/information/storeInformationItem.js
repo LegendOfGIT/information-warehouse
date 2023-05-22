@@ -41,7 +41,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
     itemToStore.highestReductionInPercent = highestReductionInPercent > 0 ? highestReductionInPercent : undefined;
 
     itemToStore.scoring = itemToStore.scoring || {};
-    itemToStore.scoring['Schnäppchen'] = (itemToScore.highestReductionInPercent || 0) > 10 ? itemToScore.highestReductionInPercent : 0;
+    itemToStore.scoring['Schnäppchen'] = (itemToStore.highestReductionInPercent || 0) > 10 ? itemToStore.highestReductionInPercent : 0;
 
     itemToStore.tags = tagsResolver(itemToStore);
 
