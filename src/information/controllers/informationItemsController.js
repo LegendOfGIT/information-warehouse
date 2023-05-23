@@ -52,8 +52,8 @@ const addSearchQuery = (query, searchPattern) => {
     }
 
     query['$or'] = [
-        { title: new RegExp(`.*${searchPattern}.*`, 'i') },
-        { description: new RegExp(`.*${searchPattern}.*`, 'i') }
+        { title: new RegExp(`.*${searchPattern}.*`, 'i') }
+        //{ description: new RegExp(`.*${searchPattern}.*`, 'i') }
     ];
 };
 
