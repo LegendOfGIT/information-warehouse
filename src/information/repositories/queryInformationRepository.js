@@ -16,37 +16,7 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Pro
             sort.numberOfRatings = -1;
             sort.updatedOn = -1;
 
-            if (query.title) {
-                query.titleWithoutSpecials = new RegExp(`.*${query.title}.*`, 'i');
-                delete query.title;
-            }
-
-
             const queryParts = [
-                {
-                    $addFields: {
-                        titleWithoutSpecials: {
-                            $reduce: {
-                                input: {
-                                    $split: ["$title", /[/,|']/]
-                                },
-                                initialValue: "",
-                                in: {
-                                    $concat: [
-                                        "$$value",
-                                        {
-                                            $cond: {
-                                                if: { $eq: ["$$value", ""] },
-                                                then: "$$this",
-                                                else: ""
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
                 { $match: { ...query, ...priceCheck } },
                 { $sort: sort}
             ];
