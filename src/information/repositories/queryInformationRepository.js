@@ -28,17 +28,19 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Pro
                         titleWithoutSpecials: {
                             $reduce: {
                                 input: {
-                                    $regexFindAll: {
-                                        input: "$title",
-                                        regex: /[\/,|']/g
-                                    }
+                                    $split: ["$title", /[/,|']/]
                                 },
-                                initialValue: "$title",
+                                initialValue: "",
                                 in: {
                                     $concat: [
-                                        { $substrCP: ["$$this.input", 0, "$$this.start"] },
-                                        '',
-                                        { $substrCP: ["$$this.input", { $add: ["$$this.end", 1] }, { $strLenCP: "$$this.input" }] }
+                                        "$$value",
+                                        {
+                                            $cond: {
+                                                if: { $eq: ["$$value", ""] },
+                                                then: "$$this",
+                                                else: ""
+                                            }
+                                        }
                                     ]
                                 }
                             }
