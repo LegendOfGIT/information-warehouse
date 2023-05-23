@@ -48,7 +48,6 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Pro
                 { $match: { ...query, ...priceCheck } },
                 { $sort: sort}
             ];
-            console.log(queryParts);
 
             if ((/true/i).test(randomItems)) {
                 queryParts.push({ $sample: { size: numberOfResults }});
@@ -72,6 +71,7 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Pro
                 });
         })
         .catch(error => {
+            console.log(error);
             reject(error);
         });
 });
