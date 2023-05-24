@@ -17,8 +17,7 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Pro
             sort.updatedOn = -1;
 
             if (query.title) {
-                const t = query.title;
-                query.titleWithoutSpecials = new RegExp(`.*${t}.*`, 'i');
+                query.titleWithoutSpecials = new RegExp(`.*${Object.assign({}, query).title}.*`, 'i');
                 delete query.title;
             }
 
