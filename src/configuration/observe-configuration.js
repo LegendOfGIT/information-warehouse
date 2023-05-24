@@ -1,4 +1,5 @@
 const CATEGORY_MAPPING = {
+    BEAUTY_CARE_FRAGRANCES_WOMEN: 'women-fragrances',
     BEAUTY_CARE_HEALTH_PAINKILLERS: 'painkillers',
     BEAUTY_CARE_SKIN_CARE_FACE_CARE: 'face-care',
     BEAUTY_CARE_SKIN_CARE_KIDS: 'skin-care-kids',
@@ -22,7 +23,6 @@ const CATEGORY_MAPPING = {
     COSMETICS_MAKEUP_EYES: 'makeup-eyes',
     COSMETICS_MAKEUP_LIPS: 'makeup-lips',
     COSMETICS_MEN_FRAGRANCES: 'men-fragrances',
-    COSMETICS_WOMEN_FRAGRANCES: 'women-fragrances',
     FASHION_BOYS_SHOES: 'boys-shoes',
     FASHION_GIRLS_SHOES: 'girls-shoes',
     FASHION_MEN_JACKETS: 'men-jackets',
