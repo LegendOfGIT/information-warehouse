@@ -17,15 +17,20 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Pro
             sort.updatedOn = -1;
 
             if (query.title) {
-                query.titleWithoutSpecials = new RegExp(`.*${query.title.split(/'|´|`|é|á|ó/).join('')}.*`, 'i');
+                query.titleWithoutSpecials = new RegExp(`.*${query.title.split(/'|´|`/).join('').replaceAll('á', 'a').replaceAll('é', 'e').replaceAll('ó', 'o')}.*`, 'i');
                 delete query.title;
             }
 
             const queryParts = [
                 { $addFields: { titleWithoutSpecials: { $replaceAll: { input: "$title", find: "'", replacement: '' }}}}
             ];
-            ["`", "´", ":", "á", "é", "ó"].forEach(
-                c => queryParts.push({ $addFields: { titleWithoutSpecials: { $replaceAll: { input: "$titleWithoutSpecials", find: c, replacement: '' }}}}));
+
+            const specialCharReplacements = {
+                '`': '', '´': '', ':': '',
+                'á': 'a', 'é': 'e', 'ó': 'o'
+            };
+            Object.keys(specialCharReplacements).forEach(
+                key => queryParts.push({ $addFields: { titleWithoutSpecials: { $replaceAll: { input: "$titleWithoutSpecials", find: key, replacement: specialCharReplacements[key] }}}}));
 
             queryParts.push({ $match: { ...query, ...priceCheck } });
             queryParts.push({ $sort: sort});
