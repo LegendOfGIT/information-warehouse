@@ -16,10 +16,17 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Pro
             sort.numberOfRatings = -1;
             sort.updatedOn = -1;
 
-            const queryParts = [
-                { $match: { ...query, ...priceCheck } },
-                { $sort: sort}
-            ];
+            if (query.title) {
+                query.titleWithoutSpecials = query.title;
+                delete query.title;
+            }
+
+            const queryParts = [];
+            ["'", "`", "´", ":"].forEach(
+                c => queryParts.push({ $addFields: { titleWithoutSpecials: { input: "$title", find: c, replacement: '' } } }));
+
+            queryParts.push({ $match: { ...query, ...priceCheck } });
+            queryParts.push({ $sort: sort});
 
             if ((/true/i).test(randomItems)) {
                 queryParts.push({ $sample: { size: numberOfResults }});
