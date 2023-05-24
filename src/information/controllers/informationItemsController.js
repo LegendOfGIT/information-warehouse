@@ -51,7 +51,7 @@ const addSearchQuery = (query, searchPattern) => {
         return;
     }
 
-    query.title = new RegExp(`.*${searchPattern}.*`, 'i');
+    query.title = searchPattern;
 };
 
 module.exports = () => ({

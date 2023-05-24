@@ -17,7 +17,7 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Pro
             sort.updatedOn = -1;
 
             if (query.title) {
-                query.titleWithoutSpecials = new RegExp(`.*${Object.assign({}, query).title}.*`, 'i');
+                query.titleWithoutSpecials = new RegExp(`.*${query.title}.*`, 'i');
                 delete query.title;
             }
 
@@ -27,7 +27,6 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Pro
             ["`", "´", ":"].forEach(
                 c => queryParts.push({ $addFields: { titleWithoutSpecials: { $replaceAll: { input: "$titleWithoutSpecials", find: c, replacement: '' }}}}));
 
-            console.log(query.titleWithoutSpecials);
             queryParts.push({ $match: { ...query, ...priceCheck } });
             queryParts.push({ $sort: sort});
 
