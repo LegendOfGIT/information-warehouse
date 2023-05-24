@@ -22,10 +22,10 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Pro
             }
 
             const queryParts = [
-                { $addFields: { titleWithoutSpecials: { input: "$title", find: "'", replacement: '' } } }
+                { $addFields: { titleWithoutSpecials: { $replaceAll: { input: "$title", find: "'", replacement: '' }}}}
             ];
             ["`", "´", ":"].forEach(
-                c => queryParts.push({ $addFields: { titleWithoutSpecials: { input: "$titleWithoutSpecials", find: c, replacement: '' } } }));
+                c => queryParts.push({ $addFields: { titleWithoutSpecials: { $replaceAll: { input: "$titleWithoutSpecials", find: c, replacement: '' }}}}));
 
             queryParts.push({ $match: { ...query, ...priceCheck } });
             queryParts.push({ $sort: sort});
