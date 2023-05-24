@@ -21,9 +21,11 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Pro
                 delete query.title;
             }
 
-            const queryParts = [];
-            ["'", "`", "´", ":"].forEach(
-                c => queryParts.push({ $addFields: { titleWithoutSpecials: { input: "$title", find: c, replacement: '' } } }));
+            const queryParts = [
+                { $addFields: { titleWithoutSpecials: { input: "$title", find: "'", replacement: '' } } }
+            ];
+            ["`", "´", ":"].forEach(
+                c => queryParts.push({ $addFields: { titleWithoutSpecials: { input: "titleWithoutSpecials", find: c, replacement: '' } } }));
 
             queryParts.push({ $match: { ...query, ...priceCheck } });
             queryParts.push({ $sort: sort});
