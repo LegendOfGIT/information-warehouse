@@ -27,7 +27,7 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Pro
             ["`", "´", ":"].forEach(
                 c => queryParts.push({ $addFields: { titleWithoutSpecials: { $replaceAll: { input: "$titleWithoutSpecials", find: c, replacement: '' }}}}));
 
-            console.log(query);
+            console.log(query.titleWithoutSpecials);
             queryParts.push({ $match: { ...query, ...priceCheck } });
             queryParts.push({ $sort: sort});
 
