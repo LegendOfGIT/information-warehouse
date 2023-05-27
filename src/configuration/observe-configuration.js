@@ -43,6 +43,7 @@ const CATEGORY_MAPPING = {
     GROCERIES_DRINKS_COFFEE: 'coffee',
     GROCERIES_FOOD_DRYFRUITS: 'dry-fruits',
     GROCERIES_FOOD_NUTS: 'nuts',
+    GROCERIES_FOOD_OILSVINEGAR: 'oils-vinegar',
     GROCERIES_FOOD_SAUCES: 'sauces',
     GROCERIES_FOOD_SPICES: 'spices',
     HOME_ACCESSOIRES_BEDCOVERS: 'bedcovers',
