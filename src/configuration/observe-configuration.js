@@ -1,4 +1,5 @@
 const CATEGORY_MAPPING = {
+    BEAUTY_CARE_BODYCARE_SOAP: 'soap',
     BEAUTY_CARE_FRAGRANCES_MEN: 'men-fragrances',
     BEAUTY_CARE_FRAGRANCES_WOMEN: 'women-fragrances',
     BEAUTY_CARE_HAIR_CARE: 'hair-care',
