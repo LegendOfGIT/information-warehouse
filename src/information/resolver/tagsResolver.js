@@ -22,7 +22,7 @@ module.exports = (item) => {
     ];
     splitProperties.forEach(splitProperty => {
         if (item[splitProperty.key]) {
-            const innerSeparators = 'sizes' === splitProperty.key ? /&/ : /&|\/|\+/;
+            const innerSeparators = 'sizes' === splitProperty.key ? /&/ : /&| und |\/|\+/;
             tags = tags.concat(item[splitProperty.key].split(',').map(a => a.split(innerSeparators)).flat());
         }
     });

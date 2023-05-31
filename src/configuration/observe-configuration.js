@@ -31,6 +31,7 @@ const CATEGORY_MAPPING = {
     FASHION_MEN_JEWELRY: 'men-jewelry',
     FASHION_MEN_NIGHTWEAR: 'men-nightwear',
     FASHION_MEN_PANTS: 'men-pants',
+    FASHION_MEN_SHIRTS: 'men-shirts',
     FASHION_MEN_SHOES: 'men-shoes',
     FASHION_MEN_SWEATERS_AND_KNITWEAR: 'men-sweaters-knitwear',
     FASHION_WOMEN_BAGS: 'women-bags',
