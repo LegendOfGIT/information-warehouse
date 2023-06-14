@@ -106,7 +106,8 @@ const CATEGORY_MAPPING = {
     VEHICLES_CARS_ALLWEATHERTYRES: 'car-all-weather-tyres',
     VEHICLES_CARS_CHILDSEATS: 'car-child-seats',
     VEHICLES_CARS_SUMMERTYRES: 'car-summer-tyres',
-    VEHICLES_CARS_WINTERTYRES: 'car-winter-tyres'
+    VEHICLES_CARS_WINTERTYRES: 'car-winter-tyres',
+    VEHICLES_SCOOTERS_ELECTRICALSCOOTERS: 'escooters'
 };
 
 module.exports = {
