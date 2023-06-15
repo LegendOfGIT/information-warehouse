@@ -2,13 +2,14 @@ const getCampaignParameterByUrl = require('../configuration/campaign-configurati
 const queryInformation = require('./repositories/queryInformationRepository');
 const constants = require('../constants');
 
-module.exports = (query, hashtag, randomItems, numberOfResults, page, addCampaignParameter) => new Promise((resolve, reject) => {
+module.exports = (query, hashtag, randomItems, numberOfResults, page, addCampaignParameter, filterIds = []) => new Promise((resolve, reject) => {
     queryInformation(
         query,
         hashtag,
         randomItems,
         numberOfResults ? Number.parseInt(numberOfResults) : constants.DEFAULT_MAXIMUM_AMOUNT_OF_RESULTS,
-        page
+        page,
+        filterIds
     ).then((items) => {
         items = (items || []).filter(item => item['title-image']).map(item => {
             (item.providers || []).forEach(provider => {

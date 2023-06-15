@@ -61,6 +61,7 @@ module.exports = () => ({
 
             const {
                 id,
+                filters,
                 highlightedItems,
                 navigationId,
                 numberOfResults,
@@ -97,7 +98,8 @@ module.exports = () => ({
                 }
             }
 
-            await queryInformationItems(query, firstHashtag, randomItems, numberOfResults, page, true)
+            const filterIds = (filters || '').split('-');
+            await queryInformationItems(query, firstHashtag, randomItems, numberOfResults, page, true, filterIds)
                 .then(async response => {
                     const navigationIdOfFirstItem = response.length ? response[0].navigationPath[0] : '';
                     storeActivityVisitedCategoryRepository(

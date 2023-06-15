@@ -1,7 +1,29 @@
 const configuration = require('../../configuration/app-config')();
+const filterConfiguration = require('../../configuration/filter-configuration');
 const mongoClient = require('mongodb').MongoClient;
 
-module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Promise((resolve, reject) => {
+module.exports = (query, hashtag, randomItems, numberOfResults, page, filterIds = []) => new Promise((resolve, reject) => {
+
+    const getFilterQuery = (filterIds) => {
+        const filterProperties = filterConfiguration.getFilterPropertiesByFilterIds(filterIds);
+        if (0 === Object.keys(filterProperties).length) {
+            return {};
+        }
+
+        const queries = [];
+        Object.values(filterProperties).forEach(filterProperty => {
+            const subQueries = [];
+            filterProperty.forEach(propertyFilter => {
+                const query = {};
+                query[propertyFilter.property] = RegExp(propertyFilter.value, 'i');
+                subQueries.push(query);
+            });
+            queries.push({ $or: subQueries });
+        });
+
+        console.log(queries);
+        return { $and: queries };
+    };
 
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
         .then(database => {
@@ -32,8 +54,8 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page) => new Pro
             Object.keys(specialCharReplacements).forEach(
                 key => queryParts.push({ $addFields: { titleWithoutSpecials: { $replaceAll: { input: "$titleWithoutSpecials", find: key, replacement: specialCharReplacements[key] }}}}));
 
-            queryParts.push({ $match: { ...query, ...priceCheck } });
-            queryParts.push({ $sort: sort});
+            queryParts.push({ $match: { ...query, ...priceCheck, ...getFilterQuery(filterIds) } });
+            queryParts.push({ $sort: sort });
 
             if ((/true/i).test(randomItems)) {
                 queryParts.push({ $sample: { size: numberOfResults }});
