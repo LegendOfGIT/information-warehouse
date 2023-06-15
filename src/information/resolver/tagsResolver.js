@@ -23,7 +23,7 @@ module.exports = (item) => {
     splitProperties.forEach(splitProperty => {
         if (item[splitProperty.key]) {
             const innerSeparators = 'sizes' === splitProperty.key ? /&/ : /&| und |\/|\+/;
-            tags = tags.concat(item[splitProperty.key].split(',').map(a => a.split(innerSeparators)).flat());
+            tags = tags.concat(item[splitProperty.key].split(/,|;/).map(a => a.split(innerSeparators)).flat());
         }
     });
 
@@ -53,6 +53,7 @@ module.exports = (item) => {
         blau: 'blue', braun: 'brown',
         dunkelblau: 'darkblue',
         gelb: 'yellow', gold: 'gold', grau: 'gray', grün: 'green',
+        khaki: 'green',
         mint: 'green',
         navy: 'darkblue',
         rosa: 'pink', rot: 'red',
