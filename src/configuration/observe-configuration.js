@@ -51,6 +51,7 @@ const CATEGORY_MAPPING = {
     FASHION_WOMEN_SWEATERS_AND_KNITWEAR: 'women-sweaters-knitwear',
     FASHION_WOMEN_SWIMWEAR: 'women-swimwear',
     GROCERIES_DRINKS_COFFEE: 'coffee',
+    GROCERIES_DRINKS_WINE: 'wine',
     GROCERIES_FOOD_DRYFRUITS: 'dry-fruits',
     GROCERIES_FOOD_NUTS: 'nuts',
     GROCERIES_FOOD_OILSVINEGAR: 'oils-vinegar',
