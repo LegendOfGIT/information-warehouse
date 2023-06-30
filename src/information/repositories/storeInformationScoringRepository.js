@@ -48,7 +48,8 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         undefined,
         false,
         1,
-        1);
+        1,
+        []);
 
     const itemToScore = itemsToScore && itemsToScore.length ? itemsToScore[0] : undefined;
     if (!itemToScore) {
@@ -77,7 +78,8 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         undefined,
         true,
         20,
-        1);
+        1,
+        []);
 
     for (let item of furtherItemsToScore) {
         item.tags = tagsResolver(item);
