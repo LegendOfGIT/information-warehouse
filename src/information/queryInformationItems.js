@@ -18,6 +18,10 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page, addCampaig
                     provider.link;
             });
 
+            //delete item.filterInformation;
+            delete item.tags;
+            delete item.titleWithoutSpecials;
+
             return item;
         });
 

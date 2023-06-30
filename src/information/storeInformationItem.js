@@ -1,5 +1,6 @@
 const storeInformationRepository = require('./repositories/storeInformationRepository');
 const queryInformationRepository = require('./repositories/queryInformationRepository');
+const filterInformationResolver = require('./resolver/filterInformationResolver');
 const tagsResolver = require('./resolver/tagsResolver');
 
 const getItemIdFromInformationItem = (item) => {
@@ -43,6 +44,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
     storedItem.scoring = storedItem.scoring || {};
     storedItem.scoring['Schnäppchen'] = (itemToStore.highestReductionInPercent || 0) > 10 ? itemToStore.highestReductionInPercent : 0;
 
+    itemToStore.filterInformation = filterInformationResolver(itemToStore);
     itemToStore.tags = tagsResolver(itemToStore);
 
     return {
