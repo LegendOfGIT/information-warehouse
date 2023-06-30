@@ -14,8 +14,8 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page, filterIds 
         Object.values(filterProperties).forEach(filterProperty => {
             const subQueries = [];
             filterProperty.forEach(propertyFilter => {
-                const query = { filterInformation: {} };
-                query.filterInformation[propertyFilter.property] = RegExp(propertyFilter.value, 'i');
+                const query = { };
+                query.filterInformation[`filterInformation.${propertyFilter.property}`] = RegExp(propertyFilter.value, 'i');
                 subQueries.push(query);
             });
             queries.push({ $or: subQueries });
