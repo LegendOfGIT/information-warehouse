@@ -7,7 +7,7 @@ module.exports = (item) => {
         berry: 'purple',
         blau: 'blue', braun: 'brown',
         dunkelblau: 'darkblue',
-        gelb: 'yellow', gold: 'gold', grau: 'gray', grün: 'green',
+        gelb: 'yellow', gold: 'gold', grau: 'gray', grey: 'grey', grün: 'green',
         khaki: 'green',
         mint: 'green',
         navy: 'darkblue',
@@ -18,9 +18,8 @@ module.exports = (item) => {
 
     const t = bitOfInformation.trim().toLowerCase();
     const replacementKey = Object.keys(replacements).find(key => -1 !== t.indexOf(key));
-    bitOfInformation = replacementKey ? replacements[replacementKey] : t;
-    if (bitOfInformation) {
-        filterInformation.color = bitOfInformation;
+    if (bitOfInformation && replacementKey) {
+        filterInformation.color = replacements[replacementKey];
     }
 
     return filterInformation;
