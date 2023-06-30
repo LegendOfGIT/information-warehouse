@@ -1,6 +1,6 @@
 const storeInformationRepository = require('./repositories/storeInformationRepository');
 const queryInformationRepository = require('./repositories/queryInformationRepository');
-const filterInformationResolver = require('./resolver/tagsResolver');
+const filterInformationResolver = require('./resolver/filterInformationResolver');
 const tagsResolver = require('./resolver/tagsResolver');
 
 const getItemIdFromInformationItem = (item) => {
