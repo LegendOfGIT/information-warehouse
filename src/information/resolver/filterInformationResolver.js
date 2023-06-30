@@ -3,17 +3,28 @@ module.exports = (item) => {
 
     let bitOfInformation = item.color || '';
     const replacements = {
+        dunkelblau: 'darkblue', dunkelrot: 'darkred',
+
         anthrazit: 'gray',
-        berry: 'purple',
         blau: 'blue', braun: 'brown',
-        dunkelblau: 'darkblue',
-        gelb: 'yellow', gold: 'gold', grau: 'gray', grey: 'grey', grün: 'green',
+        gelb: 'yellow', gold: 'gold', grau: 'gray', grün: 'green',
         khaki: 'green',
-        mint: 'green',
-        navy: 'darkblue',
         rosa: 'pink', rot: 'red',
         schwarz: 'black', silber: 'silver',
-        weiß: 'white'
+        weiß: 'white',
+
+        darkblue: 'darkblue',
+        darkred: 'darkred',
+
+        berry: 'purple', black: 'black', blue: 'blue', brown: 'brown',
+        gray: 'gray', green: 'green', grey: 'gray',
+        mint: 'green',
+        navy: 'darkblue',
+        pink: 'pink', purple: 'purple',
+        red: 'red',
+        silver: 'silver',
+        white: 'white',
+        yellow: 'yellow'
     };
 
     const t = bitOfInformation.trim().toLowerCase();
