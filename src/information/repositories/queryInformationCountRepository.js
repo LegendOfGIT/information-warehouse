@@ -13,9 +13,9 @@ module.exports = (query, numberOfResults, filterIds) => new Promise((resolve, re
             const queryParts = queryPartsResolver(query, numberOfResults, filterIds);
             queryParts.push({ $facet: { $count: 'totalCount' }});
 
-            database.db().collection('items').aggregate(queryParts)
+            database.db().collection('items').find(query).count()
                 .then((result) => {
-                    resolve(result.totalCount);
+                    resolve(result);
                 })
                 .catch((error) => {
                     console.log(error);
