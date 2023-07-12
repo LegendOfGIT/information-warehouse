@@ -12,7 +12,7 @@ module.exports = (query, numberOfResults, filterIds) => new Promise((resolve, re
 
             const queryParts = queryPartsResolver(query, numberOfResults, filterIds);
 
-            database.db().collection('items').aggregate(queryParts).count()
+            database.db().collection('items').aggregate(queryParts).toArray().count()
                 .then((result) => {
                     resolve(result);
                 })
