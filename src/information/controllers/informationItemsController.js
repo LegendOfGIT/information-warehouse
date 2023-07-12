@@ -113,7 +113,7 @@ module.exports = () => ({
                     updateItemsRepository(response, numberOfResults)
                         .then(() => {});
 
-                    const availablePages = await getAvailablePages(query, numberOfResults, page);
+                    const availablePages = await getAvailablePages(query, numberOfResults, page, filterIds);
 
                     if (!randomItems) {
                         reply.headers({
