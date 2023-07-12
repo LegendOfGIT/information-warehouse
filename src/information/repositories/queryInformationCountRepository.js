@@ -15,7 +15,7 @@ module.exports = (query, numberOfResults, filterIds) => new Promise((resolve, re
 
             database.db().collection('items').aggregate(queryParts).toArray()
                 .then((result) => {
-                    resolve(result[0].totalCount);
+                    resolve((result[0] || { totalCount: 0 }).totalCount);
                 })
                 .catch((error) => {
                     console.log(error);
