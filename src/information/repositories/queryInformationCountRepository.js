@@ -1,6 +1,6 @@
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
-const queryPartsResolver = require('queryPartsResolver');
+const queryPartsResolver = require('./queryPartsResolver');
 
 module.exports = (query, numberOfResults, filterIds) => new Promise((resolve, reject) => {
 
