@@ -19,6 +19,7 @@ module.exports = (query, numberOfResults, filterIds = []) => {
             queries.push({ $or: subQueries });
         });
 
+        console.log(queries);
         return { $and: queries };
     };
 
