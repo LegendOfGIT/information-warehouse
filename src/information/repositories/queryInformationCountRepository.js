@@ -13,7 +13,7 @@ module.exports = (query, numberOfResults, filterIds) => new Promise((resolve, re
             const queryParts = queryPartsResolver(query, numberOfResults, filterIds);
             queryParts.push({ $count: 'totalCount' });
 
-            database.db().collection('items').aggregate(query).toArray()
+            database.db().collection('items').aggregate(queryParts).toArray()
                 .then((result) => {
                     resolve(result[0].totalCount);
                 })
