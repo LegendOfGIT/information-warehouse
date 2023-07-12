@@ -11,7 +11,7 @@ module.exports = (query, numberOfResults, filterIds) => new Promise((resolve, re
             }
 
             const queryParts = queryPartsResolver(query, numberOfResults, filterIds);
-            queryParts.push({ totalCount: $count })
+            queryParts.push({ $count: 'totalCount' })
 
             database.db().collection('items').aggregate(queryParts)
                 .then((result) => {
