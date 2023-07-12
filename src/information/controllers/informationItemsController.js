@@ -134,6 +134,7 @@ module.exports = () => ({
             reply.type('application/json').code(HTTP_STATUS_CODE_OK);
 
             const {
+                filters,
                 navigationIds,
                 numberOfResults,
                 randomItems
@@ -144,14 +145,17 @@ module.exports = () => ({
                 return;
             }
 
-            const resultItems = []
+            const resultItems = [];
+            const filterIds = (filters || '').split('-');
             await Promise.all(navigationIds.split(',').map(async navigationId => {
                 const items = await queryInformationItems(
                     {navigationPath: navigationId},
                     undefined,
                     randomItems,
                     numberOfResults,
-                    true);
+                    true,
+                    false,
+                    filterIds);
 
                 resultItems.push(items && items.length ? items[0] : undefined);
             }))
