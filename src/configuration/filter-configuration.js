@@ -17,8 +17,8 @@ const FILTER_MAPPING = {
     1000016: { property: 'filterInformation.color', value: 'white' },
     1000010: { property: 'filterInformation.color', value: 'yellow' },
 
-    1000002: { property: 'filterInformation.fit', value: 'flare fit' },
-    1000003: { property: 'filterInformation.fit', value: 'skinny fit' }
+    1000002: { property: 'fit', value: 'flare fit' },
+    1000003: { property: 'fit', value: 'skinny fit' }
 };
 
 module.exports = {
