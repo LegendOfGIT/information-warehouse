@@ -9,7 +9,6 @@ const FILTER_MAPPING = {
     1000023: { property: 'providers.itemId', value: 'buch24' },
     1000024: { property: 'providers.itemId', value: 'ebrosia' },
     1000025: { property: 'providers.itemId', value: 'enners' },
-
     1000026: { property: 'providers.itemId', value: 'fussmatten-welt' },
     1000027: { property: 'providers.itemId', value: 'haymancoffee' },
     1000028: { property: 'providers.itemId', value: 'hoerner-group' },
@@ -52,7 +51,9 @@ const FILTER_MAPPING = {
     1000010: { property: 'filterInformation.color', value: 'yellow' },
 
     1000002: { property: 'fit', value: 'flare fit' },
-    1000003: { property: 'fit', value: 'skinny fit' }
+    1000003: { property: 'fit', value: 'skinny fit' },
+
+    1000051: { property: 'navigationPath', value: '_tea' }
 };
 
 module.exports = {
