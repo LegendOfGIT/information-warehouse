@@ -54,7 +54,17 @@ const FILTER_MAPPING = {
     1000002: { property: 'fit', value: 'flare fit' },
     1000003: { property: 'fit', value: 'skinny fit' },
 
-    1000051: { property: 'navigationPath', value: '_tea' }
+    1000051: { property: 'navigationPath', value: '_tea' },
+    1000053: { property: 'navigationPath', value: '_soap' },
+    1000054: { property: 'navigationPath', value: '_fragrances_men' },
+    1000055: { property: 'navigationPath', value: '_fragrances_women' },
+    1000056: { property: 'navigationPath', value: '_hair_care' },
+    1000057: { property: 'navigationPath', value: '_hair_styling' },
+    1000058: { property: 'navigationPath', value: '_painkillers' },
+    1000059: { property: 'navigationPath', value: '_makeup_eyes' },
+    1000060: { property: 'navigationPath', value: '_makeup_lips' },
+    1000061: { property: 'navigationPath', value: '_face_care' },
+    1000062: { property: 'navigationPath', value: '_skin_care_kids' }
 };
 
 module.exports = {
