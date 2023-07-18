@@ -35,6 +35,7 @@ const FILTER_MAPPING = {
     1000049: { property: 'providers.itemId', value: 'waschbaer' },
     1000050: { property: 'providers.itemId', value: 'whitecollection' },
     1000052: { property: 'providers.itemId', value: 'messmer' },
+    1000063: { property: 'providers.itemId', value: 'flaconi' },
 
     1000014: { property: 'filterInformation.color', value: 'black' },
     1000008: { property: 'filterInformation.color', value: 'blue' },
