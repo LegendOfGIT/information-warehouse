@@ -55,6 +55,20 @@ const FILTER_MAPPING = {
     1000002: { property: 'fit', value: 'flare fit' },
     1000003: { property: 'fit', value: 'skinny fit' },
 
+    1000081: { property: 'storageSize', value: '16 GB' },
+    1000082: { property: 'storageSize', value: '32 GB' },
+    1000083: { property: 'storageSize', value: '64 GB' },
+    1000084: { property: 'storageSize', value: '128 GB' },
+    1000085: { property: 'storageSize', value: '256 GB' },
+    1000086: { property: 'storageSize', value: '512 GB' },
+
+    1000088: { property: 'brand', value: 'adidas' },
+    1000087: { property: 'brand', value: 'apple' },
+    1000091: { property: 'brand', value: 'google' },
+    1000090: { property: 'brand', value: 'puma' },
+    1000089: { property: 'brand', value: 'samsung' },
+    1000092: { property: 'brand', value: 'sony' },
+
     1000051: { property: 'navigationPath', value: '_tea' },
     1000053: { property: 'navigationPath', value: '_soap' },
     1000054: { property: 'navigationPath', value: '_fragrances_men' },
@@ -65,7 +79,25 @@ const FILTER_MAPPING = {
     1000059: { property: 'navigationPath', value: '_makeup_eyes' },
     1000060: { property: 'navigationPath', value: '_makeup_lips' },
     1000061: { property: 'navigationPath', value: '_face_care' },
-    1000062: { property: 'navigationPath', value: '_skin_care_kids' }
+    1000062: { property: 'navigationPath', value: '_skin_care_kids' },
+    1000064: { property: 'navigationPath', value: '_cables_audiocables' },
+    1000065: { property: 'navigationPath', value: '_cables_displaycables' },
+    1000066: { property: 'navigationPath', value: '_cables_electriccables' },
+    1000067: { property: 'navigationPath', value: '_cables_networkcables' },
+    1000068: { property: 'navigationPath', value: '_computers_tablets' },
+    1000069: { property: 'navigationPath', value: '_FULLYAUTOMATICCOFFEEMACHINES' },
+    1000070: { property: 'navigationPath', value: '_homecinema' },
+    1000071: { property: 'navigationPath', value: '_inkjetprinter' },
+    1000072: { property: 'navigationPath', value: '_laserprinter' },
+    1000073: { property: 'navigationPath', value: '_home_tvs' },
+    1000074: { property: 'navigationPath', value: '_dishwashers' },
+    1000075: { property: 'navigationPath', value: '_dryers' },
+    1000076: { property: 'navigationPath', value: '_FRIDGES_AND_FREEZERS' },
+    1000077: { property: 'navigationPath', value: '_ovens' },
+    1000078: { property: 'navigationPath', value: '_washing_machines' },
+    1000079: { property: 'navigationPath', value: '_SMARTPHONESCELLPHONES' },
+    1000080: { property: 'navigationPath', value: '_smartwatches' },
+
 };
 
 module.exports = {
