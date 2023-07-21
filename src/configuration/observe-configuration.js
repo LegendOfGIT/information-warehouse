@@ -106,6 +106,7 @@ const CATEGORY_MAPPING = {
     MULTIMEDIA_MOVIES_FANTASY: 'movies-fantasy|movies-bluray-fantasy|movies-dvd-fantasy',
     MUSIC_CD_ALTERNATIVE: 'music-alternative',
     MUSIC_CD_GERMANFOLK: 'german-folk-music',
+    MUSIC_INSTRUMENTS_GUITARS: 'music-guitars',
     MUSIC_CD_POP: 'music-pop',
     MUSIC_CD_ROCK: 'music-rock',
     SPORTS_EXERCISE_EQUIPMENT: 'sports-exercise-equipment',
