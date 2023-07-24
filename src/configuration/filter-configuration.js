@@ -126,6 +126,7 @@ module.exports = {
             return [];
         }
 
+        console.log(navigationId);
         return NAVIGATION_DEFAULT_FILTERS[navigationId] || [];
     },
     getFilterPropertiesByFilterIds: (filterIds) => {
