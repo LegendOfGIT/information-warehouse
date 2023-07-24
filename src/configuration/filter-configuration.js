@@ -122,11 +122,10 @@ module.exports = {
             return givenFilterIds;
         }
 
-        if (randomItems || !numberOfResults) {
+        if ((/true/i).test(randomItems) || !numberOfResults) {
             return [];
         }
 
-        console.log(navigationId);
         return NAVIGATION_DEFAULT_FILTERS[navigationId] || [];
     },
     getFilterPropertiesByFilterIds: (filterIds) => {
