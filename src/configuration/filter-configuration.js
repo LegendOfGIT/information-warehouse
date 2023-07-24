@@ -122,7 +122,7 @@ module.exports = {
             return givenFilterIds;
         }
 
-        if (!randomItems && !numberOfResults) {
+        if (randomItems || !numberOfResults) {
             return [];
         }
 

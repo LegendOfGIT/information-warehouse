@@ -9,6 +9,7 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page, addCampaig
         query.navigationPath || '',
         numberOfResults,
         randomItems);
+    console.log(filterIds);
 
     queryInformation(
         query,
