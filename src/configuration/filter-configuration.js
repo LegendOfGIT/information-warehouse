@@ -109,11 +109,25 @@ const FILTER_MAPPING = {
     1000077: { property: 'navigationPath', value: '_ovens' },
     1000078: { property: 'navigationPath', value: '_washing_machines' },
     1000079: { property: 'navigationPath', value: '_SMARTPHONESCELLPHONES' },
-    1000080: { property: 'navigationPath', value: '_smartwatches' },
+    1000080: { property: 'navigationPath', value: '_smartwatches' }
+};
 
+const NAVIGATION_DEFAULT_FILTERS = {
+    FASHION: [1000105, 1000103, 1000101, 1000102, 1000090, 1000104, 1000088]
 };
 
 module.exports = {
+    getDefaultFilterIdsBy(givenFilterIds, navigationId, numberOfResults, randomItems) {
+        if ((givenFilterIds || []).length > 0) {
+            return givenFilterIds;
+        }
+
+        if (randomItems || !numberOfResults) {
+            return [];
+        }
+
+        return NAVIGATION_DEFAULT_FILTERS[navigationId] || [];
+    },
     getFilterPropertiesByFilterIds: (filterIds) => {
         const filterProperties = {};
 
