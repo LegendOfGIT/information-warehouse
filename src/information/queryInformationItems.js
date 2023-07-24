@@ -10,6 +10,8 @@ module.exports = (query, hashtag, randomItems, numberOfResults, page, addCampaig
         numberOfResults,
         randomItems);
 
+    console.log(filterIds);
+
     queryInformation(
         query,
         hashtag,
