@@ -62,17 +62,21 @@ const FILTER_MAPPING = {
     1000085: { property: 'storageSize', value: '256 GB' },
     1000086: { property: 'storageSize', value: '512 GB' },
 
+    1000109: { property: 'brand', value: 'activision' },
     1000088: { property: 'brand', value: 'adidas' },
     1000087: { property: 'brand', value: 'apple' },
     1000098: { property: 'brand', value: 'banani' },
     1000101: { property: 'brand', value: 'bugatti' },
     1000103: { property: 'brand', value: 'calvin klein' },
+    1000110: { property: 'brand', value: 'chanel' },
     1000099: { property: 'brand', value: 'desigual' },
+    1000107: { property: 'brand', value: 'electronic arts' },
     1000105: { property: 'brand', value: 'esprit' },
     1000102: { property: 'brand', value: 'fossil' },
     1000100: { property: 'brand', value: 'gabor' },
     1000091: { property: 'brand', value: 'google' },
     1000096: { property: 'brand', value: 'guess' },
+    1000106: { property: 'brand', value: 'hudora' },
     1000097: { property: 'brand', value: 'lascara' },
     1000093: { property: 'brand', value: 'lego' },
     1000104: { property: 'brand', value: 'nike' },
@@ -81,6 +85,7 @@ const FILTER_MAPPING = {
     1000089: { property: 'brand', value: 'samsung' },
     1000092: { property: 'brand', value: 'sony' },
     1000094: { property: 'brand', value: 'vivanco' },
+    1000108: { property: 'brand', value: 'vtech' },
 
     1000051: { property: 'navigationPath', value: '_tea' },
     1000053: { property: 'navigationPath', value: '_soap' },
@@ -114,7 +119,8 @@ const FILTER_MAPPING = {
 
 const NAVIGATION_DEFAULT_FILTERS = {
     ELECTRONICS_AND_COMPUTERS: [1000087, 1000092, 1000091, 1000089],
-    FASHION: [1000105, 1000103, 1000101, 1000102, 1000090, 1000104, 1000088]
+    FASHION: [1000105, 1000103, 1000101, 1000102, 1000090, 1000104, 1000088],
+    MULTIMEDIA: [1000107, 1000109, 1000095]
 };
 
 module.exports = {
