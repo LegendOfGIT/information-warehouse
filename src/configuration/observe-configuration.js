@@ -107,6 +107,8 @@ const CATEGORY_MAPPING = {
     MUSIC_CD_ALTERNATIVE: 'music-alternative',
     MUSIC_CD_GERMANFOLK: 'german-folk-music',
     MUSIC_INSTRUMENTS_GUITARS: 'music-guitars',
+    MUSIC_INSTRUMENTS_PIANOS: 'music-pianos',
+    MUSIC_INSTRUMENTS_MIXINGPANELS: 'music-mixingpanels',
     MUSIC_CD_POP: 'music-pop',
     MUSIC_CD_ROCK: 'music-rock',
     SPORTS_EXERCISE_EQUIPMENT: 'sports-exercise-equipment',
