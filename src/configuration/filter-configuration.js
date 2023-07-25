@@ -55,6 +55,8 @@ const FILTER_MAPPING = {
     1000002: { property: 'fit', value: 'flare fit' },
     1000003: { property: 'fit', value: 'skinny fit' },
 
+    1000111: { property: 'isBio', value: true },
+
     1000081: { property: 'storageSize', value: '16 GB' },
     1000082: { property: 'storageSize', value: '32 GB' },
     1000083: { property: 'storageSize', value: '64 GB' },
