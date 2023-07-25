@@ -13,7 +13,11 @@ module.exports = (query, numberOfResults, filterIds = []) => {
             const subQueries = [];
             filterProperty.forEach(propertyFilter => {
                 const query = { };
-                query[propertyFilter.property] = RegExp(propertyFilter.value, 'i');
+                query[propertyFilter.property] =
+                    'string' === typeof propertyFilter.value
+                        ? RegExp(propertyFilter.value, 'i')
+                        : propertyFilter.value;
+
                 subQueries.push(query);
             });
             queries.push({ $or: subQueries });
