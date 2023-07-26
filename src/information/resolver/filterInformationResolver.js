@@ -9,6 +9,7 @@ module.exports = (item) => {
         blau: 'blue', braun: 'brown',
         gelb: 'yellow', gold: 'gold', grau: 'gray', grün: 'green',
         khaki: 'green',
+        orange: 'orange',
         rosa: 'pink', rot: 'red',
         schwarz: 'black', silber: 'silver',
         weiß: 'white',

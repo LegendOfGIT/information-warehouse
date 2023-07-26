@@ -45,6 +45,7 @@ const FILTER_MAPPING = {
     1000011: { property: 'filterInformation.color', value: 'gold' },
     1000005: { property: 'filterInformation.color', value: 'gray' },
     1000012: { property: 'filterInformation.color', value: 'green' },
+    1000112: { property: 'filterInformation.color', value: 'orange' },
     1000013: { property: 'filterInformation.color', value: 'pink' },
     1000017: { property: 'filterInformation.color', value: 'purple' },
     1000015: { property: 'filterInformation.color', value: 'silver' },

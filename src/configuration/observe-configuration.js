@@ -11,6 +11,7 @@ const CATEGORY_MAPPING = {
     BEAUTY_CARE_SKIN_CARE_KIDS: 'skin-care-kids',
     DIY_BUILDANDRENOVATE_DOORS: 'diy-doors',
     DIY_BUILDANDRENOVATE_TILES: 'diy-tiles',
+    DIY_SEW_FABRICS: 'diy-sew-fabrics',
     DIY_TOOLS_DRILLINGMACHINES: 'drilling-machines',
     DIY_TOOLS_ELECTRICSAWS: 'electric-saws',
     ELECTRONICS_AND_COMPUTERS_CABLES_AUDIOCABLES: 'audio-cables',
