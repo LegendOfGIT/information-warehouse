@@ -114,6 +114,7 @@ const CATEGORY_MAPPING = {
     MUSIC_INSTRUMENTS_MIXINGPANELS: 'music-mixingpanels',
     MUSIC_CD_POP: 'music-pop',
     MUSIC_CD_ROCK: 'music-rock',
+    SPORTS_BALLSPORTS_SOCCER: 'sports-soccer',
     SPORTS_EXERCISE_EQUIPMENT: 'sports-exercise-equipment',
     VEHICLES_BICYCLES_CITYBIKES: 'city-bikes',
     VEHICLES_BICYCLES_ELECTRICBIKES: 'electric-bikes',

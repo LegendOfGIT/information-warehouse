@@ -84,6 +84,7 @@ const FILTER_MAPPING = {
     1000093: { property: 'brand', value: 'lego' },
     1000104: { property: 'brand', value: 'nike' },
     1000095: { property: 'brand', value: 'nintendo' },
+    1000113: { property: 'brand', value: 'nokia' },
     1000090: { property: 'brand', value: 'puma' },
     1000089: { property: 'brand', value: 'samsung' },
     1000092: { property: 'brand', value: 'sony' },
@@ -121,7 +122,7 @@ const FILTER_MAPPING = {
 };
 
 const NAVIGATION_DEFAULT_FILTERS = {
-    ELECTRONICS_AND_COMPUTERS: [1000087, 1000092, 1000091, 1000089],
+    ELECTRONICS_AND_COMPUTERS: [1000087, 1000092, 1000091, 1000089, 1000113],
     FASHION: [1000105, 1000103, 1000101, 1000102, 1000090, 1000104, 1000088],
     MULTIMEDIA: [1000107, 1000109, 1000095]
 };
