@@ -3,7 +3,20 @@ const queryInformation = require('./repositories/queryInformationRepository');
 const filterConfiguration = require('../configuration/filter-configuration');
 const constants = require('../constants');
 
-module.exports = (query, hashtag, randomItems, numberOfResults, page, addCampaignParameter, filterIds = []) => new Promise((resolve, reject) => {
+module.exports = (parameters) => new Promise((resolve, reject) => {
+    const {
+        addCampaignParameter,
+        hashtag,
+        numberOfResults,
+        page,
+        query,
+        randomItems,
+    } = parameters;
+
+    let {
+        filterIds = [],
+    } = parameters;
+
     filterIds = filterConfiguration.getDefaultFilterIdsBy(
         filterIds,
         query.navigationPath || '',

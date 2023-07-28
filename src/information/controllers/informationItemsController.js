@@ -99,7 +99,15 @@ module.exports = () => ({
             }
 
             const filterIds = (filters || '').split('-');
-            await queryInformationItems(query, firstHashtag, randomItems, numberOfResults, page, true, filterIds)
+            await queryInformationItems({
+                query,
+                hashtag: firstHashtag,
+                randomItems,
+                numberOfResults,
+                page,
+                addCampaignParameter: true,
+                filterIds
+            })
                 .then(async response => {
                     const navigationIdOfFirstItem = response.length ? response[0].navigationPath[0] : '';
                     storeActivityVisitedCategoryRepository(
@@ -148,14 +156,13 @@ module.exports = () => ({
             const resultItems = [];
             const filterIds = (filters || '').split('-');
             await Promise.all(navigationIds.split(',').map(async navigationId => {
-                const items = await queryInformationItems(
-                    {navigationPath: navigationId},
-                    undefined,
+                const items = await queryInformationItems({
+                    query: {navigationPath: navigationId},
                     randomItems,
                     numberOfResults,
-                    true,
-                    false,
-                    filterIds);
+                    addCampaignParameter: false,
+                    filterIds
+                });
 
                 resultItems.push(items && items.length ? items[0] : undefined);
             }))
