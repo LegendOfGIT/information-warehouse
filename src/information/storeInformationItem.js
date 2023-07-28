@@ -61,7 +61,10 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
             { providers: { $elemMatch: { itemId: informationItem.itemId || '' }} }
         ]
     };
-    queryInformationRepository(storedItemsQuery, undefined, 'false', undefined, 0, [])
+    queryInformationRepository({
+        query: storedItemsQuery,
+        randomItems: 'false'
+    })
         .then((storedItems) => {
             storedItems = storedItems.length ? storedItems : [undefined];
             storedItems.forEach(storedItem => {

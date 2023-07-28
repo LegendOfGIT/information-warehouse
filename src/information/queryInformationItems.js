@@ -9,6 +9,8 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
         hashtag,
         numberOfResults,
         page,
+        priceFrom,
+        priceTo,
         query,
         randomItems,
     } = parameters;
@@ -23,14 +25,14 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
         numberOfResults,
         randomItems);
 
-    queryInformation(
+    queryInformation({
         query,
         hashtag,
         randomItems,
-        numberOfResults ? Number.parseInt(numberOfResults) : constants.DEFAULT_MAXIMUM_AMOUNT_OF_RESULTS,
+        numberOfResults: numberOfResults ? Number.parseInt(numberOfResults) : constants.DEFAULT_MAXIMUM_AMOUNT_OF_RESULTS,
         page,
         filterIds
-    ).then((items) => {
+    }).then((items) => {
         items = (items || []).filter(item => item['title-image']).map(item => {
             (item.providers || []).forEach(provider => {
                 provider.link = addCampaignParameter ?

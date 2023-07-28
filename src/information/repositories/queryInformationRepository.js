@@ -2,7 +2,18 @@ const configuration = require('../../configuration/app-config')();
 const queryPartsResolver = require("./queryPartsResolver");
 const mongoClient = require('mongodb').MongoClient;
 
-module.exports = (query, hashtag, randomItems, numberOfResults, page, filterIds = []) => new Promise((resolve, reject) => {
+module.exports = (parameters) => new Promise((resolve, reject) => {
+    const {
+        filterIds = [],
+        hashtag,
+        numberOfResults,
+        page,
+        priceFrom,
+        priceTo,
+        query,
+        randomItems
+    } = parameters;
+
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
         .then(database => {
             if (!database) {
