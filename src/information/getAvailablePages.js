@@ -2,9 +2,9 @@ const queryInformationCountRepository = require('./repositories/queryInformation
 const constants = require('../constants');
 const availablePageResolver = require('./resolver/availablePageResolver');
 
-module.exports = (query, numberOfResults, page, filterIds) => new Promise((resolve, reject) => {
+module.exports = (query, priceFrom, priceTo, numberOfResults, page, filterIds) => new Promise((resolve, reject) => {
 
-    queryInformationCountRepository(query, numberOfResults, filterIds)
+    queryInformationCountRepository(query, priceFrom, priceTo, numberOfResults, filterIds)
         .then(resultCount => {
             page = page ? Number.parseInt(page) : 1;
             numberOfResults = numberOfResults ? Number.parseInt(numberOfResults) : constants.DEFAULT_MAXIMUM_AMOUNT_OF_RESULTS;

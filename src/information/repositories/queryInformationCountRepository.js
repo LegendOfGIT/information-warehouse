@@ -2,7 +2,7 @@ const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 const queryPartsResolver = require('./queryPartsResolver');
 
-module.exports = (query, numberOfResults, filterIds) => new Promise((resolve, reject) => {
+module.exports = (query, priceFrom, priceTo, numberOfResults, filterIds) => new Promise((resolve, reject) => {
 
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
         .then(database => {
@@ -10,7 +10,7 @@ module.exports = (query, numberOfResults, filterIds) => new Promise((resolve, re
                 resolve([]);
             }
 
-            const queryParts = queryPartsResolver(query, numberOfResults, filterIds);
+            const queryParts = queryPartsResolver(query, priceFrom, priceTo, numberOfResults, filterIds);
             queryParts.push({ $count: 'totalCount' });
 
             database.db().collection('items').aggregate(queryParts).toArray()

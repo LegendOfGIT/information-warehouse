@@ -31,6 +31,8 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
         randomItems,
         numberOfResults: numberOfResults ? Number.parseInt(numberOfResults) : constants.DEFAULT_MAXIMUM_AMOUNT_OF_RESULTS,
         page,
+        priceFrom,
+        priceTo,
         filterIds
     }).then((items) => {
         items = (items || []).filter(item => item['title-image']).map(item => {

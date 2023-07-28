@@ -1,6 +1,6 @@
 const filterConfiguration = require('../../configuration/filter-configuration');
 
-module.exports = (query, numberOfResults, filterIds = []) => {
+module.exports = (query, priceFrom, priceTo, numberOfResults, filterIds = []) => {
 
     const getFilterQuery = (filterIds) => {
         const filterProperties = filterConfiguration.getFilterPropertiesByFilterIds(filterIds);
@@ -23,7 +23,6 @@ module.exports = (query, numberOfResults, filterIds = []) => {
             queries.push({ $or: subQueries });
         });
 
-        console.log(queries);
         return { $and: queries };
     };
 

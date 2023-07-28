@@ -66,6 +66,8 @@ module.exports = () => ({
                 navigationId,
                 numberOfResults,
                 page,
+                priceFrom,
+                priceTo,
                 randomItems,
                 searchPattern,
                 searchProfileId
@@ -105,6 +107,8 @@ module.exports = () => ({
                 randomItems,
                 numberOfResults,
                 page,
+                priceFrom,
+                priceTo,
                 addCampaignParameter: true,
                 filterIds
             })
@@ -121,7 +125,7 @@ module.exports = () => ({
                     updateItemsRepository(response, numberOfResults)
                         .then(() => {});
 
-                    const availablePages = await getAvailablePages(query, numberOfResults, page, filterIds);
+                    const availablePages = await getAvailablePages(query, priceFrom, priceTo, numberOfResults, page, filterIds);
 
                     if (!randomItems) {
                         reply.headers({

@@ -20,7 +20,7 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
                 resolve([]);
             }
 
-            const queryParts = queryPartsResolver(query, numberOfResults, filterIds);
+            const queryParts = queryPartsResolver(query, priceFrom, priceTo, numberOfResults, filterIds);
 
             const sort = {};
             sort['scoring.' + (hashtag || 'noprofile')] = -1;
