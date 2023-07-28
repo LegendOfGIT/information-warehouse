@@ -43,13 +43,12 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         return;
     }
 
-    const itemsToScore = await queryInformationRepository(
-        {itemId: informationItemScoring.itemId},
-        undefined,
-        false,
-        1,
-        1,
-        []);
+    const itemsToScore = await queryInformationRepository({
+        query: {itemId: informationItemScoring.itemId},
+        randomItems: 'false',
+        numberOfResults: 1,
+        page: 1
+    });
 
     const itemToScore = itemsToScore && itemsToScore.length ? itemsToScore[0] : undefined;
     if (!itemToScore) {
@@ -69,17 +68,16 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
     await storeInformationRepository(itemToScore);
 
     const deepestNavigationId = itemToScore.navigationPath[itemToScore.navigationPath.length - 1];
-    const furtherItemsToScore = await queryInformationRepository(
-        {
+    const furtherItemsToScore = await queryInformationRepository({
+        query: {
             itemId: { $ne: informationItemScoring.itemId },
             navigationPath: deepestNavigationId,
             tags: { $exists: true }
         },
-        undefined,
-        true,
-        20,
-        1,
-        []);
+        randomItems: 'true',
+        numberOfResults: 20,
+        page: 1
+    });
 
     for (let item of furtherItemsToScore) {
         item.tags = tagsResolver(item);
