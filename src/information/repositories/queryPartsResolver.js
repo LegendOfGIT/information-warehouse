@@ -2,13 +2,20 @@ const filterConfiguration = require('../../configuration/filter-configuration');
 
 module.exports = (query, priceFrom, priceTo, numberOfResults, filterIds = []) => {
 
-    const getFilterQuery = (filterIds) => {
+    const getFilterQuery = (priceFrom, priceTo, filterIds) => {
         const filterProperties = filterConfiguration.getFilterPropertiesByFilterIds(filterIds);
-        if (0 === Object.keys(filterProperties).length) {
+        if (!priceFrom && !priceTo && 0 === Object.keys(filterProperties).length) {
             return {};
         }
 
         const queries = [];
+        if (priceFrom) {
+            queries.push({ "providers.price-current": { $gte: Number.parseInt(priceFrom) } })
+        }
+        if (priceTo) {
+            queries.push({ "providers.price-current": { $lte: Number.parseInt(priceTo) } })
+        }
+
         Object.values(filterProperties).forEach(filterProperty => {
             const subQueries = [];
             filterProperty.forEach(propertyFilter => {
@@ -44,7 +51,7 @@ module.exports = (query, priceFrom, priceTo, numberOfResults, filterIds = []) =>
 
     const priceCheck = numberOfResults > 1 ? { hasPriceInformation: { $in: [true, null] } } : null;
 
-    queryParts.push({ $match: { ...query, ...priceCheck, ...getFilterQuery(filterIds) } });
+    queryParts.push({ $match: { ...query, ...priceCheck, ...getFilterQuery(priceFrom, priceTo, filterIds) } });
 
     return queryParts;
 };
