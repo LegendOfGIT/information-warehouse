@@ -18,6 +18,7 @@ const FILTER_MAPPING = {
     1000032: { property: 'providers.itemId', value: 'janvanderstorm' },
     1000033: { property: 'providers.itemId', value: 'mytoys' },
     1000034: { property: 'providers.itemId', value: 'naturalfoodshop' },
+    1000114: { property: 'providers.itemId', value: 'ohmyfantasy' },
     1000035: { property: 'providers.itemId', value: 'otto' },
     1000036: { property: 'providers.itemId', value: 'pakama' },
     1000037: { property: 'providers.itemId', value: 'plantlife' },
