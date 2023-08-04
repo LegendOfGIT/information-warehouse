@@ -174,7 +174,6 @@ module.exports = () => ({
             reply.send({ items: resultItems.filter(item => item) });
         });
     },
-
     registerStoreInformationItem: (fastify) => {
         fastify.put('/api/information-item', async (request, reply) => {
             reply.type('application/json').code(HTTP_STATUS_CODE_OK);
@@ -186,7 +185,6 @@ module.exports = () => ({
                 .catch(error => replyWithInternalError(reply, error));
         });
     },
-
     registerStoreInformationItemScoring: (fastify) => {
         fastify.put('/api/information-item/scoring', async (request, reply) => {
             reply.type('application/json').code(HTTP_STATUS_CODE_OK);
@@ -201,6 +199,35 @@ module.exports = () => ({
                     reply.send({});
                 })
                 .catch(error => replyWithInternalError(reply, error));
+        });
+    },
+    registerGetAvailableFilters: (fastify) => {
+        fastify.get('/api/available-filters', async(request, reply) => {
+            reply.type('application/json').code(HTTP_STATUS_CODE_OK);
+
+            const {
+                navigationId,
+                priceFrom,
+                priceTo,
+                searchPattern
+            } = request.query;
+
+            const query = {};
+
+            addSearchQuery(query, searchPattern);
+
+            if (navigationId) {
+                query.navigationPath = navigationId;
+            }
+
+            await getAvailableFilters({ query, priceFrom, priceTo })
+                .then(async response => {
+                    reply.send({
+                        errorCode: '',
+                        items: response
+                    });
+                })
+                .catch(error => replyWithInternalError(reply, error, { items: [] }));
         });
     }
 });

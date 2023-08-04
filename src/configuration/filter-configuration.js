@@ -129,6 +129,8 @@ const NAVIGATION_DEFAULT_FILTERS = {
 };
 
 module.exports = {
+    FILTER_MAPPING,
+
     getDefaultFilterIdsBy(givenFilterIds, navigationId, numberOfResults, randomItems) {
         if ((givenFilterIds || []).filter(f => f).length > 0) {
             return givenFilterIds;
