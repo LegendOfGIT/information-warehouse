@@ -42,6 +42,10 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
 
             database.db().collection('items').aggregate(queryParts).toArray()
                 .then((result) => {
+                    if (1 === (filterIds || []).length) {
+                        result.forEach(item => { item.filterId = filterIds[0]; })
+                    }
+
                     resolve(result);
                 })
                 .catch((error) => {

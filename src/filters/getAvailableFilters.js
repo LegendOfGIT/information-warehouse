@@ -8,22 +8,10 @@ module.exports = (parameters) => new Promise(async (resolve, reject) => {
         query
     } = parameters;
 
-    let availableFilters = Object.keys(filterConfiguration.FILTER_MAPPING)
-        .map(filterId => {
-            queryInformation({
-                query,
-                priceFrom,
-                priceTo,
-                filterIds: [filterId]
-            })
-                .then((items) => {
-                    if (items.length > 0) {
-                        return {filterId}
-                    }
-                })
-                .catch(() => {
-                })
-        });
+    const filterPromises = Object.keys(filterConfiguration.FILTER_MAPPING)
+        .map(filterId => queryInformation({ query, priceFrom, priceTo, filterIds: [filterId], numberOfResults: 1 }));
+    let availableFilters = (await Promise.all(filterPromises))
+        .map(items => { return items.length > 0 ? { filterId: items[0].filterId } : undefined; });
 
     availableFilters = availableFilters.filter(f => f);
     resolve(availableFilters);
