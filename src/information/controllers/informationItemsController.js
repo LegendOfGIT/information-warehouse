@@ -11,6 +11,7 @@ const updateItemsRepository = require('../../activities/repositories/updateItems
 const isOverviewRequest = require('../../request/isOverviewRequest');
 const getAvailablePages = require('../getAvailablePages');
 const containsBadTerm = require('../validator/containsBadTerm');
+const getAvailableFilters = require('../../filters/getAvailableFilters');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
