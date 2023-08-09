@@ -73,6 +73,8 @@ const FILTER_MAPPING = {
     1000101: { property: 'brand', value: 'bugatti' },
     1000103: { property: 'brand', value: 'calvin klein' },
     1000110: { property: 'brand', value: 'chanel' },
+    1000115: { property: 'brand', value: 'charlsten' },
+    1000116: { property: 'brand', value: 'cougar' },
     1000099: { property: 'brand', value: 'desigual' },
     1000107: { property: 'brand', value: 'electronic arts' },
     1000105: { property: 'brand', value: 'esprit' },
