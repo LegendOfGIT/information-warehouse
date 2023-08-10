@@ -80,7 +80,7 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
 
     const furtherItemsToScore = await queryInformationRepository({
         query,
-        filterIds: informationItemScoring.filters || [],
+        filterIds: (informationItemScoring.filters || '').split('-'),
         randomItems: 'true',
         numberOfResults: 20,
         page: 1
