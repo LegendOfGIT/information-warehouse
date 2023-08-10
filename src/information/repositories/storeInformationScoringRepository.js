@@ -68,12 +68,19 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
     await storeInformationRepository(itemToScore);
 
     const deepestNavigationId = itemToScore.navigationPath[itemToScore.navigationPath.length - 1];
+    const query = {
+        itemId: { $ne: informationItemScoring.itemId },
+        navigationPath: deepestNavigationId,
+        tags: { $exists: true }
+    };
+
+    if (informationItemScoring.searchPattern) {
+        query.title = informationItemScoring.searchPattern;
+    }
+
     const furtherItemsToScore = await queryInformationRepository({
-        query: {
-            itemId: { $ne: informationItemScoring.itemId },
-            navigationPath: deepestNavigationId,
-            tags: { $exists: true }
-        },
+        query,
+        filterIds: informationItemScoring.filters || [],
         randomItems: 'true',
         numberOfResults: 20,
         page: 1
