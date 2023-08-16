@@ -21,7 +21,8 @@ const modifyScoringValue = (itemToScoreArguments, itemToScore, itemToCompare) =>
     const scoring = itemToCompare.scoring || {};
     scoring[hashtag] = scoring[itemToScoreArguments.searchProfileId] || 0;
 
-    scoring[hashtag] = matchingTagsInPercent > 60
+    const searchPattern = itemToScoreArguments.searchPattern || '';
+    scoring[hashtag] = '' !== searchPattern || matchingTagsInPercent > 60
         ? scoring[hashtag] + (matchingTagsInPercent * itemToScoreArguments.scoring)
         : scoring[hashtag] - (((100 - matchingTagsInPercent) * (itemToScoreArguments.scoring < 0 ? itemToScoreArguments.scoring * -1 : itemToScoreArguments.scoring)) * 2);
 
