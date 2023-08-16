@@ -127,6 +127,8 @@ const CATEGORY_MAPPING = {
     MUSIC_CD_POP: 'music-pop',
     MUSIC_CD_ROCK: 'music-rock',
     SPORTS_BALLSPORTS_SOCCER: 'sports-soccer',
+    SPORTS_CLIMBING_BACKPACKS: 'climbing-backpacks',
+    SPORTS_CLIMBING_SHOES: 'climbing-shoes',
     SPORTS_EXERCISE_EQUIPMENT: 'sports-exercise-equipment',
     SPORTS_TABLESPORTS_BILLARD: 'sports-billard',
     SPORTS_TABLESPORTS_TABLESOCCER: 'sports-tablesoccer',
