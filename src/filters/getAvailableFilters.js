@@ -32,6 +32,6 @@ module.exports = (parameters) => new Promise(async (resolve) => {
 
     availableFilters = availableFilters.filter(f => f);
 
-    cache.set(cacheKey, availableFilters, 60);
+    cache.set(cacheKey, availableFilters, 3600);
     resolve(availableFilters);
 });
