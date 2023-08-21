@@ -69,7 +69,7 @@ const getGetInformationItemsCacheKey = (query,
         return '';
     }
 
-    return [
+    return 'GET_INFORMATION_ITEMS||' + [
         query._id,
         query.title,
         query.navigationPath,

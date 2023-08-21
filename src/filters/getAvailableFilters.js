@@ -9,7 +9,7 @@ const getCacheKey = (parameters) => {
         query
     } = parameters;
 
-    return [query.title, query.navigationPath, priceFrom, priceTo].join('||');
+    return `GAFIL||${[query.title, query.navigationPath, priceFrom, priceTo].join('||')}`;
 };
 
 module.exports = (parameters) => new Promise(async (resolve) => {
