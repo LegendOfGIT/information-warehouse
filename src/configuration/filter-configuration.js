@@ -7,6 +7,7 @@ const FILTER_MAPPING = {
     1000021: { property: 'providers.itemId', value: 'bear-family' },
     1000022: { property: 'providers.itemId', value: 'bisbshop' },
     1000023: { property: 'providers.itemId', value: 'buch24' },
+    1000119: { property: 'providers.itemId', value: 'dunleath' },
     1000024: { property: 'providers.itemId', value: 'ebrosia' },
     1000025: { property: 'providers.itemId', value: 'enners' },
     1000026: { property: 'providers.itemId', value: 'fussmatten-welt' },
