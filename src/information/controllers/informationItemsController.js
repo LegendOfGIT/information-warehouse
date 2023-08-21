@@ -12,6 +12,7 @@ const isOverviewRequest = require('../../request/isOverviewRequest');
 const getAvailablePages = require('../getAvailablePages');
 const containsBadTerm = require('../validator/containsBadTerm');
 const getAvailableFilters = require('../../filters/getAvailableFilters');
+const cache = require('../../cache/cache');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -53,6 +54,33 @@ const addSearchQuery = (query, searchPattern) => {
     }
 
     query.title = searchPattern;
+};
+
+const getGetInformationItemsCacheKey = (query,
+                                        hashtag,
+                                        randomItems,
+                                        numberOfResults,
+                                        page,
+                                        priceFrom,
+                                        priceTo,
+                                        addCampaignParameter,
+                                        filterIds) => {
+    if (randomItems) {
+        return '';
+    }
+
+    return [
+        query._id,
+        query.title,
+        query.navigationPath,
+        hashtag,
+        numberOfResults,
+        page,
+        filterIds.join(';;'),
+        priceFrom,
+        priceTo,
+        addCampaignParameter
+    ].join('||');
 };
 
 module.exports = () => ({
@@ -102,6 +130,12 @@ module.exports = () => ({
             }
 
             const filterIds = (filters || '').split('-');
+            const cacheKey = getGetInformationItemsCacheKey(query, firstHashtag, randomItems, numberOfResults, page, priceFrom, priceTo, true, filterIds);
+            if (cache.has(cacheKey)) {
+                reply.send(cache.get(cacheKey));
+                return
+            }
+
             await queryInformationItems({
                 query,
                 hashtag: firstHashtag,
@@ -128,16 +162,18 @@ module.exports = () => ({
 
                     const availablePages = await getAvailablePages(query, priceFrom, priceTo, numberOfResults, page, filterIds);
 
-                    if (!randomItems) {
-                        reply.headers({
-                            'Cache-Control': 'max-age=300'});
-                    }
-
-                    reply.send({
+                    const res = {
                         errorCode: hashtagsContainBadTerm ? 'HASHTAGS_CONTAIN_BAD_TERM' : '',
                         items: response,
                         availablePages
-                    });
+                    };
+
+                    if (!randomItems) {
+                        reply.headers({'Cache-Control': 'max-age=600'});
+                        cache.set(cacheKey, res, 18000);
+                    }
+
+                    reply.send(res);
                 })
                 .catch(error => replyWithInternalError(reply, error, { items: [] }));
         });
