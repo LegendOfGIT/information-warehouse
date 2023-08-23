@@ -94,6 +94,8 @@ const CATEGORY_MAPPING = {
     HOME_GARDEN_SPORTS: 'garden-trampolines|garden-soccergoals',
     HOME_PETS_CATS: 'pets-cats',
     HOME_PETS_DOGS: 'pets-dogs',
+    HOME_WELLNESS_SAUNAS: 'saunas',
+    HOME_WELLNESS_WHIRLPOOLS: 'whirlpools',
     KIDS_BOOKS_AUDIOBOOKS: 'kids-audio-books',
     KIDS_PARTY_TABLEWARE: 'kids-party-tableware',
     KIDS_SCHOOL_SATCHEL: 'kids-school-satchel',
