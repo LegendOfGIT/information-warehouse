@@ -40,6 +40,7 @@ const FILTER_MAPPING = {
     1000052: { property: 'providers.itemId', value: 'messmer' },
     1000063: { property: 'providers.itemId', value: 'flaconi' },
     1000117: { property: 'providers.itemId', value: 'verticalextreme' },
+    1000121: { property: 'providers.itemId', value: 'awg-mode' },
 
     1000014: { property: 'filterInformation.color', value: 'black' },
     1000008: { property: 'filterInformation.color', value: 'blue' },
