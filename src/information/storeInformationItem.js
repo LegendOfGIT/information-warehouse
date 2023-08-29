@@ -27,7 +27,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
         }
 
         itemToStore[propertyKey] =
-            0 === scrapedItem[propertyKey] || scrapedItem[propertyKey]
+            false === scrapedItem[propertyKey] || 0 === scrapedItem[propertyKey] || scrapedItem[propertyKey]
                 ? scrapedItem[propertyKey]
                 : itemToStore[propertyKey];
     });
@@ -40,7 +40,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
         }
 
         providerItemToStore[propertyKey] =
-            0 === scrapedItem[propertyKey] || scrapedItem[propertyKey]
+            false === scrapedItem[propertyKey] || 0 === scrapedItem[propertyKey] || scrapedItem[propertyKey]
                 ? scrapedItem[propertyKey]
                 : providerItemToStore[propertyKey];
     });
