@@ -150,6 +150,8 @@ const CATEGORY_MAPPING = {
     VEHICLES_CARS_CHILDSEATS: 'car-child-seats',
     VEHICLES_CARS_SUMMERTYRES: 'car-summer-tyres',
     VEHICLES_CARS_WINTERTYRES: 'car-winter-tyres',
+    VEHICLES_MOTORCYCLES_MOTORBIKES: 'motorbikes',
+    VEHICLES_MOTORCYCLES_QUADS: 'quads',
     VEHICLES_SCOOTERS_ELECTRICALSCOOTERS: 'escooters'
 };
 

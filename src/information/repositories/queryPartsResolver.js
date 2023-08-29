@@ -50,8 +50,9 @@ module.exports = (query, priceFrom, priceTo, numberOfResults, filterIds = []) =>
         key => queryParts.push({ $addFields: { titleWithoutSpecials: { $replaceAll: { input: "$titleWithoutSpecials", find: key, replacement: specialCharReplacements[key] }}}}));
 
     const priceCheck = numberOfResults > 1 ? { hasPriceInformation: { $in: [true, null] } } : null;
+    const stockCheck = numberOfResults > 1 ? { $or: [{ amountInStock: null }, { amountInStock: { $gt: 0 }}] } : null;
 
-    queryParts.push({ $match: { ...query, ...priceCheck, ...getFilterQuery(priceFrom, priceTo, filterIds) } });
+    queryParts.push({ $match: { ...query, ...priceCheck, ...stockCheck, ...getFilterQuery(priceFrom, priceTo, filterIds) } });
 
     return queryParts;
 };
