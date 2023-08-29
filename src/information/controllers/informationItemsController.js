@@ -130,7 +130,7 @@ module.exports = () => ({
 
             const filterIds = (filters || '').split('-');
             const cacheKey = getGetInformationItemsCacheKey(query, firstHashtag, randomItems, numberOfResults, page, priceFrom, priceTo, true, filterIds);
-            if (cache.has(cacheKey)) {
+            if (cacheKey && cache.has(cacheKey)) {
                 reply.send(cache.get(cacheKey));
                 return
             }
@@ -169,7 +169,7 @@ module.exports = () => ({
 
                     if (!randomItems) {
                         reply.headers({'Cache-Control': 'max-age=600'});
-                        cache.set(cacheKey, res, 18000);
+                        if (cacheKey) { cache.set(cacheKey, res, 18000); }
                     }
 
                     reply.send(res);
