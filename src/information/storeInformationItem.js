@@ -29,6 +29,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
         itemToStore[propertyKey] = scrapedItem[propertyKey] ? scrapedItem[propertyKey] : itemToStore[propertyKey];
     });
 
+    console.log(scrapedItem);
     const providerItemToStore = {};
     Object.keys(scrapedItem).forEach(propertyKey => {
         if (!providerSpecificProperties.includes(propertyKey)) {
