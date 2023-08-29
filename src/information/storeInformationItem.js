@@ -26,7 +26,10 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
             return;
         }
 
-        itemToStore[propertyKey] = scrapedItem[propertyKey] ? scrapedItem[propertyKey] : itemToStore[propertyKey];
+        itemToStore[propertyKey] =
+            0 === scrapedItem[propertyKey] || scrapedItem[propertyKey]
+                ? scrapedItem[propertyKey]
+                : itemToStore[propertyKey];
     });
 
     console.log(scrapedItem);
