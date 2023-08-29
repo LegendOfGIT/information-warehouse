@@ -27,12 +27,11 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
         }
 
         itemToStore[propertyKey] =
-            false === scrapedItem[propertyKey] || 0 === scrapedItem[propertyKey] || scrapedItem[propertyKey]
+            undefined !== scrapedItem[propertyKey]
                 ? scrapedItem[propertyKey]
                 : itemToStore[propertyKey];
     });
 
-    console.log(scrapedItem);
     const providerItemToStore = {};
     Object.keys(scrapedItem).forEach(propertyKey => {
         if (!providerSpecificProperties.includes(propertyKey)) {
@@ -40,7 +39,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
         }
 
         providerItemToStore[propertyKey] =
-            false === scrapedItem[propertyKey] || 0 === scrapedItem[propertyKey] || scrapedItem[propertyKey]
+            undefined !== scrapedItem[propertyKey]
                 ? scrapedItem[propertyKey]
                 : providerItemToStore[propertyKey];
     });
@@ -51,7 +50,6 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
     providers.push(providerItemToStore);
 
     itemToStore.hasPriceInformation = providers.filter(provider => provider['price-initial'] || provider['price-current']).length > 0;
-    console.log(providers);
     itemToStore.isInStock = providers.filter(provider => undefined === provider.amountInStock || provider.amountInStock > 0).length > 0;
 
     const providersWithBothPrices = providers.filter(provider => provider['price-initial'] && provider['price-current']);
