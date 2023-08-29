@@ -44,6 +44,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
     providers.push(providerItemToStore);
 
     itemToStore.hasPriceInformation = providers.filter(provider => provider['price-initial'] || provider['price-current']).length > 0;
+    console.log(providers);
     itemToStore.isInStock = providers.filter(provider => undefined === provider.amountInStock || provider.amountInStock > 0).length > 0;
 
     const providersWithBothPrices = providers.filter(provider => provider['price-initial'] && provider['price-current']);
