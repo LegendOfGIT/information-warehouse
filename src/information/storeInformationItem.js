@@ -39,7 +39,10 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
             return;
         }
 
-        providerItemToStore[propertyKey] = scrapedItem[propertyKey] ? scrapedItem[propertyKey] : providerItemToStore[propertyKey];
+        providerItemToStore[propertyKey] =
+            0 === scrapedItem[propertyKey] || scrapedItem[propertyKey]
+                ? scrapedItem[propertyKey]
+                : providerItemToStore[propertyKey];
     });
 
     storedItem = storedItem || { itemId: getItemIdFromInformationItem(scrapedItem) };
