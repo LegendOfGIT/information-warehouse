@@ -65,12 +65,11 @@ const getGetInformationItemsCacheKey = (query,
                                         priceTo,
                                         addCampaignParameter,
                                         filterIds) => {
-    if (randomItems) {
+    if (randomItems || query._id) {
         return '';
     }
 
     return 'GET_INFORMATION_ITEMS||' + [
-        query._id,
         query.title,
         query.navigationPath,
         hashtag,
