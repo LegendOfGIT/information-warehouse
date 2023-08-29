@@ -8,7 +8,16 @@ const getItemIdFromInformationItem = (item) => {
 };
 
 const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
-    const providerSpecificProperties = ['itemId', 'link', 'mean', 'price-current', 'price-initial', 'updatedOn'];
+    const providerSpecificProperties = [
+        'amountInStock',
+        'itemId',
+        'link',
+        'mean',
+        'price-current',
+        'price-initial',
+        'productCondition',
+        'updatedOn'];
+
     const providerAndItemSpecificProperties = ['updatedOn'];
 
     const itemToStore = {}
@@ -35,6 +44,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
     providers.push(providerItemToStore);
 
     itemToStore.hasPriceInformation = providers.filter(provider => provider['price-initial'] || provider['price-current']).length > 0;
+    itemToStore.isInStock = providers.filter(provider => undefined === provider.amountInStock || provider.amountInStock > 0).length > 0;
 
     const providersWithBothPrices = providers.filter(provider => provider['price-initial'] && provider['price-current']);
     const reductions = providersWithBothPrices.map(p => (100 - (p['price-current'] * 100 / p['price-initial'])));
