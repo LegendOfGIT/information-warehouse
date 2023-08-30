@@ -120,6 +120,7 @@ const CATEGORY_MAPPING = {
     MULTIMEDIA_BOOKS_PHILOSOPHY: 'books-philosophy',
     MULTIMEDIA_BOOKS_SCIENCEFICTION: 'books-science-fiction',
     MULTIMEDIA_BOOKS_SCHOOLBOOKS: 'books-school',
+    MULTIMEDIA_GAMES_NINTENDODS: 'nintendo-ds-games',
     MULTIMEDIA_GAMES_NINTENDO_SWITCH: 'nintendo-switch-games',
     MULTIMEDIA_GAMES_PC: 'pc-games',
     MULTIMEDIA_GAMES_PLAYSTATION_4: 'playstation-4-games',
