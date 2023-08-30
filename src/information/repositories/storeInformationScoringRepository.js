@@ -87,6 +87,7 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         page: 1
     });
 
+    console.log(furtherItemsToScore);
     for (let item of furtherItemsToScore) {
         item.tags = tagsResolver(item);
         modifyScoringValue(informationItemScoring, itemToScore, item);
