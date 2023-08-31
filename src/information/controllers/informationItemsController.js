@@ -126,8 +126,8 @@ module.exports = () => ({
                 query.navigationPath = navigationId;
 
                 if (isOverviewRequest(id, firstHashtag, numberOfResults) && !isBotRequest(request)) {
-                    observeConfiguration.getCategoryIdsByNavigationId(navigationId)
-                        .forEach(categoryId => observeCategory(categoryId));
+                    const categoryIds = await observeConfiguration.getCategoryIdsByNavigationId(navigationId);
+                    categoryIds.forEach(categoryId => observeCategory(categoryId));
                 }
             }
 
