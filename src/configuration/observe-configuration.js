@@ -11,10 +11,10 @@ const updateCategoryMappingWhenNecessary = () => {
     requestModule(
         `http://${configuration.services.satellite.host}:${configuration.services.satellite.port}/observe/configuration`,
         { json: true },
-        (err, res) => {
+        (err, res, body) => {
             if (err) { return; }
 
-            CATEGORY_MAPPING = res;
+            CATEGORY_MAPPING = body;
         });
 }
 
