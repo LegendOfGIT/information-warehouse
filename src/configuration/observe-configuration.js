@@ -27,10 +27,7 @@ module.exports = {
     getRandomCategoryIds: async () => {
         await updateCategoryMappingWhenNecessary();
 
-        if (Object.keys(CATEGORY_MAPPING).length === 0) {
-            return [];
-        }
-
+        console.log(CATEGORY_MAPPING);
         return Object.values(CATEGORY_MAPPING)[Math.floor(Math.random() * Object.values(CATEGORY_MAPPING).length)]
             .split('|');
     }

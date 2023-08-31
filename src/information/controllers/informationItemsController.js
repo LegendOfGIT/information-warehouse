@@ -18,8 +18,11 @@ const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
 
 cron.schedule('0 */3 * * *',
-    () => {
-        observeConfiguration.getRandomCategoryIds().forEach(categoryId => observeCategory(categoryId));
+    async () => {
+        let randomCategories = await observeConfiguration.getRandomCategoryIds();
+        randomCategories.forEach(categoryId => observeCategory(categoryId));
+
+        randomCategories = await observeConfiguration.getRandomCategoryIds();
         observeConfiguration.getRandomCategoryIds().forEach(categoryId => observeCategory(categoryId));
     }
 );
