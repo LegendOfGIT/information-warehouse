@@ -3,16 +3,18 @@ const configuration = require('../configuration/app-config')();
 
 let CATEGORY_MAPPING = {};
 
-const updateCategoryMappingWhenNecessary = () => {
+const updateCategoryMappingWhenNecessary = async () => {
     if (Object.keys(CATEGORY_MAPPING).length > 0) {
         return;
     }
 
-    requestModule(
+    await requestModule(
         `http://${configuration.services.satellite.host}:${configuration.services.satellite.port}/observe/configuration`,
-        { json: true },
+        {json: true},
         (err, res) => {
-            if (err) { return; }
+            if (err) {
+                return;
+            }
 
             CATEGORY_MAPPING = res.body;
         });
