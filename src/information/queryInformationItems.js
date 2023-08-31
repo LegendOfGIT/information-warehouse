@@ -19,12 +19,6 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
         filterIds = [],
     } = parameters;
 
-    filterIds = filterConfiguration.getDefaultFilterIdsBy(
-        filterIds,
-        query.navigationPath || '',
-        numberOfResults,
-        randomItems);
-
     queryInformation({
         query,
         hashtag,

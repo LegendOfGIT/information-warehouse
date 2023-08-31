@@ -150,26 +150,9 @@ const FILTER_MAPPING = {
     1000080: { property: 'navigationPath', value: '_smartwatches' }
 };
 
-const NAVIGATION_DEFAULT_FILTERS = {
-    ELECTRONICS_AND_COMPUTERS: [1000087, 1000092, 1000091, 1000089, 1000113],
-    FASHION: [1000105, 1000103, 1000101, 1000102, 1000090, 1000104, 1000088],
-    MULTIMEDIA: [1000107, 1000109, 1000095]
-};
-
 module.exports = {
     FILTER_MAPPING,
 
-    getDefaultFilterIdsBy(givenFilterIds, navigationId, numberOfResults, randomItems) {
-        if ((givenFilterIds || []).filter(f => f).length > 0) {
-            return givenFilterIds;
-        }
-
-        if ((/true/i).test(randomItems) || !numberOfResults) {
-            return [];
-        }
-
-        return NAVIGATION_DEFAULT_FILTERS[navigationId] || [];
-    },
     getFilterPropertiesByFilterIds: (filterIds) => {
         const filterProperties = {};
 
