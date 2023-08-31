@@ -113,6 +113,7 @@ const FILTER_MAPPING = {
     1000104: { property: 'brand', value: 'nike' },
     1000095: { property: 'brand', value: 'nintendo' },
     1000113: { property: 'brand', value: 'nokia' },
+    1000142: { property: 'brand', value: 'pandora' },
     1000090: { property: 'brand', value: 'puma' },
     1000089: { property: 'brand', value: 'samsung' },
     1000118: { property: 'brand', value: 'schleich' },
