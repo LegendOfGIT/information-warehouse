@@ -11,6 +11,10 @@ module.exports =
                     port: 27017
                 },
                 services: {
+                    satellite: {
+                        host: 'localhost',
+                        port: 3000
+                    },
                     satelliteController: {
                         host: 'localhost',
                         port: 3001
@@ -26,6 +30,10 @@ module.exports =
                     port: 27017
                 },
                 services: {
+                    satellite: {
+                        host: 'satellite',
+                        port: 3000
+                    },
                     satelliteController: {
                         host: 'satellite-controller',
                         port: 3001
