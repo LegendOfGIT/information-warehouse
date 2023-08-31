@@ -1,6 +1,5 @@
 const getCampaignParameterByUrl = require('../configuration/campaign-configuration').getCampaignParameterByUrl;
 const queryInformation = require('./repositories/queryInformationRepository');
-const filterConfiguration = require('../configuration/filter-configuration');
 const constants = require('../constants');
 
 module.exports = (parameters) => new Promise((resolve, reject) => {
