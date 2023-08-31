@@ -23,14 +23,10 @@ const updateCategoryMappingWhenNecessary = async () => {
 module.exports = {
     getCategoryIdsByNavigationId: async (navigationId) => {
         await updateCategoryMappingWhenNecessary();
-
-        console.log(CATEGORY_MAPPING);
         return (CATEGORY_MAPPING[navigationId] || '').split('|');
     },
     getRandomCategoryIds: async () => {
         await updateCategoryMappingWhenNecessary();
-
-        console.log(CATEGORY_MAPPING);
         return Object.values(CATEGORY_MAPPING)[Math.floor(Math.random() * Object.values(CATEGORY_MAPPING).length)]
             .split('|');
     }

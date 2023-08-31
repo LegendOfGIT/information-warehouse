@@ -33,6 +33,8 @@ const replyWithInternalError = (reply, errorMessage, additionalInformation) => {
 };
 
 const observeCategory = (categoryId) => {
+    console.log(categoryId);
+
     requestModule.post({
         url: `http://${configuration.services.satelliteController.host}:3001/observe-category`,
         json: { 'category-id': categoryId }
