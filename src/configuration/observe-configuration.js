@@ -1,4 +1,5 @@
 const requestModule = require('request');
+const configuration = require('../configuration/app-config')();
 
 let CATEGORY_MAPPING = {};
 
