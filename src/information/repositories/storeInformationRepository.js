@@ -1,7 +1,7 @@
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
-module.exports = (informationItem) => new Promise((resolve, reject) => {
+module.exports = (informationItem) => new Promise((resolve) => {
     if (!informationItem?.itemId) {
         console.log('required itemId is missing');
     }
@@ -18,11 +18,15 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
                     resolve(response);
                 })
                 .catch(error => {
-                    reject(error);
+                    console.log(error);
+                    resolve();
                 })
                 .finally(() => {
                     database.close();
                 });
         })
-        .catch(error => { reject(error); });
+        .catch(error => {
+            console.log(error);
+            resolve();
+        });
 });
