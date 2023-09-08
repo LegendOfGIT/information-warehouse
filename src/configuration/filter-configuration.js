@@ -97,6 +97,7 @@ const FILTER_MAPPING = {
     1000088: { property: 'brand', value: 'adidas' },
     1000087: { property: 'brand', value: 'apple' },
     1000098: { property: 'brand', value: 'banani' },
+    1000145: { property: 'brand', value: 'bench' },
     1000101: { property: 'brand', value: 'bugatti' },
     1000103: { property: 'brand', value: 'calvin klein' },
     1000110: { property: 'brand', value: 'chanel' },
