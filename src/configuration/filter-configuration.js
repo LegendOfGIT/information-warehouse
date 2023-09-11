@@ -13,6 +13,7 @@ const FILTER_MAPPING = {
     1000025: { property: 'providers.itemId', value: 'enners' },
     1000026: { property: 'providers.itemId', value: 'fussmatten-welt' },
     1000143: { property: 'providers.itemId', value: 'galapel' },
+    1000146: { property: 'providers.itemId', value: 'gewuerzland' },
     1000027: { property: 'providers.itemId', value: 'haymancoffee' },
     1000028: { property: 'providers.itemId', value: 'hoerner-group' },
     1000029: { property: 'providers.itemId', value: 'idee-shop' },
