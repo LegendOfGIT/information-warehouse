@@ -35,7 +35,13 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
                     provider.link;
             });
 
-            //delete item.filterInformation;
+            if ((numberOfResults || 0) > 1) {
+                delete item.description;
+                delete item['images-big'];
+                delete item['images-small'];
+            }
+
+            delete item.filterInformation;
             delete item.tags;
             delete item.titleWithoutSpecials;
 
