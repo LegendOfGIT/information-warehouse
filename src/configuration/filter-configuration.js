@@ -94,6 +94,15 @@ const FILTER_MAPPING = {
     1000140: { property: 'size', value: '^XXL' },
     1000141: { property: 'size', value: '^XXXL' },
 
+    1000147: { property: 'minimumAgeInMonths', value: 6 },
+    1000148: { property: 'minimumAgeInMonths', value: 12 },
+    1000149: { property: 'minimumAgeInMonths', value: 18 },
+    1000150: { property: 'minimumAgeInMonths', value: 24 },
+    1000151: { property: 'minimumAgeInMonths', value: 30 },
+    1000152: { property: 'minimumAgeInMonths', value: 36 },
+    1000153: { property: 'minimumAgeInMonths', value: 42 },
+    1000154: { property: 'minimumAgeInMonths', value: 48 },
+
     1000109: { property: 'brand', value: 'activision' },
     1000088: { property: 'brand', value: 'adidas' },
     1000087: { property: 'brand', value: 'apple' },
