@@ -20,6 +20,7 @@ const FILTER_MAPPING = {
     1000030: { property: 'providers.itemId', value: 'inhofer' },
     1000031: { property: 'providers.itemId', value: 'iwmhchair' },
     1000032: { property: 'providers.itemId', value: 'janvanderstorm' },
+    1000164: { property: 'providers.itemId', value: 'littlehipstar' },
     1000122: { property: 'providers.itemId', value: 'medimops' },
     1000033: { property: 'providers.itemId', value: 'mytoys' },
     1000034: { property: 'providers.itemId', value: 'naturalfoodshop' },
