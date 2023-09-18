@@ -7,6 +7,7 @@ const FILTER_MAPPING = {
     1000020: { property: 'providers.itemId', value: 'backmarket' },
     1000021: { property: 'providers.itemId', value: 'bear-family' },
     1000022: { property: 'providers.itemId', value: 'bisbshop' },
+    1000175: { property: 'providers.itemId', value: 'brunobanani' },
     1000023: { property: 'providers.itemId', value: 'buch24' },
     1000119: { property: 'providers.itemId', value: 'dunleath' },
     1000024: { property: 'providers.itemId', value: 'ebrosia' },
