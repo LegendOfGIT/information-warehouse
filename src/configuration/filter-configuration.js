@@ -4,6 +4,7 @@ const FILTER_MAPPING = {
     1000000: { property: 'providers.itemId', value: 'dress-for-less' },
     1000001: { property: 'providers.itemId', value: 'biggreensmile' },
     1000018: { property: 'providers.itemId', value: '100percentpure' },
+    1000177: { property: 'providers.itemId', value: '60beans' },
     1000019: { property: 'providers.itemId', value: 'amazon' },
     1000020: { property: 'providers.itemId', value: 'backmarket' },
     1000021: { property: 'providers.itemId', value: 'bear-family' },
@@ -69,6 +70,7 @@ const FILTER_MAPPING = {
     1000003: { property: 'fit', value: 'skinny fit' },
 
     1000111: { property: 'isBio', value: true },
+    1000178: { property: 'isSustainable', value: true },
 
     1000081: { property: 'storageSize', value: '16 GB' },
     1000082: { property: 'storageSize', value: '32 GB' },
