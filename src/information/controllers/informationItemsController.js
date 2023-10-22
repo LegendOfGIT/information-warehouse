@@ -271,11 +271,13 @@ module.exports = () => ({
         });
     },
     registerDiscoverItem: (fastify) => {
-        const {
-            itemId,
-            navigationPath
-        } = request.query;
+        fastify.get('/api/discover-item', async(request) => {
+            const {
+                itemId,
+                navigationPath
+            } = request.query;
 
-        updateSingleItemRepository(itemId || '', (navigationPath || '').split(','));
+            updateSingleItemRepository(itemId || '', (navigationPath || '').split(','));
+        });
     }
 });
