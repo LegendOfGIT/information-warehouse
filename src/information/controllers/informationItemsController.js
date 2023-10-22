@@ -13,6 +13,7 @@ const getAvailablePages = require('../getAvailablePages');
 const containsBadTerm = require('../validator/containsBadTerm');
 const getAvailableFilters = require('../../filters/getAvailableFilters');
 const cache = require('../../cache/cache');
+const updateSingleItemRepository = require('../repositories/updateSingleItemRepository');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -23,7 +24,7 @@ cron.schedule('0 */3 * * *',
         randomCategories.forEach(categoryId => observeCategory(categoryId));
 
         randomCategories = await observeConfiguration.getRandomCategoryIds();
-        observeConfiguration.getRandomCategoryIds().forEach(categoryId => observeCategory(categoryId));
+        randomCategories.forEach(categoryId => observeCategory(categoryId));
     }
 );
 
@@ -268,5 +269,13 @@ module.exports = () => ({
                 })
                 .catch(error => replyWithInternalError(reply, error, { items: [] }));
         });
+    },
+    registerDiscoverItem: (fastify) => {
+        const {
+            itemId,
+            navigationPath
+        } = request.query;
+
+        updateSingleItemRepository(itemId || '', (navigationPath || '').split(','));
     }
 });

@@ -1,5 +1,4 @@
-const requestModule = require('request');
-const configuration = require('../../configuration/app-config')();
+const updateSingleItemRepository = require('../../information/repositories/updateSingleItemRepository');
 
 const getReworkedItemId = (itemId) => {
     return -1 !== (itemId || '').indexOf('otto.de') ? itemId.replace('otto.de-', 'otto.') :
@@ -9,25 +8,15 @@ const getReworkedItemId = (itemId) => {
 };
 
 const updateItem = (item) => {
-    const url = `http://${configuration.services.satelliteController.host}:${configuration.services.satelliteController.port}/update-item`;
-
     (item.providers || []).filter(provider => !provider.mean).forEach(provider => {
         let itemId = provider.itemId || (item.mean || (item.asin ? `azo.${item.asin}` : ''));
         itemId = getReworkedItemId(itemId);
 
-        requestModule.post({
-            url,
-            json: {
-                itemId,
-                navigationPath: item.navigationPath }
-        }, () => {});
+        updateSingleItemRepository(itemId, item.navigationPath);
     });
 
     (item.providers || []).filter(provider => provider.mean).forEach(provider => {
-        requestModule.post({
-            url,
-            json: { itemId: provider.mean, navigationPath: item.navigationPath }
-        }, () => {});
+        updateSingleItemRepository(provider.mean, item.navigationPath);
     });
 };
 
