@@ -7,16 +7,16 @@ const getReworkedItemId = (itemId) => {
         itemId;
 };
 
-const updateItem = (item) => {
+const updateItem = (item, withHighPriority) => {
     (item.providers || []).filter(provider => !provider.mean).forEach(provider => {
         let itemId = provider.itemId || (item.mean || (item.asin ? `azo.${item.asin}` : ''));
         itemId = getReworkedItemId(itemId);
 
-        updateSingleItemRepository(itemId, item.navigationPath);
+        updateSingleItemRepository(itemId, item.navigationPath, withHighPriority);
     });
 
     (item.providers || []).filter(provider => provider.mean).forEach(provider => {
-        updateSingleItemRepository(provider.mean, item.navigationPath);
+        updateSingleItemRepository(provider.mean, item.navigationPath, withHighPriority);
     });
 };
 
@@ -27,13 +27,13 @@ module.exports = (items, maximumNumberOfResults) => new Promise((resolve) => {
     }
 
     if (items.length <= 3) {
-        items.forEach(item => updateItem(item));
+        items.forEach(item => updateItem(item, true));
         resolve();
         return;
     }
 
     for (let i=1; i<=3; i++) {
-        updateItem(items[Math.floor(Math.random() * items.length)]);
+        updateItem(items[Math.floor(Math.random() * items.length)], false);
     }
 
 

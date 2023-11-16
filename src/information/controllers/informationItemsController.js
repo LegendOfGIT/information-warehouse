@@ -277,7 +277,10 @@ module.exports = () => ({
                 navigationPath
             } = request.query;
 
-            updateSingleItemRepository(itemId || '', (navigationPath || '').split(','));
+            updateSingleItemRepository(
+                itemId || '',
+                (navigationPath || '').split(','),
+                true);
         });
     }
 });
