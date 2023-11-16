@@ -173,7 +173,7 @@ module.exports = () => ({
 
                     if (!randomItems) {
                         reply.headers({'Cache-Control': 'max-age=600'});
-                        if (cacheKey) { cache.set(cacheKey, res, 18000); }
+                        if (cacheKey) { cache.set(cacheKey, res, 600); }
                     }
 
                     reply.send(res);
