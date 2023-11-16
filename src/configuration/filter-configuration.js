@@ -3,6 +3,7 @@ const FILTER_MAPPING = {
     1000144: { property: 'providers.itemId', value: 'artgerecht' },
     1000182: { property: 'providers.itemId', value: 'asianfoodlovers' },
     1000000: { property: 'providers.itemId', value: 'dress-for-less' },
+    1000186: { property: 'providers.itemId', value: 'beautywelt' },
     1000001: { property: 'providers.itemId', value: 'biggreensmile' },
     1000018: { property: 'providers.itemId', value: '100percentpure' },
     1000177: { property: 'providers.itemId', value: '60beans' },
