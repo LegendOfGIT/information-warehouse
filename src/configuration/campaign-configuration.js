@@ -1,7 +1,7 @@
 module.exports = {
     getCampaignParameterByUrl: (url) => {
         const mapping = {
-            'amazon\.de': 'tag=wewannashop0a-21'
+            'amazon\.de': 'tag=wewannashop20-21'
         };
 
         const foundCampaignIds = Object.keys(mapping).filter(urlPart => -1 !== url.indexOf(urlPart));
