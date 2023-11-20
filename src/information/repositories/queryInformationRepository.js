@@ -56,7 +56,7 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
                 });
         })
         .catch(error => {
-            console.log(error);
-            reject(error);
+            console.log("cant reach database");
+            resolve(error);
         });
 });

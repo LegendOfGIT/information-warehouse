@@ -12,7 +12,10 @@ module.exports = (hashtagPattern) => new Promise(async (resolve, reject) => {
             const collection =  database.db().collection('items');
 
             collection.aggregate([ { $group: { _id: null, uniqueValues: { $addToSet: "$scoring"}}} ]).toArray((err, result) => {
-                if (err) throw err;
+                if (err) {
+                    database.close();
+                    throw err;
+                }
 
                 if (!result || !result.length) {
                     resolve({ items: [] });

@@ -17,7 +17,10 @@ module.exports = (hashtag) => new Promise(async (resolve, reject) => {
             const collection =  database.db().collection('visitedCategories');
 
             collection.find({ hashtag }).sort({ activityOn: -1 }).limit(300).toArray((err, result) => {
-                if (err) throw err;
+                if (err) {
+                    database.close();
+                    throw err;
+                }
 
                 const categories = [...new Set(result.map(item => item.categoryId))].map(category => ({
                     categoryId: category,

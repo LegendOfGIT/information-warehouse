@@ -12,7 +12,10 @@ module.exports = (userId) => new Promise(async (resolve, reject) => {
             const collection =  database.db().collection('searchProfiles');
 
             collection.find({ userId }).toArray((err, result) => {
-                if (err) throw err;
+                if (err) {
+                    database.close();
+                    throw err;
+                }
 
                 resolve(result.map(res => res.searchProfile));
                 database.close();
