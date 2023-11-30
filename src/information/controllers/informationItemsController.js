@@ -160,7 +160,7 @@ module.exports = () => ({
                     ).then(() => {
                     });
 
-                    updateItemsRepository(response, numberOfResults)
+                    updateItemsRepository(response, numberOfResults, isBotRequest(request))
                         .then(() => {});
 
                     const availablePages = await getAvailablePages(query, priceFrom, priceTo, numberOfResults, page, filterIds);

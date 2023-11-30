@@ -20,14 +20,14 @@ const updateItem = (item, withHighPriority) => {
     });
 };
 
-module.exports = (items, maximumNumberOfResults) => new Promise((resolve) => {
+module.exports = (items, maximumNumberOfResults, isBotRequest) => new Promise((resolve) => {
     if (maximumNumberOfResults && maximumNumberOfResults > 1) {
         resolve();
         return;
     }
 
     if (items.length <= 3) {
-        items.forEach(item => updateItem(item, true));
+        items.forEach(item => updateItem(item, !isBotRequest));
         resolve();
         return;
     }
