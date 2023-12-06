@@ -37,7 +37,6 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
 
             if ((numberOfResults || 0) > 1) {
                 delete item.description;
-                delete item['images-big'];
                 delete item['images-small'];
             }
 
