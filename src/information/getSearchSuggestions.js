@@ -2,6 +2,6 @@ const getSearchSuggestionsRankedByRequestsRepository = require("./repositories/g
 
 module.exports = (navigationPath, searchPattern) => new Promise((resolve) => {
     getSearchSuggestionsRankedByRequestsRepository(navigationPath, searchPattern)
-        .then(rankedSuggestions => resolve({ rankedSuggestions: rankedSuggestions.map(item => item.suggestion) }))
-        .catch(() => resolve({ rankedSuggestions: []}));
+        .then(rankedSuggestions => resolve({ suggestions: rankedSuggestions.map(item => ({ suggestion: item.suggestion })) }))
+        .catch(() => resolve({ suggestions: []}));
 });

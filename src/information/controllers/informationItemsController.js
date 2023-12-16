@@ -298,10 +298,10 @@ module.exports = () => ({
                 .then(async response => {
                     reply.send({
                         errorCode: '',
-                        suggestions: response
+                        items: response
                     });
                 })
-                .catch(error => replyWithInternalError(reply, error, { suggestions: [] }));
+                .catch(error => replyWithInternalError(reply, error, { items: [] }));
         });
     }
 });
