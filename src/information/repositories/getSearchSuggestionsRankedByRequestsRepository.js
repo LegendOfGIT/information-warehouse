@@ -15,13 +15,13 @@ module.exports = (navigationPath, searchPattern) => new Promise((resolve, reject
             }
 
             const collection =  database.db().collection('searchRequests');
-            const query = { suggestion: new RegExp(`${searchPattern}.*`, 'i') };
+            const query = { suggestionWithoutSpecials: new RegExp(`${searchPattern}.*`, 'i') };
             if (navigationPath) {
                 query.navigationPath = new RegExp(`${navigationPath}.*`);
             }
 
             const queryParts = [
-                { $addFields: { suggestionWithoutSpecials: { $replaceAll: { input: "$suggestion", find: "'", replacement: '' }}}}
+                { $addFields: { suggestionWithoutSpecials: { $replaceAll: { input: "$searchPattern", find: "'", replacement: '' }}}}
             ];
 
             const specialCharReplacements = {
