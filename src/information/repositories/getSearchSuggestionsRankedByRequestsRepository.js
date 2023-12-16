@@ -15,16 +15,26 @@ module.exports = (navigationPath, searchPattern) => new Promise((resolve, reject
             }
 
             const collection =  database.db().collection('searchRequests');
-            const query = { searchPattern: new RegExp(`${searchPattern}.*`, 'i') };
+            const query = { suggestionWithoutSpecials: new RegExp(`${searchPattern}.*`, 'i') };
             if (navigationPath) {
                 query.navigationPath = new RegExp(`${navigationPath}.*`);
             }
-            collection.find(query).sort({ activityOn: -1 }).toArray((err, result) => {
-                if (err) {
-                    database.close();
-                    throw err;
-                }
 
+            const queryParts = [
+                { $addFields: { suggestionWithoutSpecials: { $replaceAll: { input: "$suggestion", find: "'", replacement: '' }}}}
+            ];
+
+            const specialCharReplacements = {
+                '`': '', '´': '', ':': '',
+                'á': 'a', 'é': 'e', 'ó': 'o'
+            };
+            Object.keys(specialCharReplacements).forEach(
+                key => queryParts.push({ $addFields: { suggestionWithoutSpecials: { $replaceAll: { input: "$suggestionWithoutSpecials", find: key, replacement: specialCharReplacements[key] }}}}));
+
+            queryParts.push({ $match: query });
+            queryParts.push({ $sort: { activityOn: -1 }});
+
+            collection.aggregate(queryParts).toArray().toArray().then((result) => {
                 const suggestions = [...new Set(result.map(item => item.searchPattern))].map(pattern => ({
                     suggestion: pattern,
                     numberOfRequests: result.filter(r => pattern === r.searchPattern).length
@@ -33,7 +43,12 @@ module.exports = (navigationPath, searchPattern) => new Promise((resolve, reject
                     a.numberOfRequests < b.numberOfRequests ? 1 : -1);
 
                 resolve(suggestions);
-                database.close();
+                database.close().then(() => {});
+            }).catch((error) => {
+                reject(error);
+            })
+            .finally(() => {
+                database.close().then(() => {});
             });
         })
         .catch(error => {
