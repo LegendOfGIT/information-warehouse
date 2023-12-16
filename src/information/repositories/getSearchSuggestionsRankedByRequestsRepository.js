@@ -15,7 +15,7 @@ module.exports = (navigationPath, searchPattern) => new Promise((resolve, reject
             }
 
             const collection =  database.db().collection('searchRequests');
-            const query = { suggestionWithoutSpecials: new RegExp(`${searchPattern}.*`, 'i') };
+            const query = { suggestion: new RegExp(`${searchPattern}.*`, 'i') };
             if (navigationPath) {
                 query.navigationPath = new RegExp(`${navigationPath}.*`);
             }
