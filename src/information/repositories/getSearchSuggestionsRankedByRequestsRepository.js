@@ -32,8 +32,6 @@ module.exports = (navigationPath, searchPattern) => new Promise((resolve, reject
                 suggestions.sort((a, b) =>
                     a.numberOfRequests < b.numberOfRequests ? 1 : -1);
 
-                console.log(suggestions);
-
                 resolve(suggestions);
                 database.close();
             });
