@@ -16,14 +16,12 @@ informationItemsController.registerStoreInformationItem(fastify);
 informationItemsController.registerStoreInformationItemScoring(fastify);
 informationItemsController.registerGetAvailableFilters(fastify);
 informationItemsController.registerDiscoverItem(fastify);
+informationItemsController.registerGetSearchSuggestions(fastify);
 
 hashtagsController.registerGetHashtags(fastify);
 hashtagsController.registerGetRankedCategoriesByHashtags(fastify);
 
 searchProfilesController.registerGetSearchProfile(fastify);
-searchProfilesController.registerGetSearchProfiles(fastify);
-searchProfilesController.registerStoreSearchProfile(fastify);
-searchProfilesController.registerRemoveSearchProfile(fastify);
 
 wishlistItemsController.registerGetWishlistItems(fastify);
 wishlistItemsController.registerStoreWishlistItem(fastify);

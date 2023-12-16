@@ -14,6 +14,8 @@ const containsBadTerm = require('../validator/containsBadTerm');
 const getAvailableFilters = require('../../filters/getAvailableFilters');
 const cache = require('../../cache/cache');
 const updateSingleItemRepository = require('../repositories/updateSingleItemRepository');
+const getSearchSuggestions = require('../getSearchSuggestions');
+const fastify = require("fastify");
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -283,6 +285,23 @@ module.exports = () => ({
                 itemId || '',
                 (navigationPath || '').split(','),
                 true);
+        });
+    },
+    registerGetSearchSuggestions: (fastify) => {
+        fastify.get('/api/search-suggestions', async(request, reply) => {
+            const {
+                navigationId,
+                searchPattern
+            } = request.query;
+
+            await getSearchSuggestions(navigationId, searchPattern)
+                .then(async response => {
+                    reply.send({
+                        errorCode: '',
+                        suggestions: response
+                    });
+                })
+                .catch(error => replyWithInternalError(reply, error, { suggestions: [] }));
         });
     }
 });
