@@ -35,6 +35,7 @@ module.exports = (navigationPath, searchPattern) => new Promise((resolve, reject
             queryParts.push({ $sort: { activityOn: -1 }});
 
             collection.aggregate(queryParts).toArray().toArray().then((result) => {
+                console.log(result);
                 const suggestions = [...new Set(result.map(item => item.searchPattern))].map(pattern => ({
                     suggestion: pattern,
                     numberOfRequests: result.filter(r => pattern === r.searchPattern).length
