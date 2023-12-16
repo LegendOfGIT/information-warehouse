@@ -1,10 +1,12 @@
 const getCampaignParameterByUrl = require('../configuration/campaign-configuration').getCampaignParameterByUrl;
 const queryInformation = require('./repositories/queryInformationRepository');
+const storeActivitySearchRequestRepository = require('../activities/repositories/storeActivitySearchRequestRepository');
 const constants = require('../constants');
 
 module.exports = (parameters) => new Promise((resolve, reject) => {
     const {
         addCampaignParameter,
+        botRequest,
         hashtag,
         numberOfResults,
         page,
@@ -17,6 +19,13 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
     let {
         filterIds = [],
     } = parameters;
+
+    const {
+        navigationPath,
+        title
+    } = query;
+
+    storeActivitySearchRequestRepository(navigationPath, title, botRequest).then();
 
     queryInformation({
         query,

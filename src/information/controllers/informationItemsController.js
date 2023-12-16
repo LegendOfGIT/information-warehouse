@@ -139,8 +139,10 @@ module.exports = () => ({
                 return
             }
 
+            const botRequest = isBotRequest(request);
             await queryInformationItems({
                 query,
+                botRequest,
                 hashtag: firstHashtag,
                 randomItems,
                 numberOfResults,
@@ -156,11 +158,11 @@ module.exports = () => ({
                         firstHashtag,
                         navigationIdOfFirstItem,
                         numberOfResults,
-                        isBotRequest(request)
+                        botRequest
                     ).then(() => {
                     });
 
-                    updateItemsRepository(response, numberOfResults, isBotRequest(request))
+                    updateItemsRepository(response, numberOfResults, botRequest)
                         .then(() => {});
 
                     const availablePages = await getAvailablePages(query, priceFrom, priceTo, numberOfResults, page, filterIds);
