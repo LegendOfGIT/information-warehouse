@@ -1,18 +1,18 @@
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
-module.exports = (navigationPath, searchPattern, isBotRequest) => new Promise((resolve) => {
+module.exports = (navigationPath, searchPattern, numberOfResults, isBotRequest) => new Promise((resolve) => {
     if (isBotRequest) {
         resolve();
         return;
     }
 
-    if (!searchPattern) {
+    if (numberOfResults) {
         resolve();
         return;
     }
 
-    if (!navigationPath) {
+    if (!searchPattern) {
         resolve();
         return;
     }

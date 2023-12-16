@@ -25,7 +25,7 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
         title
     } = query;
 
-    storeActivitySearchRequestRepository(navigationPath, title, botRequest).then();
+    storeActivitySearchRequestRepository(navigationPath, title, numberOfResults, botRequest).then();
 
     queryInformation({
         query,
