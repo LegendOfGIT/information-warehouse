@@ -32,7 +32,7 @@ const FILTER_MAPPING = {
     1000164: { property: 'providers.itemId', value: 'littlehipstar' },
     1000122: { property: 'providers.itemId', value: 'medimops' },
     1000185: { property: 'providers.itemId', value: 'metabrewsociety' },
-    1000033: { property: 'providers.itemId', value: 'mytoys' },
+    1000033: { property: 'providers.itemId', value: 'foot-store' },
     1000034: { property: 'providers.itemId', value: 'naturalfoodshop' },
     1000114: { property: 'providers.itemId', value: 'ohmyfantasy' },
     1000035: { property: 'providers.itemId', value: 'otto' },
