@@ -34,6 +34,7 @@ const FILTER_MAPPING = {
     1000185: { property: 'providers.itemId', value: 'metabrewsociety' },
     1000033: { property: 'providers.itemId', value: 'foot-store' },
     1000034: { property: 'providers.itemId', value: 'naturalfoodshop' },
+    1000121: { property: 'providers.itemId', value: 'naturesway' },
     1000114: { property: 'providers.itemId', value: 'ohmyfantasy' },
     1000035: { property: 'providers.itemId', value: 'otto' },
     1000036: { property: 'providers.itemId', value: 'pakama' },
