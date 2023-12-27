@@ -1,4 +1,5 @@
 const queryInformation = require('./repositories/queryInformationRepository');
+const storeInformationItem = require('storeInformationItem');
 
 module.exports = (parameters) => new Promise((resolve, reject) => {
     const {
@@ -19,9 +20,9 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
     }).then((items) => {
         items = (items || []).filter(item => item['title-image']).map(item => {
             const providerMeanId = meanTokens[0];
-            console.log(item);
             item.providers = item.providers.filter(provider => !(provider.mean || '').startsWith(providerMeanId));
-            console.log(item);
+
+            storeInformationItem(item).then(() => {});
 
             return item;
         });
