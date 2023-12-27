@@ -16,6 +16,7 @@ const cache = require('../../cache/cache');
 const updateSingleItemRepository = require('../repositories/updateSingleItemRepository');
 const getSearchSuggestions = require('../getSearchSuggestions');
 const fastify = require("fastify");
+const removeProviderFromInformationItem = require('../removeProviderFromInformationItem');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -295,6 +296,22 @@ module.exports = () => ({
             } = request.query;
 
             await getSearchSuggestions(navigationId, searchPattern)
+                .then(async response => {
+                    reply.send({
+                        errorCode: '',
+                        items: response
+                    });
+                })
+                .catch(error => replyWithInternalError(reply, error, { items: [] }));
+        });
+    },
+    registerRemoveProvider: (fastify) => {
+        fastify.delete('/api/information-item', async(request, reply) => {
+            const {
+                mean
+            } = request.query;
+
+            await removeProviderFromInformationItem({ mean })
                 .then(async response => {
                     reply.send({
                         errorCode: '',
