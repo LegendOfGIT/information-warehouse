@@ -18,7 +18,7 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
         query,
         numberOfResults: 1
     }).then((items) => {
-        items = (items || []).filter(item => item['title-image']).map(item => {
+        items = (items || []).map(item => {
             const providerMeanId = meanTokens[0];
             item.providers = item.providers.filter(provider => provider.mean && !(provider.mean || '').startsWith(providerMeanId));
 
