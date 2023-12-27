@@ -11,7 +11,7 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
         return;
     }
 
-    const query = { 'provider.mean': mean };
+    const query = { 'providers.mean': mean };
 
     queryInformation({
         query,
