@@ -1,5 +1,5 @@
 const queryInformation = require('./repositories/queryInformationRepository');
-const storeInformationItem = require('storeInformationItem');
+const storeInformationItem = require('./storeInformationItem');
 
 module.exports = (parameters) => new Promise((resolve, reject) => {
     const {
