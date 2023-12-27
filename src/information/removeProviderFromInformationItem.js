@@ -22,7 +22,7 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
             const providerMeanId = meanTokens[0];
             item.providers = item.providers.filter(provider => !(provider.mean || '').startsWith(providerMeanId));
 
-            storeInformationItem(item).then(() => {});
+            storeInformationItem(item, true).then(() => {});
 
             return item;
         });

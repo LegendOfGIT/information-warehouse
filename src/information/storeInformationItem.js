@@ -7,7 +7,7 @@ const getItemIdFromInformationItem = (item) => {
     return `${(item.navigationPath  || []).join('-')}-${item.gtin || item.asin || item.ean || item.mean}`;
 };
 
-const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
+const itemToStoreFromScrapedItem = (storedItem, scrapedItem, overrideProviders) => {
     const providerSpecificProperties = [
         'amountInStock',
         'itemId',
@@ -45,9 +45,13 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
     });
 
     storedItem = storedItem || { itemId: getItemIdFromInformationItem(scrapedItem) };
+
     let providers = storedItem.providers || [];
-    providers = providers.filter(provider => provider.itemId !== providerItemToStore.itemId);
-    providers.push(providerItemToStore);
+    if (overrideProviders) { providers = itemToStore.providers; }
+    else {
+        providers = providers.filter(provider => provider.itemId !== providerItemToStore.itemId);
+        providers.push(providerItemToStore);
+    }
 
     itemToStore.hasPriceInformation = providers.filter(provider => provider['price-initial'] || provider['price-current']).length > 0;
     itemToStore.isInStock = providers.filter(provider => undefined === provider.amountInStock || provider.amountInStock > 0).length > 0;
@@ -70,7 +74,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem) => {
     };
 };
 
-module.exports = (informationItem) => new Promise((resolve, reject) => {
+module.exports = (informationItem, overrideProviders = false) => new Promise((resolve, reject) => {
     const storedItemsQuery = {
         $or: [
             { itemId: getItemIdFromInformationItem(informationItem) },
@@ -84,7 +88,7 @@ module.exports = (informationItem) => new Promise((resolve, reject) => {
         .then((storedItems) => {
             storedItems = storedItems.length ? storedItems : [undefined];
             storedItems.forEach(storedItem => {
-                const itemToStore = itemToStoreFromScrapedItem(storedItem, informationItem);
+                const itemToStore = itemToStoreFromScrapedItem(storedItem, informationItem, overrideProviders);
 
                 storeInformationRepository(itemToStore)
                     .then(() => {})
