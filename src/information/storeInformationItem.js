@@ -15,7 +15,9 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem, overrideProviders) 
         'mean',
         'price-current',
         'price-initial',
+        'pricePerUnit',
         'productCondition',
+        'referenceUnit',
         'updatedOn'];
 
     const providerAndItemSpecificProperties = ['updatedOn'];
