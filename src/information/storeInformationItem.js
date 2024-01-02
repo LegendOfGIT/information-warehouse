@@ -52,6 +52,12 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem, overrideProviders) 
     if (overrideProviders) { providers = itemToStore.providers; }
     else {
         providers = providers.filter(provider => provider.itemId !== providerItemToStore.itemId);
+        let providerId = providerItemToStore.mean || '';
+        providerId = providerId.split('.').length > 1 ? providerId.split('.')[0] : '';
+        if (providerId) {
+            providers = providers.filter(provider => !provider.mean || !provider.mean.startsWith(providerId));
+        }
+
         providers.push(providerItemToStore);
     }
 
