@@ -49,6 +49,7 @@ const FILTER_MAPPING = {
     1000043: { property: 'providers.itemId', value: 'songmics' },
     1000188: { property: 'providers.itemId', value: 'srlopez' },
     1000044: { property: 'providers.itemId', value: 'studibuch' },
+    1000189: { property: 'providers.itemId', value: 'talkinghands' },
     1000045: { property: 'providers.itemId', value: 'third-of-life' },
     1000046: { property: 'providers.itemId', value: 'timber-taste' },
     1000047: { property: 'providers.itemId', value: 'toom' },
