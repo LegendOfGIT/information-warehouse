@@ -29,7 +29,6 @@ const FILTER_MAPPING = {
     1000032: { property: 'providers.itemId', value: 'janvanderstorm' },
     1000187: { property: 'providers.itemId', value: 'karlkarlo' },
     1000180: { property: 'providers.itemId', value: 'laco.de' },
-    1000164: { property: 'providers.itemId', value: 'littlehipstar' },
     1000122: { property: 'providers.itemId', value: 'medimops' },
     1000185: { property: 'providers.itemId', value: 'metabrewsociety' },
     1000033: { property: 'providers.itemId', value: 'foot-store' },
