@@ -62,7 +62,7 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         return;
     }
 
-    let hashtag = getFirstHashtag(itemToScore.hashtags) || itemToScore.searchProfileId || '';
+    let hashtag = getFirstHashtag(informationItemScoring.hashtags) || informationItemScoring.searchProfileId || '';
     hashtag = '' === hashtag ? 'Highlights': hashtag;
 
     if ('Schnäppchen' === hashtag) {
