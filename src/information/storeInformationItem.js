@@ -8,7 +8,7 @@ const getItemIdFromInformationItem = (item) => {
 };
 
 const updatePriceHistoryOfItem = (item) => {
-    if (!item?.providers) {
+    if (!(item?.providers || []).length) {
         return;
     }
 
@@ -16,6 +16,8 @@ const updatePriceHistoryOfItem = (item) => {
     if (!latestLowestPrice) {
         return;
     }
+
+    console.log(latestLowestPrice);
 
     const todaysDate = new Date().getDate();
     const priceHistory = (item.priceHistory || []);
