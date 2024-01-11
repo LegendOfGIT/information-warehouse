@@ -44,7 +44,7 @@ const FILTER_MAPPING = {
     1000120: { property: 'providers.itemId', value: 'saunaloft' },
     1000041: { property: 'providers.itemId', value: 'shop24direct' },
     1000042: { property: 'providers.itemId', value: 'shop-apotheke' },
-    1000189: { property: 'providers.itemId', value: 'skeisan' },
+    1000190: { property: 'providers.itemId', value: 'skeisan' },
     1000183: { property: 'providers.itemId', value: 'silkes-weinkeller' },
     1000043: { property: 'providers.itemId', value: 'songmics' },
     1000188: { property: 'providers.itemId', value: 'srlopez' },
