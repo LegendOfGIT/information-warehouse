@@ -10,13 +10,10 @@ const getFirstHashtag = (hashtags) => {
     return hashtags.split(',')[0] || '';
 }
 
-const modifyScoringValue = (itemToScoreArguments, itemToScore, itemToCompare) => {
+const modifyScoringValue = (itemToScoreArguments, itemToScore, itemToCompare, hashtag) => {
     const tags = itemToScore.tags || [];
     const matchingTags = (itemToCompare.tags || []).filter(tag => -1 !== tags.indexOf(tag));
 
-    let hashtag = getFirstHashtag(itemToScoreArguments.hashtags) || itemToScoreArguments.searchProfileId || '';
-
-    hashtag = '' === hashtag ? 'Highlights': hashtag;
     const matchingTagsInPercent = Math.ceil((matchingTags.length * 100) / tags.length);
     const scoring = itemToCompare.scoring || {};
     scoring[hashtag] = scoring[itemToScoreArguments.searchProfileId] || 0;
@@ -65,8 +62,21 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         return;
     }
 
-    modifyScoringValue(informationItemScoring, itemToScore, itemToScore);
+    let hashtag = getFirstHashtag(informationItemScoring.hashtags) || informationItemScoring.searchProfileId || '';
+    hashtag = '' === hashtag ? 'Highlights': hashtag;
+
+    if ('Schnäppchen' === hashtag) {
+        resolve();
+        return;
+    }
+
+    modifyScoringValue(informationItemScoring, itemToScore, itemToScore, hashtag);
     await storeInformationRepository(itemToScore);
+
+    if ('SocialMedia' === hashtag) {
+        resolve();
+        return;
+    }
 
     const deepestNavigationId = itemToScore.navigationPath[itemToScore.navigationPath.length - 1];
     const query = {
@@ -89,7 +99,7 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
 
     for (let item of furtherItemsToScore) {
         item.tags = tagsResolver(item);
-        modifyScoringValue(informationItemScoring, itemToScore, item);
+        modifyScoringValue(informationItemScoring, itemToScore, item, hashtag);
         await storeInformationRepository(item);
     }
 
