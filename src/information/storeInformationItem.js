@@ -86,7 +86,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem, overrideProviders) 
 
     itemToStore.hasPriceInformation = providers.filter(provider => provider['price-initial'] || provider['price-current']).length > 0;
     itemToStore.isInStock = providers.filter(provider => undefined === provider.amountInStock || provider.amountInStock > 0).length > 0;
-    updatePriceHistoryOfItem(itemToStore, providers);
+    updatePriceHistoryOfItem(storedItem, providers);
 
     const providersWithBothPrices = providers.filter(provider => provider['price-initial'] && provider['price-current']);
     const reductions = providersWithBothPrices.map(p => (100 - (p['price-current'] * 100 / p['price-initial'])));
