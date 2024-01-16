@@ -145,6 +145,7 @@ const FILTER_MAPPING = {
 
     1000109: { property: 'brand', value: 'activision' },
     1000088: { property: 'brand', value: 'adidas' },
+    1000206: { property: 'brand', value: 'affenzahn' },
     1000087: { property: 'brand', value: 'apple' },
     1000098: { property: 'brand', value: 'banani' },
     1000145: { property: 'brand', value: 'bench' },
@@ -184,6 +185,7 @@ const FILTER_MAPPING = {
     1000169: { property: 'brand', value: 'spin master' },
     1000094: { property: 'brand', value: 'vivanco' },
     1000108: { property: 'brand', value: 'vtech' },
+    1000207: { property: 'brand', value: 'wildling' },
 
     1000051: { property: 'navigationPath', value: '_tea' },
     1000053: { property: 'navigationPath', value: '_soap' },
