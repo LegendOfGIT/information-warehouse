@@ -17,6 +17,7 @@ const FILTER_MAPPING = {
     1000184: { property: 'providers.itemId', value: 'club-of-wine' },
     1000119: { property: 'providers.itemId', value: 'dunleath' },
     1000024: { property: 'providers.itemId', value: 'ebrosia' },
+    1000208: { property: 'providers.itemId', value: 'edelstahl-tuerklingel' },
     1000025: { property: 'providers.itemId', value: 'enners' },
     1000026: { property: 'providers.itemId', value: 'fussmatten-welt' },
     1000143: { property: 'providers.itemId', value: 'galapel' },
