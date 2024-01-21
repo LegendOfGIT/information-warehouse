@@ -206,6 +206,7 @@ const FILTER_MAPPING = {
     1000209: { property: 'navigationPath', value: '^GROCERIES_DRINKS_COFFEE$' },
     1000210: { property: 'navigationPath', value: '^GROCERIES_DRINKS_COFFEEACCESSORIES$' },
     1000068: { property: 'navigationPath', value: '_computers_tablets' },
+    1000211: { property: 'navigationPath', value: 'espressomachines' },
     1000069: { property: 'navigationPath', value: '_FULLYAUTOMATICCOFFEEMACHINES' },
     1000070: { property: 'navigationPath', value: '_homecinema' },
     1000071: { property: 'navigationPath', value: '_inkjetprinter' },
