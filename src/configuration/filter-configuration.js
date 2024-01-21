@@ -203,6 +203,8 @@ const FILTER_MAPPING = {
     1000065: { property: 'navigationPath', value: '_cables_displaycables' },
     1000066: { property: 'navigationPath', value: '_cables_electriccables' },
     1000067: { property: 'navigationPath', value: '_cables_networkcables' },
+    1000209: { property: 'navigationPath', value: '^GROCERIES_DRINKS_COFFEE$' },
+    1000210: { property: 'navigationPath', value: '^GROCERIES_DRINKS_COFFEEACCESSORIES$' },
     1000068: { property: 'navigationPath', value: '_computers_tablets' },
     1000069: { property: 'navigationPath', value: '_FULLYAUTOMATICCOFFEEMACHINES' },
     1000070: { property: 'navigationPath', value: '_homecinema' },
