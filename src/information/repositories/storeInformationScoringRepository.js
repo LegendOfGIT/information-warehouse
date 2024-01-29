@@ -1,6 +1,7 @@
 const queryInformationRepository = require('./queryInformationRepository');
 const storeInformationRepository = require('./storeInformationRepository');
 const tagsResolver = require('../resolver/tagsResolver');
+const updateItemsRepository = require("../../activities/repositories/updateItemsRepository");
 
 const getFirstHashtag = (hashtags) => {
     if (!hashtags) {
@@ -54,6 +55,9 @@ module.exports = (informationItemScoring) => new Promise(async (resolve, reject)
         reject();
         return;
     }
+
+    updateItemsRepository([itemToScore], 1, false)
+        .then(() => {});
 
     itemToScore.tags = tagsResolver(itemToScore);
     if (!(itemToScore.tags || []).length) {
