@@ -13,6 +13,7 @@ const FILTER_MAPPING = {
     1000022: { property: 'providers.itemId', value: 'bisbshop' },
     1000175: { property: 'providers.itemId', value: 'brunobanani' },
     1000023: { property: 'providers.itemId', value: 'buch24' },
+    1000189: { property: 'providers.itemId', value: 'capiche' },
     1000181: { property: 'providers.itemId', value: 'carrera-toys' },
     1000184: { property: 'providers.itemId', value: 'club-of-wine' },
     1000119: { property: 'providers.itemId', value: 'dunleath' },
