@@ -16,6 +16,8 @@ module.exports = (query, priceFrom, priceTo, numberOfResults, createdToday = '',
         if (priceTo) {
             queries.push({ "providers.price-current": { $lte: Number.parseInt(priceTo) } })
         }
+
+        console.log('createdToday: ' + createdToday);
         if ((/true/i).test(createdToday)) {
             const today = new Date();
             today.setHours(0, 0, 0, 0);
