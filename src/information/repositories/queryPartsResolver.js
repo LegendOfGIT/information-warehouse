@@ -16,11 +16,10 @@ module.exports = (query, priceFrom, priceTo, numberOfResults, createdToday = '',
         if (priceTo) {
             queries.push({ "providers.price-current": { $lte: Number.parseInt(priceTo) } })
         }
-        if (createdToday === 'true') {
+        if ((/true/i).test(createdToday)) {
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             queries.push({ _id: { $gte: ObjectID.createFromTime(today / 1000) }});
-            console.log(queries);
         }
 
         Object.values(filterProperties).forEach(filterProperty => {
