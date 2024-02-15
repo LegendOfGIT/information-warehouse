@@ -17,14 +17,6 @@ module.exports = (query, priceFrom, priceTo, numberOfResults, createdToday = '',
             queries.push({ "providers.price-current": { $lte: Number.parseInt(priceTo) } })
         }
 
-        console.log('createdToday: ' + createdToday);
-        if ((/true/i).test(createdToday)) {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            queries.push({ _id: { $gte: ObjectID.createFromTime(today / 1000) }});
-            console.log(queries);
-        }
-
         Object.values(filterProperties).forEach(filterProperty => {
             const subQueries = [];
             filterProperty.forEach(propertyFilter => {
@@ -45,6 +37,12 @@ module.exports = (query, priceFrom, priceTo, numberOfResults, createdToday = '',
     if (query.title) {
         query.titleWithoutSpecials = new RegExp(`.*${query.title.split(/'|´|`/).join('').replaceAll('á', 'a').replaceAll('é', 'e').replaceAll('ó', 'o')}.*`, 'i');
         delete query.title;
+    }
+
+    if ((/true/i).test(createdToday)) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        query._id = { $gte: ObjectID.createFromTime(today / 1000) };
     }
 
     const queryParts = [
