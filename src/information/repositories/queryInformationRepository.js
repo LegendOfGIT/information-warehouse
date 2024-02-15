@@ -4,6 +4,7 @@ const mongoClient = require('mongodb').MongoClient;
 
 module.exports = (parameters) => new Promise((resolve, reject) => {
     const {
+        createdToday,
         filterIds = [],
         hashtag,
         numberOfResults,
@@ -20,13 +21,18 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
                 resolve([]);
             }
 
-            const queryParts = queryPartsResolver(query, priceFrom, priceTo, numberOfResults, filterIds);
+            const queryParts = queryPartsResolver(
+                query,
+                priceFrom,
+                priceTo,
+                numberOfResults,
+                createdToday,
+                filterIds);
 
             const sort = {};
             sort['scoring.' + (hashtag || 'noprofile')] = -1;
             sort.ratingInPercent = -1;
             sort.numberOfRatings = -1;
-            //sort.updatedOn = -1;
 
             queryParts.push({ $sort: sort });
 

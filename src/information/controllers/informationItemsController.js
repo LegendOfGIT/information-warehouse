@@ -15,7 +15,6 @@ const getAvailableFilters = require('../../filters/getAvailableFilters');
 const cache = require('../../cache/cache');
 const updateSingleItemRepository = require('../repositories/updateSingleItemRepository');
 const getSearchSuggestions = require('../getSearchSuggestions');
-const fastify = require("fastify");
 const removeProviderFromInformationItem = require('../removeProviderFromInformationItem');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
@@ -71,7 +70,8 @@ const getGetInformationItemsCacheKey = (query,
                                         priceFrom,
                                         priceTo,
                                         addCampaignParameter,
-                                        filterIds) => {
+                                        filterIds,
+                                        createdToday) => {
     if (randomItems || query._id) {
         return '';
     }
@@ -85,7 +85,8 @@ const getGetInformationItemsCacheKey = (query,
         filterIds.join(';;'),
         priceFrom,
         priceTo,
-        addCampaignParameter
+        addCampaignParameter,
+        createdToday
     ].join('||');
 };
 
@@ -96,6 +97,7 @@ module.exports = () => ({
 
             const {
                 id,
+                createdToday,
                 filters,
                 highlightedItems,
                 navigationId,
@@ -136,7 +138,18 @@ module.exports = () => ({
             }
 
             const filterIds = (filters || '').split('-');
-            const cacheKey = getGetInformationItemsCacheKey(query, firstHashtag, randomItems, numberOfResults, page, priceFrom, priceTo, true, filterIds);
+            const cacheKey = getGetInformationItemsCacheKey(
+                query,
+                firstHashtag,
+                randomItems,
+                numberOfResults,
+                page,
+                priceFrom,
+                priceTo,
+                true,
+                filterIds,
+                createdToday);
+
             if (cacheKey && cache.has(cacheKey)) {
                 reply.send(cache.get(cacheKey));
                 return
@@ -146,6 +159,7 @@ module.exports = () => ({
             await queryInformationItems({
                 query,
                 botRequest,
+                createdToday,
                 hashtag: firstHashtag,
                 randomItems,
                 numberOfResults,
@@ -168,7 +182,14 @@ module.exports = () => ({
                     updateItemsRepository(response, numberOfResults, botRequest)
                         .then(() => {});
 
-                    const availablePages = await getAvailablePages(query, priceFrom, priceTo, numberOfResults, page, filterIds);
+                    const availablePages = await getAvailablePages(
+                        query,
+                        priceFrom,
+                        priceTo,
+                        numberOfResults,
+                        page,
+                        createdToday,
+                        filterIds);
 
                     const res = {
                         errorCode: hashtagsContainBadTerm ? 'HASHTAGS_CONTAIN_BAD_TERM' : '',

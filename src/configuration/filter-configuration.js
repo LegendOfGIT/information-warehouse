@@ -6,7 +6,6 @@ const FILTER_MAPPING = {
     1000186: { property: 'providers.itemId', value: 'beautywelt' },
     1000001: { property: 'providers.itemId', value: 'biggreensmile' },
     1000018: { property: 'providers.itemId', value: '100percentpure' },
-    1000177: { property: 'providers.itemId', value: '60beans' },
     1000019: { property: 'providers.itemId', value: 'amazon' },
     1000020: { property: 'providers.itemId', value: 'backmarket' },
     1000021: { property: 'providers.itemId', value: 'bear-family' },

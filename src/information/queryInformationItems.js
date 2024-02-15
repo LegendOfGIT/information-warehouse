@@ -7,6 +7,7 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
     const {
         addCampaignParameter,
         botRequest,
+        createdToday,
         hashtag,
         numberOfResults,
         page,
@@ -29,6 +30,7 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
 
     queryInformation({
         query,
+        createdToday,
         hashtag,
         randomItems,
         numberOfResults: numberOfResults ? Number.parseInt(numberOfResults) : constants.DEFAULT_MAXIMUM_AMOUNT_OF_RESULTS,

@@ -1,6 +1,7 @@
 const filterConfiguration = require('../../configuration/filter-configuration');
+const ObjectID = require('mongodb').ObjectID;
 
-module.exports = (query, priceFrom, priceTo, numberOfResults, filterIds = []) => {
+module.exports = (query, priceFrom, priceTo, numberOfResults, createdToday = '', filterIds = []) => {
 
     const getFilterQuery = (priceFrom, priceTo, filterIds) => {
         const filterProperties = filterConfiguration.getFilterPropertiesByFilterIds(filterIds);
@@ -14,6 +15,11 @@ module.exports = (query, priceFrom, priceTo, numberOfResults, filterIds = []) =>
         }
         if (priceTo) {
             queries.push({ "providers.price-current": { $lte: Number.parseInt(priceTo) } })
+        }
+        if (createdToday === 'true') {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            queries.push({ _id: { $gte: ObjectID.createFromTime(today / 1000) }});
         }
 
         Object.values(filterProperties).forEach(filterProperty => {
