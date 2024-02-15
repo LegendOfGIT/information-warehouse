@@ -20,6 +20,7 @@ module.exports = (query, priceFrom, priceTo, numberOfResults, createdToday = '',
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             queries.push({ _id: { $gte: ObjectID.createFromTime(today / 1000) }});
+            console.log(queries);
         }
 
         Object.values(filterProperties).forEach(filterProperty => {
