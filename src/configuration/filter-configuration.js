@@ -50,6 +50,7 @@ const FILTER_MAPPING = {
     1000190: { property: 'providers.itemId', value: 'skeisan' },
     1000183: { property: 'providers.itemId', value: 'silkes-weinkeller' },
     1000043: { property: 'providers.itemId', value: 'songmics' },
+    1000259: { property: 'providers.itemId', value: 'soundcore' },
     1000188: { property: 'providers.itemId', value: 'srlopez' },
     1000044: { property: 'providers.itemId', value: 'studibuch' },
     1000045: { property: 'providers.itemId', value: 'third-of-life' },
