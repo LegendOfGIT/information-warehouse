@@ -53,6 +53,7 @@ const FILTER_MAPPING = {
     1000259: { property: 'providers.itemId', value: 'soundcore' },
     1000188: { property: 'providers.itemId', value: 'srlopez' },
     1000044: { property: 'providers.itemId', value: 'studibuch' },
+    1000260: { property: 'providers.itemId', value: 'taipan' },
     1000045: { property: 'providers.itemId', value: 'third-of-life' },
     1000046: { property: 'providers.itemId', value: 'timber-taste' },
     1000047: { property: 'providers.itemId', value: 'toom' },
