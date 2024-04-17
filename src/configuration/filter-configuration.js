@@ -34,6 +34,7 @@ const FILTER_MAPPING = {
     1000180: { property: 'providers.itemId', value: 'laco.de' },
     1000122: { property: 'providers.itemId', value: 'medimops' },
     1000185: { property: 'providers.itemId', value: 'metabrewsociety' },
+    1000261: { property: 'providers.itemId', value: 'mlily' },
     1000033: { property: 'providers.itemId', value: 'foot-store' },
     1000034: { property: 'providers.itemId', value: 'naturalfoodshop' },
     1000121: { property: 'providers.itemId', value: 'naturesway' },
