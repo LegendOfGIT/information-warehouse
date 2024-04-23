@@ -41,6 +41,7 @@ const FILTER_MAPPING = {
     1000114: { property: 'providers.itemId', value: 'ohmyfantasy' },
     1000035: { property: 'providers.itemId', value: 'otto' },
     1000036: { property: 'providers.itemId', value: 'pakama' },
+    1000262: { property: 'providers.itemId', value: 'paperandsons' },
     1000037: { property: 'providers.itemId', value: 'plantlife' },
     1000038: { property: 'providers.itemId', value: 'quelle' },
     1000039: { property: 'providers.itemId', value: 'reifen' },
