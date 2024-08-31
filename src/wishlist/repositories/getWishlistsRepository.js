@@ -11,16 +11,15 @@ module.exports = (userId) => new Promise((resolve, reject) => {
 
             const collection = database.db().collection('wishlists');
 
-            collection.find({ userId })
-                .then((result) => {
-                    resolve(result);
-                })
-                .catch(() => {
-                    resolve([]);
-                })
-                .finally(() => {
+            collection.find({ userId }).toArray((err, result) => {
+                if (err) {
                     database.close();
-                });
+                    throw err;
+                }
+
+                resolve(result);
+                database.close();
+            });
         })
         .catch(error => {
             reject(error);
