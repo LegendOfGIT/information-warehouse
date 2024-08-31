@@ -82,7 +82,7 @@ module.exports = () => ({
         fastify.get('/api/wishlists', async (request, reply) => {
             reply.type('application/json');
 
-            const { userId } = request.body;
+            const { userId } = request.query;
 
             await getWishlists({ userId }).then(async (wishlists) => {
                 reply.code(HTTP_STATUS_CODE_OK).send(wishlists);
