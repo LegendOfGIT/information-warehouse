@@ -1,7 +1,10 @@
+const {uuidV4} = require("mongodb/lib/core/utils");
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
 module.exports = ({ id, userId, title, description }) => new Promise((resolve, reject) => {
+    id = id ?? uuidV4();
+
     let message = '';
     if (!userId) {
         message = 'required userId is missing';

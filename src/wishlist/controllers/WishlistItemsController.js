@@ -72,7 +72,7 @@ module.exports = () => ({
             const { userId, id, title, description } = request.body;
 
             await storeWishlist({ id, userId, title, description }).then(async (wishlist) => {
-                reply.code(HTTP_STATUS_CODE_OK).send(wishlist);
+                reply.code(HTTP_STATUS_CODE_OK).send({});
             }).catch((error) => replyWithInternalError(reply, error));
         });
     },
