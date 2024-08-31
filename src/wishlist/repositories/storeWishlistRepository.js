@@ -1,7 +1,10 @@
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
+const crypto = require('crypto');
 
 module.exports = ({ id, userId, title, description }) => new Promise((resolve, reject) => {
+    id = id ?? crypto.randomUUID();
+
     let message = '';
     if (!userId) {
         message = 'required userId is missing';
