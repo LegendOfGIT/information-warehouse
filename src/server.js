@@ -28,6 +28,8 @@ wishlistItemsController.registerGetWishlistItems(fastify);
 wishlistItemsController.registerStoreWishlistItem(fastify);
 wishlistItemsController.registerDeleteWishlistItem(fastify);
 wishlistItemsController.registerCreateOrUpdateWishlist(fastify);
+wishlistItemsController.registerGetWishlists(fastify);
+wishlistItemsController.registerDeleteWishlist(fastify);
 
 fastify.listen({ host: configuration.application.host, port: 3002 }, (err, address) => {
     if (err) throw err

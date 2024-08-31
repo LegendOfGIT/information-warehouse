@@ -2,6 +2,8 @@ const queryInformationRepository = require('../../information/repositories/query
 const getWishlistItemsRepository = require('../repositories/getWishlistItemsRepository');
 const storeWishlistItemsRepository = require('../repositories/storeWishlistItemsRepository');
 const storeWishlist = require('../repositories/storeWishlistRepository');
+const getWishlists = require('../repositories/getWishlistsRepository');
+const deleteWishlist = require('../repositories/deleteWishlistRepository');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -71,10 +73,31 @@ module.exports = () => ({
 
             const { userId, id, title, description } = request.body;
 
-            await storeWishlist({ id, userId, title, description }).then(async (wishlist) => {
+            await storeWishlist({ id, userId, title, description }).then(async () => {
                 reply.code(HTTP_STATUS_CODE_OK).send({});
             }).catch((error) => replyWithInternalError(reply, error));
         });
     },
-    registerDeleteWishlist: (fastify) => {}
+    registerGetWishlists: (fastify) => {
+        fastify.post('/api/wishlists', async (request, reply) => {
+            reply.type('application/json');
+
+            const { userId } = request.body;
+
+            await getWishlists({ userId }).then(async (wishlists) => {
+                reply.code(HTTP_STATUS_CODE_OK).send(wishlists);
+            }).catch((error) => replyWithInternalError(reply, error));
+        });
+    },
+    registerDeleteWishlist: (fastify) => {
+        fastify.delete('/api/wishlist', async (request, reply) => {
+            reply.type('application/json');
+
+            const { userId, id } = request.body;
+
+            await deleteWishlist({ id, userId }).then(async () => {
+                reply.code(HTTP_STATUS_CODE_OK).send({});
+            }).catch((error) => replyWithInternalError(reply, error));
+        });
+    }
 });
