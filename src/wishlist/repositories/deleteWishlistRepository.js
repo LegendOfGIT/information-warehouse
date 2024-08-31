@@ -20,17 +20,15 @@ module.exports = ({ id, userId }) => new Promise((resolve, reject) => {
 
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/wishlists`)
         .then((database) => {
-            const collection = database.db().collection('wishlists');
-            collection.deleteOne({ id })
-                .then(response => {
-                    resolve(response);
-                })
-                .catch(error => {
-                    reject(error);
-                })
-                .finally(() => {
+            database.db().collection('wishlists').deleteOne({ id }, function(err, result) {
+                if (err) {
                     database.close();
-                });
+                    throw err;
+                }
+
+                resolve({});
+                database.close();
+            });
         })
         .catch(error => { reject(error); });
 });
