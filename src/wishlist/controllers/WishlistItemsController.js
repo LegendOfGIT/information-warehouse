@@ -79,7 +79,7 @@ module.exports = () => ({
         });
     },
     registerGetWishlists: (fastify) => {
-        fastify.post('/api/wishlists', async (request, reply) => {
+        fastify.get('/api/wishlists', async (request, reply) => {
             reply.type('application/json');
 
             const { userId } = request.body;
