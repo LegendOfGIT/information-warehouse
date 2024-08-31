@@ -21,7 +21,7 @@ module.exports = ({ id, userId }) => new Promise((resolve, reject) => {
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/wishlists`)
         .then((database) => {
             const collection = database.db().collection('wishlists');
-            collection.removeOne({ id })
+            collection.deleteOne({ id })
                 .then(response => {
                     resolve(response);
                 })
