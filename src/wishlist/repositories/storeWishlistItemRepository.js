@@ -2,8 +2,12 @@ const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 const crypto = require('crypto');
 
-module.exports = ({ id, userId, title, description }) => new Promise((resolve, reject) => {
+module.exports = ({ id, userId, title, titleImage, description, itemWasBought }) => new Promise((resolve, reject) => {
     id = id ?? crypto.randomUUID();
+    description = description ?? '';
+    title = title ?? '';
+    titleImage = titleImage ?? '';
+    itemWasBought = itemWasBought ?? false;
 
     let message = '';
     if (!userId) {
@@ -19,12 +23,19 @@ module.exports = ({ id, userId, title, description }) => new Promise((resolve, r
             collection.updateOne(
                 { id },
                 {
+                    $push: {
+                        items: {
+                            title,
+                            titleImage,
+                            description,
+                            itemWasBought
+                        }
+                    },
                     $set: {
                         userId,
-                        title,
-                        description,
                         lastUpdatedOn: new Date()
-                    }},
+                    }
+                },
                 { upsert: true }
             )
                 .then(response => {
