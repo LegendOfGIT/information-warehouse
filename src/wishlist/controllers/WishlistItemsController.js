@@ -4,6 +4,7 @@ const storeWishlistItemsRepository = require('../repositories/storeWishlistItems
 const storeWishlist = require('../repositories/storeWishlistRepository');
 const storeWishlistItem = require('../repositories/storeWishlistItemRepository');
 const updateWishlistItem = require('../repositories/updateWishlistItemRepository');
+const removeWishlistItem = require('../repositories/removeWishlistItemRepository');
 const getWishlists = require('../repositories/getWishlistsRepository');
 const deleteWishlist = require('../repositories/deleteWishlistRepository');
 
@@ -109,6 +110,17 @@ module.exports = () => ({
             const { userId, wishlistId, itemId, url, title, titleImage, description, itemWasBought } = request.body;
 
             await updateWishlistItem({ wishlistId, itemId, userId, url, title, titleImage, description, itemWasBought }).then(async () => {
+                reply.code(HTTP_STATUS_CODE_OK).send({});
+            }).catch((error) => replyWithInternalError(reply, error));
+        });
+    },
+    registerRemoveSingleWishlistItem: (fastify) => {
+        fastify.delete('/api/wishlist/item', async (request, reply) => {
+            reply.type('application/json');
+
+            const { userId, wishlistId, itemId } = request.query;
+
+            await removeWishlistItem({ wishlistId, itemId, userId }).then(async () => {
                 reply.code(HTTP_STATUS_CODE_OK).send({});
             }).catch((error) => replyWithInternalError(reply, error));
         });
