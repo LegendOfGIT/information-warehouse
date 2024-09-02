@@ -103,7 +103,7 @@ module.exports = () => ({
         });
     },
     registerUpdateSingleWishlistItem: (fastify) => {
-        fastify.update('/api/wishlist/item', async (request, reply) => {
+        fastify.post('/api/wishlist/item', async (request, reply) => {
             reply.type('application/json');
 
             const { userId, wishlistId, url, title, titleImage, description, itemWasBought } = request.body;
