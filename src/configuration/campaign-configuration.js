@@ -12,6 +12,6 @@ module.exports = {
         return '';
     },
     removeCampaignParametersFromUrl: (url) => {
-        return url.replace(/tag=.*?&/, "").replace(/tag=.*$/, "").replace(/\?$/, "");
+        return url.replace(/tag=.*?&/, "").replace(/tag=.*$/, "").replace(/\?$/, "").replace(/&$/, "");
     }
 };
