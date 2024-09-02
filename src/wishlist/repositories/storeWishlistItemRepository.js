@@ -1,6 +1,7 @@
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 const crypto = require('crypto');
+const removeCampaignParametersFromUrl = require('../../configuration/campaign-configuration').removeCampaignParametersFromUrl;
 
 module.exports = ({ wishlistId, id, userId, url, title, titleImage, description, itemWasBought }) => new Promise((resolve, reject) => {
     id = id ?? crypto.randomUUID();
@@ -33,7 +34,7 @@ module.exports = ({ wishlistId, id, userId, url, title, titleImage, description,
                     $push: {
                         items: {
                             id,
-                            url,
+                            url: removeCampaignParametersFromUrl(url),
                             title,
                             titleImage,
                             description,

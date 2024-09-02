@@ -1,7 +1,7 @@
 module.exports = {
     getCampaignParameterByUrl: (url) => {
         const mapping = {
-            'amazon\.de': 'tag=wewannashop07-21'
+            'amazon\.de': 'tag=wewannashop08-21'
         };
 
         const foundCampaignIds = Object.keys(mapping).filter(urlPart => -1 !== url.indexOf(urlPart));
@@ -10,5 +10,8 @@ module.exports = {
         }
 
         return '';
+    },
+    removeCampaignParametersFromUrl: (url) => {
+        return url.replace(/tag=.*?&/, "").replace(/tag=.*$/, "").replace(/\?$/, "");
     }
 };

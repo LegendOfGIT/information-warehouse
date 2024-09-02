@@ -1,5 +1,6 @@
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
+const removeCampaignParametersFromUrl = require('../../configuration/campaign-configuration').removeCampaignParametersFromUrl;
 
 module.exports = ({ wishlistId, itemId, userId, url, title, titleImage, description, itemWasBought }) => new Promise((resolve, reject) => {
     description = description ?? '';
@@ -38,7 +39,7 @@ module.exports = ({ wishlistId, itemId, userId, url, title, titleImage, descript
                     const items = result.items;
                     const itemToUpdate = items.find((item) => item.id === itemId);
                     if (itemToUpdate) {
-                        itemToUpdate.url = url;
+                        itemToUpdate.url = removeCampaignParametersFromUrl(url);
                         itemToUpdate.title = title;
                         itemToUpdate.titleImage = titleImage;
                         itemToUpdate.description = description;
