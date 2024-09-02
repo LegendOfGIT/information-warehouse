@@ -90,8 +90,8 @@ module.exports = () => ({
             }).catch((error) => replyWithInternalError(reply, error));
         });
     },
-    registerAddOrUpdateSingleWishlistItem: (fastify) => {
-        fastify.post('/api/wishlist/item', async (request, reply) => {
+    registerAddSingleWishlistItem: (fastify) => {
+        fastify.put('/api/wishlist/item', async (request, reply) => {
             reply.type('application/json');
 
             const { userId, wishlistId, title, titleImage, description, itemWasBought } = request.body;
