@@ -30,7 +30,7 @@ module.exports = ({ wishlistId, itemId, userId }) => new Promise((resolve, rejec
 
             collection.findOne({ id: wishlistId })
                 .then((result) => {
-                    const items = result.items.filter((item) => item.id === itemId);
+                    const items = result.items.filter((item) => item.id !== itemId);
 
                     collection.updateOne(
                         { id: wishlistId },
