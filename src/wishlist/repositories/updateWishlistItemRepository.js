@@ -43,6 +43,7 @@ module.exports = ({ wishlistId, itemId, userId, url, title, titleImage, descript
                         itemToUpdate.titleImage = titleImage;
                         itemToUpdate.description = description;
                         itemToUpdate.itemWasBought = itemWasBought;
+                        itemToUpdate.lastUpdatedOn = new Date();
                     }
 
                     collection.updateOne(
