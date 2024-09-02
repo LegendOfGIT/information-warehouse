@@ -2,7 +2,7 @@ const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 const crypto = require('crypto');
 
-module.exports = ({ wishlistId, userId, title, titleImage, description, itemWasBought }) => new Promise((resolve, reject) => {
+module.exports = ({ wishlistId, userId, url, title, titleImage, description, itemWasBought }) => new Promise((resolve, reject) => {
     description = description ?? '';
     title = title ?? '';
     titleImage = titleImage ?? '';
@@ -32,6 +32,7 @@ module.exports = ({ wishlistId, userId, title, titleImage, description, itemWasB
                     $push: {
                         items: {
                             id: crypto.randomUUID(),
+                            url,
                             title,
                             titleImage,
                             description,
