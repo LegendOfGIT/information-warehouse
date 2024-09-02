@@ -36,7 +36,8 @@ module.exports = ({ wishlistId, userId, url, title, titleImage, description, ite
                             title,
                             titleImage,
                             description,
-                            itemWasBought
+                            itemWasBought,
+                            lastUpdatedOn: new Date()
                         }
                     },
                     $set: {
