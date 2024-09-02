@@ -94,9 +94,9 @@ module.exports = () => ({
         fastify.post('/api/wishlist/item', async (request, reply) => {
             reply.type('application/json');
 
-            const { userId, id, title, titleImage, description } = request.body;
+            const { userId, wishlistId, title, titleImage, description, itemWasBought } = request.body;
 
-            await storeWishlistItem({ id, userId, title, titleImage, description, itemWasBought }).then(async () => {
+            await storeWishlistItem({ wishlistId, userId, title, titleImage, description, itemWasBought }).then(async () => {
                 reply.code(HTTP_STATUS_CODE_OK).send({});
             }).catch((error) => replyWithInternalError(reply, error));
         });

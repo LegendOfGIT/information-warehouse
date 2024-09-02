@@ -2,8 +2,7 @@ const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 const crypto = require('crypto');
 
-module.exports = ({ id, userId, title, titleImage, description, itemWasBought }) => new Promise((resolve, reject) => {
-    id = id ?? crypto.randomUUID();
+module.exports = ({ wishlistId, userId, title, titleImage, description, itemWasBought }) => new Promise((resolve, reject) => {
     description = description ?? '';
     title = title ?? '';
     titleImage = titleImage ?? '';
@@ -17,14 +16,22 @@ module.exports = ({ id, userId, title, titleImage, description, itemWasBought })
         return;
     }
 
+    if (!wishlistId) {
+        message = 'required wishlistId is missing';
+        console.log(message);
+        reject(message);
+        return;
+    }
+
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/wishlists`)
         .then((database) => {
             const collection = database.db().collection('wishlists');
             collection.updateOne(
-                { id },
+                { id: wishlistId },
                 {
                     $push: {
                         items: {
+                            id: crypto.randomUUID(),
                             title,
                             titleImage,
                             description,
