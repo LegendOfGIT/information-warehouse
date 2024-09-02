@@ -1,5 +1,6 @@
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
+const getCampaignParameterByUrl = require('../../configuration/campaign-configuration').getCampaignParameterByUrl;
 
 module.exports = (userId) => new Promise((resolve, reject) => {
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/wishlists`)
@@ -13,7 +14,10 @@ module.exports = (userId) => new Promise((resolve, reject) => {
 
             collection.findOne({ userId })
                 .then((result) => {
-                    resolve(result.items);
+                    resolve(result.items.map((item) => {
+                        item.url = getCampaignParameterByUrl(item.url);
+                        return item;
+                    }));
                 })
                 .catch(() => {
                     resolve([]);
