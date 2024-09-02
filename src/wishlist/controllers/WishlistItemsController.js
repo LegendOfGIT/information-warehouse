@@ -118,7 +118,7 @@ module.exports = () => ({
         fastify.delete('/api/wishlist/item', async (request, reply) => {
             reply.type('application/json');
 
-            const { userId, wishlistId, itemId } = request.query;
+            const { userId, wishlistId, itemId } = request.body;
 
             await removeWishlistItem({ wishlistId, itemId, userId }).then(async () => {
                 reply.code(HTTP_STATUS_CODE_OK).send({});
