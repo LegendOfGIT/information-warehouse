@@ -92,7 +92,7 @@ module.exports = () => ({
         });
     },
     registerGetSingleWishlist: (fastify) => {
-        fastify.get('/api/wishlists', async (request, reply) => {
+        fastify.get('/api/wishlist', async (request, reply) => {
             reply.type('application/json');
 
             const { userId, id, sharedWithHash } = request.query;
