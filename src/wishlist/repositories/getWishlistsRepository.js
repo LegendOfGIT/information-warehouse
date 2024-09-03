@@ -14,7 +14,7 @@ module.exports = ({userId, id, sharedWithHash}) => new Promise((resolve, reject)
 
             const query = { userId };
             if (id) { query.id = id; }
-            if (sharedWithHash) { query.id = sharedWithHash; }
+            if (sharedWithHash) { query.sharedWithHash = sharedWithHash; }
 
             collection.find(query).toArray((err, result) => {
                 if (err) {
