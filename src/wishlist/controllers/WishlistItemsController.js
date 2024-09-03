@@ -7,6 +7,7 @@ const updateWishlistItem = require('../repositories/updateWishlistItemRepository
 const removeWishlistItem = require('../repositories/removeWishlistItemRepository');
 const getWishlists = require('../repositories/getWishlistsRepository');
 const deleteWishlist = require('../repositories/deleteWishlistRepository');
+const shareWishlist = require('../repositories/shareWishlistRepository');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -90,6 +91,17 @@ module.exports = () => ({
             }).catch((error) => replyWithInternalError(reply, error));
         });
     },
+    registerGetSingleWishlist: (fastify) => {
+        fastify.get('/api/wishlists', async (request, reply) => {
+            reply.type('application/json');
+
+            const { userId, id, sharedWithHash } = request.query;
+
+            await getWishlists({ userId, id, sharedWithHash }).then(async (wishlists) => {
+                reply.code(HTTP_STATUS_CODE_OK).send(wishlists.length ? wishlists[0] : {});
+            }).catch((error) => replyWithInternalError(reply, error));
+        });
+    },
     registerAddSingleWishlistItem: (fastify) => {
         fastify.put('/api/wishlist/item', async (request, reply) => {
             reply.type('application/json');
@@ -133,5 +145,27 @@ module.exports = () => ({
                 reply.code(HTTP_STATUS_CODE_OK).send({});
             }).catch((error) => replyWithInternalError(reply, error));
         });
-    }
+    },
+    registerShareWishlist: (fastify) => {
+        fastify.post('/api/wishlist/share', async (request, reply) => {
+            reply.type('application/json');
+
+            const { userId, id, sharedWithHash } = request.body;
+
+            await shareWishlist({ userId, id, sharedWithHash }).then(async () => {
+                reply.code(HTTP_STATUS_CODE_OK).send({});
+            }).catch((error) => replyWithInternalError(reply, error));
+        });
+    },
+    registerCancelShareWishlist: (fastify) => {
+        fastify.post('/api/wishlist/cancel-share', async (request, reply) => {
+            reply.type('application/json');
+
+            const { userId, id } = request.body;
+
+            await shareWishlist({ userId, id, sharedWithHash: '' }).then(async () => {
+                reply.code(HTTP_STATUS_CODE_OK).send({});
+            }).catch((error) => replyWithInternalError(reply, error));
+        });
+    },
 });
