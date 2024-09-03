@@ -1,7 +1,7 @@
 const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 
-module.exports = ({ id, userId, sharedWithHash }) => new Promise((resolve, reject) => {
+module.exports = ({ id, userId, sharedWithHash, isShareRequest }) => new Promise((resolve, reject) => {
     let message = '';
     if (!userId) {
         message = 'required userId is missing';
@@ -12,6 +12,13 @@ module.exports = ({ id, userId, sharedWithHash }) => new Promise((resolve, rejec
 
     if (!id) {
         message = 'required id is missing';
+        console.log(message);
+        reject(message);
+        return;
+    }
+
+    if (isShareRequest && !sharedWithHash) {
+        message = 'required sharedWithHash is missing';
         console.log(message);
         reject(message);
         return;

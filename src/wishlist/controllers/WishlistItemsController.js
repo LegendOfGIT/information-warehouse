@@ -152,7 +152,7 @@ module.exports = () => ({
 
             const { userId, id, sharedWithHash } = request.body;
 
-            await shareWishlist({ userId, id, sharedWithHash }).then(async () => {
+            await shareWishlist({ userId, id, sharedWithHash, isShareRequest: true }).then(async () => {
                 reply.code(HTTP_STATUS_CODE_OK).send({});
             }).catch((error) => replyWithInternalError(reply, error));
         });
@@ -163,7 +163,7 @@ module.exports = () => ({
 
             const { userId, id } = request.body;
 
-            await shareWishlist({ userId, id, sharedWithHash: '' }).then(async () => {
+            await shareWishlist({ userId, id, sharedWithHash: '', isShareRequest: false }).then(async () => {
                 reply.code(HTTP_STATUS_CODE_OK).send({});
             }).catch((error) => replyWithInternalError(reply, error));
         });
