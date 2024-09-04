@@ -8,6 +8,7 @@ const removeWishlistItem = require('../repositories/removeWishlistItemRepository
 const getWishlists = require('../repositories/getWishlistsRepository');
 const deleteWishlist = require('../repositories/deleteWishlistRepository');
 const shareWishlist = require('../repositories/shareWishlistRepository');
+const updateWishlistItemWasBought = require('../repositories/updateWishlistItemWasBoughtRepository');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -168,4 +169,15 @@ module.exports = () => ({
             }).catch((error) => replyWithInternalError(reply, error));
         });
     },
+    registerUpdateSingleWishlistItemWasBought: (fastify) => {
+        fastify.post('/api/wishlist/item/bought', async (request, reply) => {
+            reply.type('application/json');
+
+            const { userId, wishlistId, itemId, itemWasBought } = request.body;
+
+            await updateWishlistItemWasBought({ wishlistId, itemId, userId, itemWasBought }).then(async () => {
+                reply.code(HTTP_STATUS_CODE_OK).send({});
+            }).catch((error) => replyWithInternalError(reply, error));
+        });
+    }
 });
