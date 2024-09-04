@@ -29,7 +29,7 @@ module.exports = ({ wishlistId, id, userId, url, title, titleImage, description,
         .then((database) => {
             const collection = database.db().collection('wishlists');
             collection.updateOne(
-                { id: wishlistId },
+                { id: wishlistId, userId },
                 {
                     $push: {
                         items: {

@@ -28,10 +28,9 @@ module.exports = ({ id, userId, sharedWithHash, isShareRequest }) => new Promise
         .then((database) => {
             const collection = database.db().collection('wishlists');
             collection.updateOne(
-                { id },
+                { id, userId },
                 {
                     $set: {
-                        userId,
                         sharedWithHash,
                         lastUpdatedOn: new Date()
                     }},

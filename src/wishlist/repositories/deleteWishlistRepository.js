@@ -20,7 +20,7 @@ module.exports = ({ id, userId }) => new Promise((resolve, reject) => {
 
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/wishlists`)
         .then((database) => {
-            database.db().collection('wishlists').removeMany({ id })
+            database.db().collection('wishlists').removeMany({ id, userId })
                 .then(() => {
                     resolve({})
                 })

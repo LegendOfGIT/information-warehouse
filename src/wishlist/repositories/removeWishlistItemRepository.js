@@ -28,7 +28,7 @@ module.exports = ({ wishlistId, itemId, userId }) => new Promise((resolve, rejec
         .then((database) => {
             const collection = database.db().collection('wishlists');
 
-            collection.findOne({ id: wishlistId })
+            collection.findOne({ id: wishlistId, userId })
                 .then((result) => {
                     const items = result.items.filter((item) => item.id !== itemId);
 
@@ -37,7 +37,6 @@ module.exports = ({ wishlistId, itemId, userId }) => new Promise((resolve, rejec
                         {
                             $set: {
                                 items,
-                                userId,
                                 lastUpdatedOn: new Date()
                             }
                         },

@@ -3,8 +3,6 @@ const mongoClient = require('mongodb').MongoClient;
 const crypto = require('crypto');
 
 module.exports = ({ id, userId, title, description }) => new Promise((resolve, reject) => {
-    id = id ?? crypto.randomUUID();
-
     let message = '';
     if (!userId) {
         message = 'required userId is missing';
@@ -12,6 +10,8 @@ module.exports = ({ id, userId, title, description }) => new Promise((resolve, r
         reject(message);
         return;
     }
+
+    id = id ?? crypto.randomUUID();
 
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/wishlists`)
         .then((database) => {

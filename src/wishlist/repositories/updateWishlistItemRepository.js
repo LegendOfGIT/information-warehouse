@@ -34,7 +34,7 @@ module.exports = ({ wishlistId, itemId, userId, url, title, titleImage, descript
         .then((database) => {
             const collection = database.db().collection('wishlists');
 
-            collection.findOne({ id: wishlistId })
+            collection.findOne({ id: wishlistId, userId })
                 .then((result) => {
                     const items = result.items;
                     const itemToUpdate = items.find((item) => item.id === itemId);

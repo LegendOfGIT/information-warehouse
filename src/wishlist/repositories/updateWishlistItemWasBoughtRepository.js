@@ -5,12 +5,6 @@ module.exports = ({ wishlistId, itemId, userId, itemWasBought }) => new Promise(
     itemWasBought = itemWasBought ?? false;
 
     let message = '';
-    if (!userId) {
-        message = 'required userId is missing';
-        console.log(message);
-        reject(message);
-        return;
-    }
 
     if (!wishlistId) {
         message = 'required wishlistId is missing';
