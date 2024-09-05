@@ -86,7 +86,8 @@ module.exports = ({ url }) => new Promise((resolve, reject) => {
         const urlForResponse = getValueByRegex(body, OG_URL, 3) || getValueByRegex(body, LINK_URL, 1) || url;
 
         if (title === 'Just a moment...') {
-            return {};
+            resolve({});
+            return;
         }
 
         resolve({
