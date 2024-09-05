@@ -1,5 +1,6 @@
 const requestModule = require('axios');
 const https = require('https');
+const axiosRetry = require('axios-retry').default;
 
 const getValueByRegex = (content, regex, group) => {
     let value = '';
@@ -68,17 +69,19 @@ module.exports = ({ url }) => new Promise((resolve, reject) => {
         headers: {
             'User-Agent': userAgents[Math.floor(Math.random() * userAgents.length)]
         },
-        retries: 5,
+        httpsAgent: new https.Agent({ rejectUnauthorized: false }),
+        responseType: 'arraybuffer'
+    };
+
+    axiosRetry(requestModule, {
+        retries: 8,
         retryDelay: (retryCount) => {
-            console.log(`retry attempt: ${retryCount}`);
             return retryCount * 2000; // time interval between retries
         },
         retryCondition: (error) => {
             return error.response.status > 400;
-        },
-        httpsAgent: new https.Agent({ rejectUnauthorized: false }),
-        responseType: 'arraybuffer'
-    };
+        }
+    });
 
     requestModule.get(url, options)
         .then((response) => {
