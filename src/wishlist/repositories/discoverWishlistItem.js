@@ -22,6 +22,7 @@ const OG_IMAGE = /<meta.*?(p|P)roperty=\"og:image\".*?(c|C)ontent=\"(.*?)\"/;
 const OG_IMAGE_SECURE = /<meta.*?(p|P)roperty=\"og:image:secure\".*?(c|C)ontent=\"(.*?)\"/;
 const OG_TITLE = /<meta.*?(p|P)roperty=\"og:title\".*?(c|C)ontent=\"(.*?)\"/;
 const OG_URL = /<meta.*?(p|P)roperty=\"og:url\".*?(c|C)ontent=\"(.*?)\"/;
+const SCRIPT_PRODUCT_IMAGE = /@type\".*?\"Product\".*?\"image\".*?\"(.*?)\"/;
 const TAG_TITLE = /<title.*?>(.*?)<\/title>/;
 
 const userAgents = [
@@ -81,7 +82,11 @@ module.exports = ({ url }) => new Promise((resolve, reject) => {
         body = body.toString('utf-8');
 
         const title = getValueByRegex(body, OG_TITLE, 3) || getValueByRegex(body, META_TITLE, 3) || getValueByRegex(body, TAG_TITLE, 1);
-        const titleImage = getValueByRegex(body, OG_IMAGE_SECURE, 3) || getValueByRegex(body, OG_IMAGE, 3) || getValueByRegex(body, AMAZON_IMAGE, 1);
+        const titleImage =
+            getValueByRegex(body, OG_IMAGE_SECURE, 3) ||
+            getValueByRegex(body, OG_IMAGE, 3) ||
+            getValueByRegex(body, AMAZON_IMAGE, 1)  ||
+            getValueByRegex(body, SCRIPT_PRODUCT_IMAGE, 1);
         const description = getValueByRegex(body, OG_DESCRIPTION, 3) || getValueByRegex(body, META_DESCRIPTION, 3);
         const urlForResponse = getValueByRegex(body, OG_URL, 3) || getValueByRegex(body, LINK_URL, 1) || url;
 
