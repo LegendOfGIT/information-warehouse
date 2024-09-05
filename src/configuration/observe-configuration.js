@@ -1,4 +1,4 @@
-const requestModule = require('request');
+const requestModule = require('axios');
 const configuration = require('../configuration/app-config')();
 
 let CATEGORY_MAPPING = {};
@@ -8,16 +8,15 @@ const updateCategoryMappingWhenNecessary = async () => {
         return;
     }
 
-    await requestModule(
+    await requestModule.get(
         `http://${configuration.services.satellite.host}:${configuration.services.satellite.port}/observe/configuration`,
-        {json: true},
-        (err, res) => {
-            if (err) {
-                return;
-            }
+    )
+    .then(() => {
 
-            CATEGORY_MAPPING = res.body;
-        });
+    })
+    .catch((response) => {
+        CATEGORY_MAPPING = response.data;
+    });
 }
 
 module.exports = {

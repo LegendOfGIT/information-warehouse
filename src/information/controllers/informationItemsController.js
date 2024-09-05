@@ -1,4 +1,4 @@
-const requestModule = require('request');
+const requestModule = require('axios');
 const cron = require('node-cron');
 const configuration = require('../../configuration/app-config')();
 const queryInformationItems = require('../queryInformationItems');
@@ -36,10 +36,10 @@ const replyWithInternalError = (reply, errorMessage, additionalInformation) => {
 };
 
 const observeCategory = (categoryId) => {
-    requestModule.post({
-        url: `http://${configuration.services.satelliteController.host}:3001/observe-category`,
-        json: { 'category-id': categoryId }
-    }, () => {});
+    requestModule.post(
+        `http://${configuration.services.satelliteController.host}:3001/observe-category`,
+        { 'category-id': categoryId }
+    ).then(() => {}).catch(() => {});
 };
 
 const isBotRequest = (request) => {

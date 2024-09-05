@@ -1,4 +1,5 @@
-const requestModule = require('request');
+const requestModule = require('axios');
+const https = require('https');
 
 const getValueByRegex = (content, regex, group) => {
     let value = '';
@@ -64,41 +65,41 @@ module.exports = ({ url }) => new Promise((resolve, reject) => {
     }
 
     const options = {
-        url,
-        method: 'GET',
         headers: {
-            'Accept': 'text/html',
-            'Accept-Charset': 'utf-8',
-            'User-Agent': userAgents[Math.floor(Math.random() * userAgents.length)],
-            'responseType': 'arraybuffer'
-        }
+            'User-Agent': userAgents[Math.floor(Math.random() * userAgents.length)]
+        },
+        httpsAgent: new https.Agent({ rejectUnauthorized: false }),
+        responseType: 'arraybuffer'
     };
 
-    requestModule.get(options, (error, response, body) => {
-        if (error) {
+    requestModule.get(url, options)
+        .then((response) => {
+            const body = response.data.toString('utf-8');
+
+            const title = getValueByRegex(body, OG_TITLE, 3) || getValueByRegex(body, META_TITLE, 3) || getValueByRegex(body, TAG_TITLE, 1);
+            const titleImage =
+                getValueByRegex(body, OG_IMAGE_SECURE, 3) ||
+                getValueByRegex(body, OG_IMAGE, 3) ||
+                getValueByRegex(body, AMAZON_IMAGE, 1)  ||
+                getValueByRegex(body, SCRIPT_PRODUCT_IMAGE, 1);
+            const description = getValueByRegex(body, OG_DESCRIPTION, 3) || getValueByRegex(body, META_DESCRIPTION, 3);
+            const urlForResponse = getValueByRegex(body, OG_URL, 3) || getValueByRegex(body, LINK_URL, 1) || url;
+
+            if (title === 'Just a moment...') {
+                resolve({});
+                return;
+            }
+
+            resolve({
+                title,
+                titleImage,
+                description,
+                url: urlForResponse
+            });
+
+            resolve();
+        })
+        .catch((error) => {
             reject(error);
-            return;
-        }
-
-        const title = getValueByRegex(body, OG_TITLE, 3) || getValueByRegex(body, META_TITLE, 3) || getValueByRegex(body, TAG_TITLE, 1);
-        const titleImage =
-            getValueByRegex(body, OG_IMAGE_SECURE, 3) ||
-            getValueByRegex(body, OG_IMAGE, 3) ||
-            getValueByRegex(body, AMAZON_IMAGE, 1)  ||
-            getValueByRegex(body, SCRIPT_PRODUCT_IMAGE, 1);
-        const description = getValueByRegex(body, OG_DESCRIPTION, 3) || getValueByRegex(body, META_DESCRIPTION, 3);
-        const urlForResponse = getValueByRegex(body, OG_URL, 3) || getValueByRegex(body, LINK_URL, 1) || url;
-
-        if (title === 'Just a moment...') {
-            resolve({});
-            return;
-        }
-
-        resolve({
-            title,
-            titleImage,
-            description,
-            url: urlForResponse
         });
-    });
 });
