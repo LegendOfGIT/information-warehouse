@@ -25,6 +25,13 @@ module.exports = ({ wishlistId, id, userId, url, title, titleImage, description,
         return;
     }
 
+    if (!title) {
+        message = 'required title is missing';
+        console.log(message);
+        reject(message);
+        return;
+    }
+
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/wishlists`)
         .then((database) => {
             const collection = database.db().collection('wishlists');
