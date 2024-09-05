@@ -84,6 +84,11 @@ module.exports = ({ url }) => new Promise((resolve, reject) => {
         const titleImage = getValueByRegex(body, OG_IMAGE_SECURE, 3) || getValueByRegex(body, OG_IMAGE, 3) || getValueByRegex(body, AMAZON_IMAGE, 1);
         const description = getValueByRegex(body, OG_DESCRIPTION, 3) || getValueByRegex(body, META_DESCRIPTION, 3);
         const urlForResponse = getValueByRegex(body, OG_URL, 3) || getValueByRegex(body, LINK_URL, 1) || url;
+
+        if (title === 'Just a moment...') {
+            return {};
+        }
+
         resolve({
             title,
             titleImage,
