@@ -79,6 +79,7 @@ module.exports = ({ url }) => new Promise((resolve, reject) => {
             return retryCount * 2000; // time interval between retries
         },
         retryCondition: (error) => {
+            console.log(error);
             return error.response.status > 400;
         }
     });
