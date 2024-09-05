@@ -70,17 +70,17 @@ module.exports = ({ url }) => new Promise((resolve, reject) => {
             'User-Agent': userAgents[Math.floor(Math.random() * userAgents.length)]
         },
         httpsAgent: new https.Agent({ rejectUnauthorized: false }),
-        responseType: 'arraybuffer'
+        responseType: 'arraybuffer',
+        validateStatus: (status) => { return status === 200; }
     };
 
     axiosRetry(requestModule, {
         retries: 8,
         retryDelay: (retryCount) => {
-            return retryCount * 2000; // time interval between retries
+            return 2000; // time interval between retries
         },
         retryCondition: (error) => {
-            console.log(error);
-            return error.response.status > 400;
+            return error.response.status === 202 || error.response.status > 400;
         }
     });
 
