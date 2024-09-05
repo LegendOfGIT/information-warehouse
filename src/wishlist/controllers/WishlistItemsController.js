@@ -125,10 +125,8 @@ module.exports = () => ({
             const { title, titleImage, description } = item;
             console.log(item);
             await storeWishlistItem({ wishlistId, userId, url, title, titleImage, description }).then(async () => {
-                reply.code(HTTP_STATUS_CODE_OK).send({});
+                reply.code(HTTP_STATUS_CODE_OK).send(item);
             }).catch((error) => replyWithInternalError(reply, error));
-
-            reply.code(HTTP_STATUS_CODE_OK).send(item);
         });
     },
     registerUpdateSingleWishlistItem: (fastify) => {
