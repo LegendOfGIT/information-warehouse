@@ -69,7 +69,8 @@ module.exports = ({ url }) => new Promise((resolve, reject) => {
         headers: {
             'Accept': 'text/html',
             'Accept-Charset': 'utf-8',
-            'User-Agent': userAgents[Math.floor(Math.random() * userAgents.length)]
+            'User-Agent': userAgents[Math.floor(Math.random() * userAgents.length)],
+            'responseType': 'arraybuffer'
         }
     };
 
