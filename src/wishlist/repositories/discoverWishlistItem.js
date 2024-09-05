@@ -68,6 +68,14 @@ module.exports = ({ url }) => new Promise((resolve, reject) => {
         headers: {
             'User-Agent': userAgents[Math.floor(Math.random() * userAgents.length)]
         },
+        retries: 5,
+        retryDelay: (retryCount) => {
+            console.log(`retry attempt: ${retryCount}`);
+            return retryCount * 2000; // time interval between retries
+        },
+        retryCondition: (error) => {
+            return error.response.status > 400;
+        },
         httpsAgent: new https.Agent({ rejectUnauthorized: false }),
         responseType: 'arraybuffer'
     };
@@ -96,8 +104,6 @@ module.exports = ({ url }) => new Promise((resolve, reject) => {
                 description,
                 url: urlForResponse
             });
-
-            resolve();
         })
         .catch((error) => {
             reject(error);
