@@ -24,7 +24,7 @@ const OG_IMAGE = /<meta.*?(p|P)roperty=\"og:image\".*?(c|C)ontent=\"(.*?)\"/;
 const OG_IMAGE_SECURE = /<meta.*?(p|P)roperty=\"og:image:secure\".*?(c|C)ontent=\"(.*?)\"/;
 const OG_TITLE = /<meta.*?(p|P)roperty=\"og:title\".*?(c|C)ontent=\"(.*?)\"/;
 const OG_URL = /<meta.*?(p|P)roperty=\"og:url\".*?(c|C)ontent=\"(.*?)\"/;
-const SCRIPT_PRODUCT_DESCRIPTION = /@type\".*?\"Product\".*?\"description\".*?\"(.*?)\"/;
+const SCRIPT_PRODUCT_DESCRIPTION = /@type\".*?\"(p|P)roduct\"(\n|.)*?\"description\".*?\"(.*?)\"/;
 const SCRIPT_PRODUCT_IMAGE = /@type\".*?\"Product\".*?\"image\".*?\"(.*?)\"/;
 const TAG_TITLE = /<title.*?>(.*?)<\/title>/;
 
@@ -58,7 +58,8 @@ const userAgents = [
 ];
 
 const replaceEncodedCharacters = (value) => {
-    return value.replaceAll('\\u0026', '&').replaceAll('\\u003C', '<').replaceAll('\\u003c', '<').replaceAll('\\u003E', '>').replaceAll('\\u003e', '>').replaceAll('&apos;', '?')
+    return decodeURIComponent(value)
+        .replaceAll('\\u0026', '&').replaceAll('\\u003C', '<').replaceAll('\\u003c', '<').replaceAll('\\u003E', '>').replaceAll('\\u003e', '>').replaceAll('&apos;', '?')
         .replaceAll('\\n', ' ')
         .replaceAll('&amp;', '&')
         .replaceAll('&#009;', '; ')
@@ -114,7 +115,7 @@ module.exports = ({ url }) => new Promise((resolve, reject) => {
                 getValueByRegex(body, OG_IMAGE, 3) ||
                 getValueByRegex(body, AMAZON_IMAGE, 1)  ||
                 getValueByRegex(body, SCRIPT_PRODUCT_IMAGE, 1);
-            const description = replaceEncodedCharacters(getValueByRegex(body, SCRIPT_PRODUCT_DESCRIPTION, 1) || getValueByRegex(body, OG_DESCRIPTION, 3) || getValueByRegex(body, META_DESCRIPTION, 3));
+            const description = replaceEncodedCharacters(getValueByRegex(body, SCRIPT_PRODUCT_DESCRIPTION, 3) || getValueByRegex(body, OG_DESCRIPTION, 3) || getValueByRegex(body, META_DESCRIPTION, 3));
             const urlForResponse = getValueByRegex(body, OG_URL, 3) || getValueByRegex(body, LINK_URL, 1) || url;
 
             if (title === 'Just a moment...') {
