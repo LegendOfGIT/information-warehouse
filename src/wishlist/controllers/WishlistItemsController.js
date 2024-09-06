@@ -10,6 +10,7 @@ const deleteWishlist = require('../repositories/deleteWishlistRepository');
 const shareWishlist = require('../repositories/shareWishlistRepository');
 const updateWishlistItemWasBought = require('../repositories/updateWishlistItemWasBoughtRepository');
 const discoverWishlistItem = require('../repositories/discoverWishlistItem');
+const containsBadTerm = require('../../information/validator/containsBadTerm');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -123,7 +124,6 @@ module.exports = () => ({
 
             const item = await discoverWishlistItem({ url });
             const { title, titleImage, description } = item;
-            console.log(item);
 
             await storeWishlistItem({ wishlistId, userId, url, title, titleImage, description }).then(async () => {
                 reply.code(HTTP_STATUS_CODE_OK).send(item);
@@ -135,6 +135,10 @@ module.exports = () => ({
             reply.type('application/json');
 
             const { userId, wishlistId, itemId, url, title, titleImage, description, itemWasBought } = request.body;
+            if (containsBadTerm(title) || containsBadTerm(description)) {
+                replyWithInternalError(reply, 'Forbidden term in title or description');
+                return;
+            }
 
             await updateWishlistItem({ wishlistId, itemId, userId, url, title, titleImage, description, itemWasBought }).then(async () => {
                 reply.code(HTTP_STATUS_CODE_OK).send({});
