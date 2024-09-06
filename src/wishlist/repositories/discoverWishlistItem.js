@@ -3,16 +3,15 @@ const https = require('https');
 const axiosRetry = require('axios-retry').default;
 
 const getValueByRegex = (content, regex, group) => {
-    let value = '';
     const matches = content.matchAll(new RegExp(regex, 'sg'));
 
     for (let match of matches) {
         if (match[group]) {
-            value = match[group];
+            return match[group];
         }
     }
 
-    return value;
+    return '';
 };
 
 const AMAZON_IMAGE = /colorImages'.*?\"hiRes\".*?\"(.*?)\"/;
