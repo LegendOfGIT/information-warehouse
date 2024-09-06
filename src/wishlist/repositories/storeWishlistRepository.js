@@ -2,7 +2,7 @@ const configuration = require('../../configuration/app-config')();
 const mongoClient = require('mongodb').MongoClient;
 const crypto = require('crypto');
 
-module.exports = ({ id, userId, title, description }) => new Promise((resolve, reject) => {
+module.exports = ({ id, userId, title, description, imageId }) => new Promise((resolve, reject) => {
     let message = '';
     if (!userId) {
         message = 'required userId is missing';
@@ -11,7 +11,15 @@ module.exports = ({ id, userId, title, description }) => new Promise((resolve, r
         return;
     }
 
+    if (!title) {
+        message = 'required title is missing';
+        console.log(message);
+        reject(message);
+        return;
+    }
+
     id = id ?? crypto.randomUUID();
+    imageId = imageId ?? 'WISHLIST_IMAGE_01';
 
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/wishlists`)
         .then((database) => {
@@ -23,6 +31,7 @@ module.exports = ({ id, userId, title, description }) => new Promise((resolve, r
                         userId,
                         title,
                         description,
+                        imageId,
                         lastUpdatedOn: new Date()
                     }},
                 { upsert: true }
