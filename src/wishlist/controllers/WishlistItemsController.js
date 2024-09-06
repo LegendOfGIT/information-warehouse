@@ -77,6 +77,10 @@ module.exports = () => ({
             reply.type('application/json');
 
             const { userId, id, title, description, imageId } = request.body;
+            if (containsBadTerm(title) || containsBadTerm(description)) {
+                replyWithInternalError(reply, 'Forbidden term in title or description');
+                return;
+            }
 
             await storeWishlist({ id, userId, title, description, imageId }).then(async () => {
                 reply.code(HTTP_STATUS_CODE_OK).send({});
@@ -135,10 +139,6 @@ module.exports = () => ({
             reply.type('application/json');
 
             const { userId, wishlistId, itemId, url, title, titleImage, description, itemWasBought } = request.body;
-            if (containsBadTerm(title) || containsBadTerm(description)) {
-                replyWithInternalError(reply, 'Forbidden term in title or description');
-                return;
-            }
 
             await updateWishlistItem({ wishlistId, itemId, userId, url, title, titleImage, description, itemWasBought }).then(async () => {
                 reply.code(HTTP_STATUS_CODE_OK).send({});
