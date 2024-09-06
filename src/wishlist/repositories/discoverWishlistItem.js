@@ -115,7 +115,7 @@ module.exports = ({ url }) => new Promise((resolve, reject) => {
                 getValueByRegex(body, OG_IMAGE, 3) ||
                 getValueByRegex(body, AMAZON_IMAGE, 1)  ||
                 getValueByRegex(body, SCRIPT_PRODUCT_IMAGE, 1);
-            const description = replaceEncodedCharacters(getValueByRegex(body, SCRIPT_PRODUCT_DESCRIPTION, 2) || getValueByRegex(body, OG_DESCRIPTION, 3) || getValueByRegex(body, META_DESCRIPTION, 3));
+            const description = replaceEncodedCharacters(getValueByRegex(body, OG_DESCRIPTION, 3) || getValueByRegex(body, META_DESCRIPTION, 3) || getValueByRegex(body, SCRIPT_PRODUCT_DESCRIPTION, 2));
             const urlForResponse = getValueByRegex(body, OG_URL, 3) || getValueByRegex(body, LINK_URL, 1) || url;
 
             if (title === 'Just a moment...') {
