@@ -26,6 +26,8 @@ module.exports = ({userId, id, sharedWithHash}) => new Promise((resolve, reject)
                 }
 
                 (result ?? []).forEach((wishlist) => {
+                    delete wishlist._id;
+                    wishlist.imageId = wishlist.imageId || 'WISHLIST_IMAGE_01';
                     wishlist.items = (wishlist.items ?? []).map((item) => {
                         item.url = `${item.url}${getCampaignParameterByUrl(item.url)}`;
                         return item;
