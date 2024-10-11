@@ -1,5 +1,6 @@
 const getTranslationsRepository = require('../repositories/getTranslationsRepository');
 const saveTranslationsRepository = require('../repositories/saveTranslationsRepository');
+const constants = require('/src/constants');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -25,7 +26,12 @@ module.exports = () => ({
         fastify.post('/api/translations', async (request, reply) => {
             reply.type('application/json');
 
-            const { locale, translations } = request.body;
+            const { locale, secret, translations } = request.body;
+            if (secret !== constants.TRANSLATIONS_SECRET) {
+                replyWithInternalError(reply, 'Uh uh uh! Wrong secret!');
+                return;
+            }
+
 
             await saveTranslationsRepository(locale, translations).then(async (response) => {
                 reply.code(HTTP_STATUS_CODE_OK).send(response);
