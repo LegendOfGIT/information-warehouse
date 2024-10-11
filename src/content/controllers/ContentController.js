@@ -1,6 +1,6 @@
 const getTranslationsRepository = require('../repositories/getTranslationsRepository');
 const saveTranslationsRepository = require('../repositories/saveTranslationsRepository');
-const constants = require('/src/constants');
+const constants = require('../../constants');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
