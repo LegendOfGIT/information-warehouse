@@ -1,4 +1,5 @@
 const configuration = require('./configuration/app-config')();
+const contentController = require('./content/controllers/ContentController')();
 const hashtagsController = require('./hashtags/controllers/hashtagsController')();
 const informationItemsController = require('./information/controllers/informationItemsController')();
 const searchProfilesController = require('./profiles/controllers/ProfilesController')();
@@ -18,6 +19,8 @@ informationItemsController.registerGetAvailableFilters(fastify);
 informationItemsController.registerDiscoverItem(fastify);
 informationItemsController.registerGetSearchSuggestions(fastify);
 informationItemsController.registerRemoveProvider(fastify);
+
+contentController.registerGetTranslations(fastify);
 
 hashtagsController.registerGetHashtags(fastify);
 hashtagsController.registerGetRankedCategoriesByHashtags(fastify);
