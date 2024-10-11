@@ -12,7 +12,7 @@ module.exports = (locale) => new Promise((resolve, reject) => {
             const collection = database.db().collection('translations');
             collection.findOne({ locale })
                 .then((result) => {
-                    resolve(result === undefined ? {} : result.translations);
+                    resolve(result ? result.translations : {});
                 })
                 .catch((error) => {
                     reject(error);
