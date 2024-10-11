@@ -1,4 +1,5 @@
 const getTranslationsRepository = require('../repositories/getTranslationsRepository');
+const saveTranslationsRepository = require('../repositories/saveTranslationsRepository');
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -17,6 +18,17 @@ module.exports = () => ({
 
             await getTranslationsRepository(locale).then(async (translations) => {
                 reply.code(HTTP_STATUS_CODE_OK).send(translations);
+            }).catch((error) => replyWithInternalError(reply, error));
+        });
+    },
+    registerSaveTranslations: (fastify) => {
+        fastify.post('/api/translations', async (request, reply) => {
+            reply.type('application/json');
+
+            const { locale, translations } = request.body;
+
+            await saveTranslationsRepository(locale, translations).then(async (response) => {
+                reply.code(HTTP_STATUS_CODE_OK).send(response);
             }).catch((error) => replyWithInternalError(reply, error));
         });
     }

@@ -21,6 +21,7 @@ informationItemsController.registerGetSearchSuggestions(fastify);
 informationItemsController.registerRemoveProvider(fastify);
 
 contentController.registerGetTranslations(fastify);
+contentController.registerSaveTranslations(fastify);
 
 hashtagsController.registerGetHashtags(fastify);
 hashtagsController.registerGetRankedCategoriesByHashtags(fastify);
