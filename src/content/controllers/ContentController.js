@@ -37,6 +37,11 @@ module.exports = () => ({
         fastify.post('/api/story', async (request, reply) => {
             reply.type('application/json');
 
+            if (request.body.secret !== constants.TRANSLATIONS_SECRET) {
+                replyWithInternalError(reply, 'Uh uh uh! Wrong secret!');
+                return;
+            }
+
             await saveStoryRepository(request.body).then(async () => {
                 reply.code(HTTP_STATUS_CODE_OK).send({});
             }).catch((error) => replyWithInternalError(reply, error));
@@ -45,6 +50,11 @@ module.exports = () => ({
     registerRemoveStory: (fastify) => {
         fastify.delete('/api/story', async (request, reply) => {
             reply.type('application/json');
+
+            if (request.body.secret !== constants.TRANSLATIONS_SECRET) {
+                replyWithInternalError(reply, 'Uh uh uh! Wrong secret!');
+                return;
+            }
 
             await removeStoryRepository(request.query.id).then(async () => {
                 reply.code(HTTP_STATUS_CODE_OK).send({});
