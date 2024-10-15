@@ -48,8 +48,8 @@ module.exports = ({ id, canonical, title, navigationId, elements }) => new Promi
                 },
                 { upsert: true }
             )
-                .then(response => {
-                    resolve(response);
+                .then(() => {
+                    resolve({});
                 })
                 .catch(error => {
                     reject(error);

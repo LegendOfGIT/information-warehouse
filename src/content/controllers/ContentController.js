@@ -26,8 +26,8 @@ module.exports = () => ({
         fastify.post('/api/story', async (request, reply) => {
             reply.type('application/json');
 
-            await saveStoryRepository(request.body).then(async (stories) => {
-                reply.code(HTTP_STATUS_CODE_OK).send(stories);
+            await saveStoryRepository(request.body).then(async () => {
+                reply.code(HTTP_STATUS_CODE_OK).send({});
             }).catch((error) => replyWithInternalError(reply, error));
         });
     },
