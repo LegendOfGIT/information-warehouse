@@ -1,5 +1,6 @@
 const getStoriesRepository = require('../repositories/getStoriesRepository');
 const getSingleStoryRepository = require('../repositories/getSingleStoryRepository');
+const removeStoryRepository = require('../repositories/removeStoryRepository');
 const saveStoryRepository = require('../repositories/saveStoryRepository');
 const getTranslationsRepository = require('../repositories/getTranslationsRepository');
 const saveTranslationsRepository = require('../repositories/saveTranslationsRepository');
@@ -45,7 +46,7 @@ module.exports = () => ({
         fastify.delete('/api/story', async (request, reply) => {
             reply.type('application/json');
 
-            await saveStoryRepository(request.query.id).then(async () => {
+            await removeStoryRepository(request.query.id).then(async () => {
                 reply.code(HTTP_STATUS_CODE_OK).send({});
             }).catch((error) => replyWithInternalError(reply, error));
         });
