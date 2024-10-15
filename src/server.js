@@ -21,6 +21,7 @@ informationItemsController.registerGetSearchSuggestions(fastify);
 informationItemsController.registerRemoveProvider(fastify);
 
 contentController.registerGetStories(fastify);
+contentController.registerGetSingleStory(fastify);
 contentController.registerSaveStory(fastify);
 contentController.registerGetTranslations(fastify);
 contentController.registerSaveTranslations(fastify);
