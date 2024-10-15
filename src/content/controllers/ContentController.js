@@ -23,7 +23,7 @@ module.exports = () => ({
         });
     },
     registerSaveStory: (fastify) => {
-        fastify.get('/api/story', async (request, reply) => {
+        fastify.post('/api/story', async (request, reply) => {
             reply.type('application/json');
 
             await saveStoryRepository(request.body).then(async (stories) => {
