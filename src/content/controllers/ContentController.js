@@ -1,3 +1,4 @@
+const getStoriesRepository = require('../repositories/getStoriesRepository');
 const getTranslationsRepository = require('../repositories/getTranslationsRepository');
 const saveTranslationsRepository = require('../repositories/saveTranslationsRepository');
 const constants = require('../../constants');
@@ -11,6 +12,15 @@ const replyWithInternalError = (reply, errorMessage, additionalInformation) => {
 };
 
 module.exports = () => ({
+    registerGetStories: (fastify) => {
+        fastify.get('/api/stories', async (request, reply) => {
+            reply.type('application/json');
+
+            await getStoriesRepository().then(async (stories) => {
+                reply.code(HTTP_STATUS_CODE_OK).send(stories);
+            }).catch((error) => replyWithInternalError(reply, error));
+        });
+    },
     registerGetTranslations: (fastify) => {
         fastify.get('/api/translations', async (request, reply) => {
             reply.type('application/json');
@@ -31,7 +41,6 @@ module.exports = () => ({
                 replyWithInternalError(reply, 'Uh uh uh! Wrong secret!');
                 return;
             }
-
 
             await saveTranslationsRepository(locale, translations).then(async (response) => {
                 reply.code(HTTP_STATUS_CODE_OK).send(response);
