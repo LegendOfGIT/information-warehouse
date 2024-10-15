@@ -9,16 +9,15 @@ module.exports = (id) => new Promise((resolve, reject) => {
     mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
         .then((database) => {
             const collection = database.db().collection('stories');
-            collection.removeOne({ id })
-                .then(() => {
-                    resolve({});
-                })
-                .catch(error => {
-                    reject(error);
-                })
-                .finally(() => {
+            collection.deleteOne({ id }, (err, result) => {
+                if (err) {
                     database.close();
-                });
+                    throw err;
+                }
+
+                resolve({});
+                database.close();
+            });
         })
         .catch(error => { reject(error); });
 });
