@@ -12,7 +12,7 @@ module.exports = (id) => new Promise((resolve, reject) => {
             const collection = database.db().collection('stories');
             collection.findOne({ id })
                 .then((result) => {
-                    resolve(result);
+                    resolve(result ? result : {});
                 })
                 .catch((error) => {
                     reject(error);

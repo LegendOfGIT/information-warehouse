@@ -41,6 +41,15 @@ module.exports = () => ({
             }).catch((error) => replyWithInternalError(reply, error));
         });
     },
+    registerRemoveStory: (fastify) => {
+        fastify.delete('/api/story', async (request, reply) => {
+            reply.type('application/json');
+
+            await saveStoryRepository(request.query.id).then(async () => {
+                reply.code(HTTP_STATUS_CODE_OK).send({});
+            }).catch((error) => replyWithInternalError(reply, error));
+        });
+    },
     registerGetTranslations: (fastify) => {
         fastify.get('/api/translations', async (request, reply) => {
             reply.type('application/json');

@@ -22,6 +22,7 @@ informationItemsController.registerRemoveProvider(fastify);
 
 contentController.registerGetStories(fastify);
 contentController.registerGetSingleStory(fastify);
+contentController.registerRemoveStory(fastify);
 contentController.registerSaveStory(fastify);
 contentController.registerGetTranslations(fastify);
 contentController.registerSaveTranslations(fastify);
