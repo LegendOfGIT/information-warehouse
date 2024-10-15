@@ -10,6 +10,8 @@ module.exports = (id) => new Promise((resolve, reject) => {
         .then((database) => {
             const collection = database.db().collection('stories');
             collection.deleteOne({ id }, (err, result) => {
+                console.log(id);
+                console.log(result);
                 if (err) {
                     database.close();
                     throw err;
