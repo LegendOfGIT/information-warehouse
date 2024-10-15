@@ -38,7 +38,7 @@ module.exports = ({ id, canonical, title, navigationId, elements }) => new Promi
     }
 
 
-    mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/wishlists`)
+    mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/stories`)
         .then((database) => {
             const collection = database.db().collection('stories');
             collection.updateOne(

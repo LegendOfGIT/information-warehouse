@@ -6,7 +6,7 @@ module.exports = (id) => new Promise((resolve, reject) => {
         console.log('required id is missing');
     }
 
-    mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`)
+    mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/stories`)
         .then((database) => {
             const collection = database.db().collection('stories');
             collection.deleteOne({ id }, (err, result) => {
