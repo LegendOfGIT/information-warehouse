@@ -1,4 +1,5 @@
 const getStoriesRepository = require('../repositories/getStoriesRepository');
+const saveStoryRepository = require('../repositories/saveStoryRepository');
 const getTranslationsRepository = require('../repositories/getTranslationsRepository');
 const saveTranslationsRepository = require('../repositories/saveTranslationsRepository');
 const constants = require('../../constants');
@@ -17,6 +18,15 @@ module.exports = () => ({
             reply.type('application/json');
 
             await getStoriesRepository().then(async (stories) => {
+                reply.code(HTTP_STATUS_CODE_OK).send(stories);
+            }).catch((error) => replyWithInternalError(reply, error));
+        });
+    },
+    registerSaveStory: (fastify) => {
+        fastify.get('/api/story', async (request, reply) => {
+            reply.type('application/json');
+
+            await saveStoryRepository(request.body).then(async (stories) => {
                 reply.code(HTTP_STATUS_CODE_OK).send(stories);
             }).catch((error) => replyWithInternalError(reply, error));
         });
