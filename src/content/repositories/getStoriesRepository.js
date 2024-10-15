@@ -18,7 +18,9 @@ module.exports = () => new Promise((resolve, reject) => {
 
                 resolve((result || [])
                     .map(story => ({
+                        id: story.id,
                         canonical: story.canonical,
+                        createdOn: story.createdOn,
                         title: story.title })));
                 database.close();
             });
