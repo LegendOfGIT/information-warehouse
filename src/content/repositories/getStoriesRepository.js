@@ -21,7 +21,9 @@ module.exports = () => new Promise((resolve, reject) => {
                         id: story.id,
                         canonical: story.canonical,
                         createdOn: story.createdOn,
-                        title: story.title })));
+                        title: story.title,
+                        navigationId: story.navigationId
+                    })));
                 database.close();
             });
         })
