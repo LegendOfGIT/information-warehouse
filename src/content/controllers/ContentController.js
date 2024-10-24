@@ -43,7 +43,7 @@ module.exports = () => ({
         fastify.post('/api/story', async (request, reply) => {
             reply.type('application/json');
 
-            if (request.body.secret !== constants.TRANSLATIONS_SECRET) {
+            if (stringToSecretHash(request.body.secret) !== constants.TRANSLATIONS_SECRET) {
                 replyWithInternalError(reply, 'Uh uh uh! Wrong secret!');
                 return;
             }
