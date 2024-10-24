@@ -14,6 +14,12 @@ const replyWithInternalError = (reply, errorMessage, additionalInformation) => {
     return reply.send(Object.assign({ errorMessage }, additionalInformation));
 };
 
+const stringToSecretHash = (s) => {
+    let hash = Array.from(s).reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0);
+    hash = hash < 0 ? hash * -1 : hash;
+    return hash;
+}
+
 module.exports = () => ({
     registerGetStories: (fastify) => {
         fastify.get('/api/stories', async (request, reply) => {
@@ -51,7 +57,7 @@ module.exports = () => ({
         fastify.delete('/api/story', async (request, reply) => {
             reply.type('application/json');
 
-            if (request.body.secret !== constants.TRANSLATIONS_SECRET) {
+            if (stringToSecretHash(request.body.secret) !== constants.TRANSLATIONS_SECRET) {
                 replyWithInternalError(reply, 'Uh uh uh! Wrong secret!');
                 return;
             }
@@ -77,7 +83,7 @@ module.exports = () => ({
             reply.type('application/json');
 
             const { locale, secret, translations } = request.body;
-            if (secret !== constants.TRANSLATIONS_SECRET) {
+            if (stringToSecretHash(secret) !== constants.TRANSLATIONS_SECRET) {
                 replyWithInternalError(reply, 'Uh uh uh! Wrong secret!');
                 return;
             }
