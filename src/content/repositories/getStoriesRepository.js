@@ -22,6 +22,7 @@ module.exports = () => new Promise((resolve, reject) => {
                         canonical: story.canonical,
                         createdOn: story.createdOn,
                         title: story.title,
+                        titleImage: (story.elements || []).find(element => element.type === 3)?.content || '',
                         navigationId: story.navigationId
                     })));
                 database.close();
