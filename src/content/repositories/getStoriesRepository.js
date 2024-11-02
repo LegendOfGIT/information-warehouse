@@ -21,6 +21,7 @@ module.exports = () => new Promise((resolve, reject) => {
                         id: story.id,
                         canonical: story.canonical,
                         createdOn: story.createdOn,
+                        firstBlock: (story.elements || []).find(element => element.type === 1)?.content || '',
                         title: story.title,
                         titleImage: (story.elements || []).find(element => element.type === 3)?.content || '',
                         navigationId: story.navigationId
