@@ -5,6 +5,7 @@ const saveStoryRepository = require('../repositories/saveStoryRepository');
 const getTranslationsRepository = require('../repositories/getTranslationsRepository');
 const saveTranslationsRepository = require('../repositories/saveTranslationsRepository');
 const constants = require('../../constants');
+const cache = require("../../cache/cache");
 
 const HTTP_STATUS_CODE_INTERNAL_ERROR = 500;
 const HTTP_STATUS_CODE_OK = 200;
@@ -73,7 +74,16 @@ module.exports = () => ({
 
             const { locale } = request.query;
 
+            const cacheKey = `translations.${locale}`;
+            if (cacheKey && cache.has(cacheKey)) {
+                reply.send(cache.get(cacheKey));
+                return;
+            }
+
             await getTranslationsRepository(locale).then(async (translations) => {
+                reply.headers({'Cache-Control': 'max-age=3600'});
+                if (cacheKey) { cache.set(cacheKey, translations, 3600); }
+
                 reply.code(HTTP_STATUS_CODE_OK).send(translations);
             }).catch((error) => replyWithInternalError(reply, error));
         });
