@@ -110,8 +110,8 @@ module.exports = () => ({
         fastify.get('/api/things-of-interest', async (request, reply) => {
             reply.type('application/json');
 
-            await getThingsOfInterestRepository().then(async (stories) => {
-                reply.code(HTTP_STATUS_CODE_OK).send(stories);
+            await getThingsOfInterestRepository(request.query).then(async (items) => {
+                reply.code(HTTP_STATUS_CODE_OK).send(items);
             }).catch((error) => replyWithInternalError(reply, error));
         });
     },
