@@ -4,6 +4,8 @@ const removeStoryRepository = require('../repositories/removeStoryRepository');
 const saveStoryRepository = require('../repositories/saveStoryRepository');
 const getTranslationsRepository = require('../repositories/getTranslationsRepository');
 const saveTranslationsRepository = require('../repositories/saveTranslationsRepository');
+const getThingsOfInterestRepository = require('../repositories/getThingsOfInterestRepository');
+const saveThingOfInterestRepository = require('../repositories/saveThingOfInterestRepository');
 const constants = require('../../constants');
 const cache = require("../../cache/cache");
 
@@ -44,7 +46,7 @@ module.exports = () => ({
         fastify.post('/api/story', async (request, reply) => {
             reply.type('application/json');
 
-            if (stringToSecretHash(request.body.secret) !== constants.TRANSLATIONS_SECRET) {
+            if (stringToSecretHash(request.body.secret) !== constants.CONTENT_SECRET) {
                 replyWithInternalError(reply, 'Uh uh uh! Wrong secret!');
                 return;
             }
@@ -58,7 +60,7 @@ module.exports = () => ({
         fastify.delete('/api/story', async (request, reply) => {
             reply.type('application/json');
 
-            if (stringToSecretHash(request.body.secret) !== constants.TRANSLATIONS_SECRET) {
+            if (stringToSecretHash(request.body.secret) !== constants.CONTENT_SECRET) {
                 replyWithInternalError(reply, 'Uh uh uh! Wrong secret!');
                 return;
             }
@@ -93,13 +95,36 @@ module.exports = () => ({
             reply.type('application/json');
 
             const { locale, secret, translations } = request.body;
-            if (stringToSecretHash(secret) !== constants.TRANSLATIONS_SECRET) {
+            if (stringToSecretHash(secret) !== constants.CONTENT_SECRET) {
                 replyWithInternalError(reply, 'Uh uh uh! Wrong secret!');
                 return;
             }
 
             await saveTranslationsRepository(locale, translations).then(async (response) => {
                 reply.code(HTTP_STATUS_CODE_OK).send(response);
+            }).catch((error) => replyWithInternalError(reply, error));
+        });
+    },
+    registerGetThingsOfInterest: (fastify) => {
+        fastify.get('/api/things-of-interest', async (request, reply) => {
+            reply.type('application/json');
+
+            await getThingsOfInterestRepository().then(async (stories) => {
+                reply.code(HTTP_STATUS_CODE_OK).send(stories);
+            }).catch((error) => replyWithInternalError(reply, error));
+        });
+    },
+    registerSaveThingOfInterest: (fastify) => {
+        fastify.post('/api/thing-of-interest', async (request, reply) => {
+            reply.type('application/json');
+
+            if (stringToSecretHash(request.body.secret) !== constants.CONTENT_SECRET) {
+                replyWithInternalError(reply, 'Uh uh uh! Wrong secret!');
+                return;
+            }
+
+            await saveThingOfInterestRepository(request.body).then(async () => {
+                reply.code(HTTP_STATUS_CODE_OK).send({});
             }).catch((error) => replyWithInternalError(reply, error));
         });
     }

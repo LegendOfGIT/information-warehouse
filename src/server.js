@@ -26,6 +26,8 @@ contentController.registerRemoveStory(fastify);
 contentController.registerSaveStory(fastify);
 contentController.registerGetTranslations(fastify);
 contentController.registerSaveTranslations(fastify);
+contentController.registerGetThingsOfInterest(fastify);
+contentController.registerSaveThingOfInterest(fastify);
 
 hashtagsController.registerGetHashtags(fastify);
 hashtagsController.registerGetRankedCategoriesByHashtags(fastify);
