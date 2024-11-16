@@ -6,6 +6,7 @@ const getTranslationsRepository = require('../repositories/getTranslationsReposi
 const saveTranslationsRepository = require('../repositories/saveTranslationsRepository');
 const getThingsOfInterestRepository = require('../repositories/getThingsOfInterestRepository');
 const saveThingOfInterestRepository = require('../repositories/saveThingOfInterestRepository');
+const removeThingOfInterestRepository = require('../repositories/removeThingOfInterestRepository');
 const constants = require('../../constants');
 const cache = require("../../cache/cache");
 
@@ -127,5 +128,19 @@ module.exports = () => ({
                 reply.code(HTTP_STATUS_CODE_OK).send({});
             }).catch((error) => replyWithInternalError(reply, error));
         });
-    }
+    },
+    registerRemoveThingOfInterest: (fastify) => {
+        fastify.delete('/api/thing-of-interest', async (request, reply) => {
+            reply.type('application/json');
+
+            if (stringToSecretHash(request.body.secret) !== constants.CONTENT_SECRET) {
+                replyWithInternalError(reply, 'Uh uh uh! Wrong secret!');
+                return;
+            }
+
+            await removeThingOfInterestRepository(request.query.id).then(async () => {
+                reply.code(HTTP_STATUS_CODE_OK).send({});
+            }).catch((error) => replyWithInternalError(reply, error));
+        });
+    },
 });
