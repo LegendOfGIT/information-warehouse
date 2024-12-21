@@ -75,10 +75,10 @@ module.exports = () => ({
         fastify.get('/api/translations', async (request, reply) => {
             reply.type('application/json');
 
-            const { locale } = request.query;
+            const { locale, secret } = request.query;
 
             const cacheKey = `translations.${locale}`;
-            if (cacheKey && cache.has(cacheKey)) {
+            if (!secret && cacheKey && cache.has(cacheKey)) {
                 reply.send(cache.get(cacheKey));
                 return;
             }
