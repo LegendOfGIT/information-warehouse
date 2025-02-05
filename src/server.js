@@ -10,7 +10,7 @@ const fastify = require('fastify')({
 });
 
 fastify.register(require('@fastify/cors'), {});
-fastify.register(require('@fastify/compress'), { global: true });
+fastify.register(require('@fastify/compress'), { global: true, threshold: 0 });
 
 informationItemsController.registerGetInformationItems(fastify);
 informationItemsController.registerGetSampleInformationItemsOfCategories(fastify)
