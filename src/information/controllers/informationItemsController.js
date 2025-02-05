@@ -198,7 +198,7 @@ module.exports = () => ({
                     };
 
                     console.log('randomItems: ' + randomItems);
-                    if (!randomItems) {
+                    if (!randomItems || /false/i.test(randomItems)) {
                         reply.headers({'Cache-Control': 'max-age=600'});
                         console.log('cacheKey: ' + cacheKey);
                         if (cacheKey) { cache.set(cacheKey, res, 600); }
