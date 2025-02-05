@@ -182,19 +182,19 @@ module.exports = () => ({
                     updateItemsRepository(response, numberOfResults, botRequest)
                         .then(() => {});
 
-                    const availablePages = await getAvailablePages(
+                    /*const availablePages = await getAvailablePages(
                         query,
                         priceFrom,
                         priceTo,
                         numberOfResults,
                         page,
                         createdToday,
-                        filterIds);
+                        filterIds);*/
 
                     const res = {
                         errorCode: hashtagsContainBadTerm ? 'HASHTAGS_CONTAIN_BAD_TERM' : '',
                         items: response,
-                        availablePages
+                        availablePages: []
                     };
 
                     if (!randomItems) {
