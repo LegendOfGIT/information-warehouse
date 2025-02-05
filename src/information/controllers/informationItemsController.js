@@ -202,7 +202,7 @@ module.exports = () => ({
                         if (cacheKey) { cache.set(cacheKey, res, 600); }
                     }
 
-                    reply.compress(res);
+                    reply.send(res);
                 })
                 .catch(error => replyWithInternalError(reply, error, { items: [] }));
         });
