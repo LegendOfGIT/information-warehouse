@@ -150,6 +150,7 @@ module.exports = () => ({
                 filterIds,
                 createdToday);
 
+            console.log(cacheKey);
             if (cacheKey && cache.has(cacheKey)) {
                 reply.send(cache.get(cacheKey));
                 return
