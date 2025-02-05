@@ -150,10 +150,9 @@ module.exports = () => ({
                 filterIds,
                 createdToday);
 
-            console.log(cacheKey);
             if (cacheKey && cache.has(cacheKey)) {
                 reply.send(cache.get(cacheKey));
-                return
+                return;
             }
 
             const botRequest = isBotRequest(request);
@@ -198,8 +197,10 @@ module.exports = () => ({
                         availablePages
                     };
 
+                    console.log('randomItems: ' + randomItems);
                     if (!randomItems) {
                         reply.headers({'Cache-Control': 'max-age=600'});
+                        console.log('cacheKey: ' + cacheKey);
                         if (cacheKey) { cache.set(cacheKey, res, 600); }
                     }
 
