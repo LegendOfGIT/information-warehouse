@@ -72,7 +72,7 @@ const getGetInformationItemsCacheKey = (query,
                                         addCampaignParameter,
                                         filterIds,
                                         createdToday) => {
-    if (randomItems || query._id) {
+    if (/true/i.test(randomItems) || query._id) {
         return '';
     }
 
