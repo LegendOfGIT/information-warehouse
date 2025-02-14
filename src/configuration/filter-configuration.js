@@ -45,7 +45,7 @@ const FILTER_MAPPING = {
     // 1000037: { property: 'providers.itemId', value: 'plantlife' },
     1000038: { property: 'providers.itemId', value: 'quelle' },
     1000039: { property: 'providers.itemId', value: 'reifen' },
-    1000040: { property: 'providers.itemId', value: 'sandawha-skincare' },
+    // 1000040: { property: 'providers.itemId', value: 'sandawha-skincare' },
     1000120: { property: 'providers.itemId', value: 'saunaloft' },
     1000041: { property: 'providers.itemId', value: 'shop24direct' },
     // 1000042: { property: 'providers.itemId', value: 'shop-apotheke' },

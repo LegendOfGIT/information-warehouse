@@ -202,7 +202,7 @@ module.exports = () => ({
                     };
 
                     if (!randomItems || /false/i.test(randomItems)) {
-                        const cacheLifetime = requestingSource === 'STARTPAGE' ?
+                        const cacheLifetime = ['STARTPAGE', 'STORIES'].indexOf(requestingSource || '') !== -1 ?
                             TWELVE_HOURS_IN_SECONDS :
                             TEN_MINUTES_IN_SECONDS;
 
