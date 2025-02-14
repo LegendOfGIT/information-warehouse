@@ -30,6 +30,9 @@ cron.schedule('0 */3 * * *',
     }
 );
 
+const TEN_MINUTES_IN_SECONDS = 600;
+const TWELVE_HOURS_IN_SECONDS = 43200;
+
 const replyWithInternalError = (reply, errorMessage, additionalInformation) => {
     reply.code(HTTP_STATUS_CODE_INTERNAL_ERROR);
     return reply.send(Object.assign({ errorMessage }, additionalInformation));
@@ -106,6 +109,7 @@ module.exports = () => ({
                 priceFrom,
                 priceTo,
                 randomItems,
+                requestingSource,
                 searchPattern,
                 searchProfileId
             } = request.query;
@@ -197,11 +201,14 @@ module.exports = () => ({
                         availablePages
                     };
 
-                    console.log('randomItems: ' + randomItems);
                     if (!randomItems || /false/i.test(randomItems)) {
-                        reply.headers({'Cache-Control': 'max-age=600'});
+                        const cacheLifetime = requestingSource === 'STARTPAGE' ?
+                            TWELVE_HOURS_IN_SECONDS :
+                            TEN_MINUTES_IN_SECONDS;
+
+                        reply.headers({'Cache-Control': 'max-age=' + cacheLifetime});
                         console.log('cacheKey: ' + cacheKey);
-                        if (cacheKey) { cache.set(cacheKey, res, 600); }
+                        if (cacheKey) { cache.set(cacheKey, res, cacheLifetime); }
                     }
 
                     reply.send(res);
