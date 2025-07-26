@@ -30,7 +30,7 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
                 filterIds);
 
             const sort = {};
-            sort['scoring.' + (hashtag || 'noprofile')] = -1;
+            // sort['scoring.' + (hashtag || 'noprofile')] = -1;
             sort.numberOfRatings = -1;
             sort.ratingInPercent = -1;
             queryParts.push({ $sort: sort});
