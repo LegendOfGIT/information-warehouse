@@ -30,6 +30,13 @@ const updatePriceHistoryOfItem = (item, providers) => {
     item.priceHistory = priceHistory;
 }
 
+const normalizeTitle = (str) =>
+    str
+        .normalize("NFD")                 // Unicode zerlegen
+        .replace(/[\u0300-\u036f]/g, "") // Diakritika entfernen (é -> e)
+        .replace(/[^\w\s]/g, "")         // Sonderzeichen entfernen
+        .trim();
+
 const itemToStoreFromScrapedItem = (storedItem, scrapedItem, overrideProviders) => {
     const providerSpecificProperties = [
         'amountInStock',
@@ -98,6 +105,7 @@ const itemToStoreFromScrapedItem = (storedItem, scrapedItem, overrideProviders) 
 
     itemToStore.filterInformation = filterInformationResolver(itemToStore);
     itemToStore.tags = tagsResolver(itemToStore);
+    itemToStore.titleWithoutSpecials = (normalizeTitle(itemToStore.title || ''));
 
     return {
         ...storedItem,

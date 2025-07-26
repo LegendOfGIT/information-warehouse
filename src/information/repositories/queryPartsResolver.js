@@ -2,6 +2,12 @@ const filterConfiguration = require('../../configuration/filter-configuration');
 const ObjectID = require('mongodb').ObjectID;
 
 module.exports = (query, priceFrom, priceTo, numberOfResults, createdToday = '', filterIds = []) => {
+    const normalizeTitle = (str) =>
+        str
+            .normalize("NFD")                 // Unicode zerlegen
+            .replace(/[\u0300-\u036f]/g, "") // Diakritika entfernen (é -> e)
+            .replace(/[^\w\s]/g, "")         // Sonderzeichen entfernen
+            .trim();
 
     const getFilterQuery = (priceFrom, priceTo, filterIds) => {
         const filterProperties = filterConfiguration.getFilterPropertiesByFilterIds(filterIds);
@@ -35,7 +41,7 @@ module.exports = (query, priceFrom, priceTo, numberOfResults, createdToday = '',
     };
 
     if (query.title) {
-        query.titleWithoutSpecials = new RegExp(`.*${query.title.split(/'|´|`/).join('').replaceAll('á', 'a').replaceAll('é', 'e').replaceAll('ó', 'o')}.*`, 'i');
+        query.titleWithoutSpecials = new RegExp(`.*${normalizeTitle(query.title)}.*`, 'i');
         delete query.title;
     }
 
@@ -45,21 +51,8 @@ module.exports = (query, priceFrom, priceTo, numberOfResults, createdToday = '',
         query._id = { $gte: ObjectID.createFromTime(today / 1000) };
     }
 
-    const queryParts = [
-        { $addFields: { titleWithoutSpecials: { $replaceAll: { input: "$title", find: "'", replacement: '' }}}}
-    ];
-
-    const specialCharReplacements = {
-        '`': '', '´': '', ':': '',
-        'á': 'a', 'é': 'e', 'ó': 'o'
-    };
-    Object.keys(specialCharReplacements).forEach(
-        key => queryParts.push({ $addFields: { titleWithoutSpecials: { $replaceAll: { input: "$titleWithoutSpecials", find: key, replacement: specialCharReplacements[key] }}}}));
-
     const priceCheck = numberOfResults > 1 ? { hasPriceInformation: { $in: [true, null] } } : null;
     const stockCheck = numberOfResults > 1 ? { isInStock: { $in: [true, null] } } : null;
 
-    queryParts.push({ $match: { ...query, ...priceCheck, ...stockCheck, ...getFilterQuery(priceFrom, priceTo, filterIds) } });
-
-    return queryParts;
+    return { $match: { ...query, ...priceCheck, ...stockCheck, ...getFilterQuery(priceFrom, priceTo, filterIds) } };
 };
