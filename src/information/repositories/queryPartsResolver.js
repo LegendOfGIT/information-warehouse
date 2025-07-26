@@ -54,5 +54,6 @@ module.exports = (query, priceFrom, priceTo, numberOfResults, createdToday = '',
     const priceCheck = numberOfResults > 1 ? { hasPriceInformation: { $in: [true, null] } } : null;
     const stockCheck = numberOfResults > 1 ? { isInStock: { $in: [true, null] } } : null;
 
-    return [{ $match: { ...query, ...getFilterQuery(priceFrom, priceTo, filterIds) } }];
+    console.log([{ $match: { ...query, ...priceCheck, ...stockCheck, ...getFilterQuery(priceFrom, priceTo, filterIds) } }]);
+    return [{ $match: { ...query, ...priceCheck, ...stockCheck, ...getFilterQuery(priceFrom, priceTo, filterIds) } }];
 };
