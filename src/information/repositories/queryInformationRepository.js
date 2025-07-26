@@ -29,12 +29,12 @@ module.exports = (parameters) => new Promise((resolve, reject) => {
                 createdToday,
                 filterIds);
 
-            const sort = {};
-            sort['scoring.' + (hashtag || 'noprofile')] = -1;
-            sort.ratingInPercent = -1;
-            sort.numberOfRatings = -1;
+            // sort['scoring.' + (hashtag || 'noprofile')] = -1;
 
-            queryParts.push({ $sort: sort });
+            queryParts.push({ $sort: {
+                numberOfRatings: -1,
+                ratingInPercent: -1
+            }});
 
             if ((/true/i).test(randomItems)) {
                 queryParts.push({ $sample: { size: numberOfResults }});
