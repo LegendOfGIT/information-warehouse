@@ -41,7 +41,7 @@ module.exports = (query, priceFrom, priceTo, numberOfResults, createdToday = '',
     };
 
     if (query.title) {
-        query.titleWithoutSpecials = new RegExp(`.*${normalizeTitle(query.title)}.*`, 'i');
+        query.titleWithoutSpecials = new RegExp(normalizeTitle(query.title), 'i');
         delete query.title;
     }
 
