@@ -2,6 +2,7 @@ const configuration = require('./configuration/app-config')();
 const contentController = require('./content/controllers/ContentController')();
 const hashtagsController = require('./hashtags/controllers/hashtagsController')();
 const informationItemsController = require('./information/controllers/informationItemsController')();
+const addTitleWithoutSpecialCharactersPropertyController = require('./information/controllers/addTitleWithoutSpecialCharactersPropertyController')();
 const searchProfilesController = require('./profiles/controllers/ProfilesController')();
 const wishlistItemsController = require('./wishlist/controllers/WishlistItemsController')();
 
@@ -50,6 +51,8 @@ wishlistItemsController.registerShareWishlist(fastify);
 wishlistItemsController.registerCancelShareWishlist(fastify);
 wishlistItemsController.registerUpdateSingleWishlistItemWasBought(fastify);
 wishlistItemsController.registerDiscoverWishlistItemAndAddItToWishlist(fastify);
+
+addTitleWithoutSpecialCharactersPropertyController.registerAddNewProperty(fastify);
 
 fastify.listen({ host: configuration.application.host, port: 3002 }, (err, address) => {
     if (err) throw err
