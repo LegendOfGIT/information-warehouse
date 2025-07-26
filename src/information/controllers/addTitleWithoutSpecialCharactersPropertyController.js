@@ -16,10 +16,10 @@ module.exports = () => ({
                     .trim();
             }
 
-            let db;
+            let client;
             try {
-                db = await mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`);
-                const collection = db.collection('items');
+                client = await mongoClient.connect(`mongodb://${configuration.database.host}:${configuration.database.port}/information-items`);
+                const collection = client.db().collection('items');
 
                 const cursor = collection.find({}, { projection: { _id: 1, title: 1 } });
 
@@ -52,8 +52,8 @@ module.exports = () => ({
 
                 console.log("Alle Titel erfolgreich aktualisiert.");
             } finally {
-                if (db) {
-                    await db.close();
+                if (client) {
+                    await client.close();
                 }
             }
 
